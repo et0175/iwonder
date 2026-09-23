@@ -1,0 +1,16 @@
+topic: space
+title: Space
+ages: 5-7
+status: mapped
+start: earth-ball   # which concept the atlas opens on; omit for the most load-bearing one
+# Names for each prerequisite depth, shallowest first. Purely editorial —
+# the depths themselves are computed from the prerequisites, never set by hand.
+layers:
+  - Foundations
+  - First footing
+  - The turning world
+  - Motions & mechanisms
+  - Alignments
+  - Systems & instruments
+  - Other worlds
+  - Far edges

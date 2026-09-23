@@ -1,0 +1,15 @@
+{
+  "name": "i-wonder",
+  "version": "0.1.0",
+  "description": "A curiosity encyclopaedia for children, organised as a prerequisite graph of concepts.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "node tools/validate.mjs",
+    "build": "node tools/validate.mjs && node tools/build.mjs",
+    "serve": "npm run build && npx --yes serve site"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  }
+}

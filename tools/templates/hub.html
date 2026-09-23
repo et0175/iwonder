@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>I Wonder</title>
+<meta name="description" content="A curiosity encyclopaedia for children, built as a prerequisite graph of concepts rather than a list of topics.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&display=swap">
+<style>
+:root{
+  --ground:#ECEDF3;--ground-2:#E2E4EE;--surface:#FAFBFE;--surface-2:#F1F2F8;
+  --ink:#14182A;--ink-soft:#59607C;--ink-faint:#868DA6;
+  --rule:#C6CBDC;--rule-soft:#DBDFEB;
+  --accent:#A96310;--accent-ink:#7C4708;--accent-wash:#F4E6CE;
+  --shadow:0 1px 2px rgba(20,24,42,.06),0 8px 24px -16px rgba(20,24,42,.35);
+  --f-display:"Fraunces","Iowan Old Style",Georgia,serif;
+  --f-body:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --f-mono:ui-monospace,"SF Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ground:#0F1324;--ground-2:#0A0E1C;--surface:#191E34;--surface-2:#141930;
+  --ink:#E7E9F3;--ink-soft:#98A0BE;--ink-faint:#6E7699;
+  --rule:#2C3352;--rule-soft:#232945;
+  --accent:#EFAC4C;--accent-ink:#F6C57E;--accent-wash:#33270F;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -18px rgba(0,0,0,.9);
+}}
+:root[data-theme="dark"]{
+  --ground:#0F1324;--ground-2:#0A0E1C;--surface:#191E34;--surface-2:#141930;
+  --ink:#E7E9F3;--ink-soft:#98A0BE;--ink-faint:#6E7699;
+  --rule:#2C3352;--rule-soft:#232945;
+  --accent:#EFAC4C;--accent-ink:#F6C57E;--accent-wash:#33270F;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px -18px rgba(0,0,0,.9);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1060px;margin:0 auto;padding:0 28px 88px}
+a{color:var(--accent-ink)}
+.eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 14px}
+header.mast{padding:54px 0 30px;border-bottom:1px solid var(--rule)}
+h1{font-family:var(--f-display);font-weight:700;font-size:clamp(44px,8vw,78px);line-height:.98;letter-spacing:-.022em;margin:0 0 18px;font-variation-settings:"opsz" 144}
+.lede{max-width:60ch;font-size:17px;color:var(--ink-soft);margin:0}
+.lede b{color:var(--ink);font-weight:600}
+h2{font-family:var(--f-display);font-weight:700;font-size:27px;letter-spacing:-.012em;margin:0 0 6px;font-variation-settings:"opsz" 60}
+section{padding-top:52px}
+.sub{color:var(--ink-soft);max-width:62ch;margin:0 0 24px}
+
+/* five beats — a real sequence, so it is numbered */
+.beats{list-style:none;margin:0;padding:0;counter-reset:b;display:grid;gap:0}
+.beats li{counter-increment:b;display:grid;grid-template-columns:44px 1fr;gap:16px;padding:16px 0;border-bottom:1px solid var(--rule-soft);align-items:baseline}
+.beats li::before{content:counter(b,decimal-leading-zero);font-family:var(--f-mono);font-size:12px;color:var(--ink-faint);letter-spacing:.06em}
+.beats b,.beats span{grid-column:2}
+.beats b{font-family:var(--f-display);font-weight:700;font-size:18px;margin-bottom:2px;font-variation-settings:"opsz" 30}
+.beats span{color:var(--ink-soft);font-size:14px;max-width:62ch}
+.beats li.key b{color:var(--accent-ink)}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:4px;padding:20px 22px 18px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px}
+.card h3{font-family:var(--f-display);font-weight:700;font-size:22px;margin:0;font-variation-settings:"opsz" 40}
+.card .tag{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint)}
+.figs{display:flex;gap:20px;flex-wrap:wrap;border-top:1px solid var(--rule-soft);padding-top:12px;margin-top:auto}
+.fig b{display:block;font-family:var(--f-mono);font-size:19px;font-weight:500;font-variant-numeric:tabular-nums;line-height:1.2}
+.fig span{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-faint)}
+.go{align-self:flex-start;font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--accent-ink);border:1px solid var(--accent);background:var(--accent-wash);padding:7px 13px;border-radius:2px}
+.go:hover{background:var(--accent);color:var(--surface)}
+.go:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.bar{height:5px;background:var(--rule-soft);border-radius:3px;overflow:hidden;display:flex}
+.bar i{display:block;height:100%}
+.bar i.w{background:var(--accent)}
+.bar i.d{background:var(--ink-faint)}
+.prog{font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-top:-6px}
+
+.empty{border:1px dashed var(--rule);border-radius:4px;padding:26px 24px;color:var(--ink-soft);background:var(--surface-2)}
+.empty b{display:block;font-family:var(--f-display);font-size:19px;color:var(--ink);margin-bottom:6px;font-variation-settings:"opsz" 30}
+.empty code{font-family:var(--f-mono);font-size:12.5px;background:var(--ground-2);padding:2px 6px;border-radius:2px}
+.cast{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:0}
+.who{padding:18px 22px 18px 0;border-bottom:1px solid var(--rule-soft);margin-right:22px}
+.who h4{font-family:var(--f-display);font-weight:700;font-size:20px;margin:0 0 3px;font-variation-settings:"opsz" 40}
+.who .role{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--accent-ink);display:block;margin-bottom:8px}
+.who p{margin:0;color:var(--ink-soft);font-size:14px}
+footer{margin-top:64px;padding-top:24px;border-top:1px solid var(--rule);color:var(--ink-faint);font-size:13px;max-width:70ch}
+footer code{font-family:var(--f-mono);font-size:12.5px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="mast">
+    <p class="eyebrow">A curiosity encyclopaedia for children</p>
+    <h1>I Wonder</h1>
+    <p class="lede">A book organised by <b>what a child can already understand</b>, not by subject. Every article starts from something visible in the world and a question a child actually asks — and it can only be told once the concepts underneath it are in place. Those dependencies are the whole architecture, so they are kept as data and checked on every change.</p>
+  </header>
+
+  <section>
+    <h2>The anatomy of an article</h2>
+    <p class="sub">Five beats, always in this order. The concept is never announced — it is what the child is left holding at the end.</p>
+    <ol class="beats">
+      <li><b>The concept</b><span>The idea the article is really about. It is a planning label. It does not appear in the book.</span></li>
+      <li><b>The phenomenon</b><span>Something the child can see for themselves, without equipment or permission.</span></li>
+      <li class="key"><b>The question</b><span>How the child would actually put it. This is the title of the article, and the only part they meet first.</span></li>
+      <li><b>The experiment</b><span>A thing they do with ordinary objects that makes the honest answer unavoidable.</span></li>
+      <li><b>The next questions</b><span>The doors it opens. Most of them lead out of the topic entirely — that is the point.</span></li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Concept atlases</h2>
+    <p class="sub">Each topic is a prerequisite graph. Open one to see what has to come before what.</p>
+    <div class="grid" id="topics"></div>
+  </section>
+
+  <section>
+    <h2>The cast</h2>
+    <p class="sub">Who the child meets, and what each one is for.</p>
+    <div id="cast"></div>
+  </section>
+
+  <footer>
+    This page is generated from the files in <code>content/</code>. Edit the markdown, run <code>npm run build</code>, and it updates. Nothing here is written by hand.
+  </footer>
+</div>
+
+<script>
+const TOPICS = __TOPICS__;
+const CAST = __CAST__;
+const esc = s => String(s == null ? "" : s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+document.getElementById("topics").innerHTML = TOPICS.length ? TOPICS.map(t => {
+  const done = Math.round(100 * t.written / t.count), draft = Math.round(100 * t.drafted / t.count);
+  return '<article class="card">' +
+    '<div><span class="tag">Ages ' + esc(t.ages) + '</span><h3>' + esc(t.title) + '</h3></div>' +
+    '<div class="bar" title="' + t.written + ' written, ' + t.drafted + ' drafted, rest mapped">' +
+      '<i class="w" style="width:' + done + '%"></i><i class="d" style="width:' + draft + '%"></i></div>' +
+    '<div class="prog">' + (t.written + t.drafted ? t.written + ' written · ' + t.drafted + ' drafted' : 'mapped only — no prose yet') + '</div>' +
+    '<div class="figs">' +
+      '<div class="fig"><b>' + t.count + '</b><span>concepts</span></div>' +
+      '<div class="fig"><b>' + t.layers + '</b><span>layers</span></div>' +
+      '<div class="fig"><b>' + t.roots + '</b><span>roots</span></div>' +
+      '<div class="fig"><b>' + t.out + '</b><span>doors out</span></div>' +
+    '</div>' +
+    '<a class="go" href="atlas/' + esc(t.topic) + '.html">Open the atlas</a>' +
+  '</article>';
+}).join("") : '<div class="empty"><b>No topics yet</b>Add a folder under <code>content/concepts/</code> with a <code>_topic.yml</code> and one markdown file per concept.</div>';
+
+document.getElementById("cast").innerHTML = CAST.length
+  ? '<div class="cast">' + CAST.map(c =>
+      '<div class="who"><h4>' + esc(c.name) + '</h4><span class="role">' + esc(c.role || "role not set") + '</span>' +
+      '<p>' + esc(c.blurb || c.asks || "") + '</p></div>').join("") + '</div>'
+  : '<div class="empty"><b>Nobody yet</b>Copy <code>content/characters/_template.md</code>, fill it in, and they appear here. The one field that matters is <code>role</code> — what this character is <em>for</em>.</div>';
+</script>
+</body>
+</html>
