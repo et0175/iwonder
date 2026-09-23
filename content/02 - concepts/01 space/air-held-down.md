@@ -4,7 +4,7 @@ title: Gravity holds our air on
 proposition: The air stays put because the Earth pulls it down, exactly as it pulls us.
 domain: Space
 topic: space
-ages: 5-7
+age_range: 5-7
 status: mapped
 prerequisites:
   - '[[down-is-center]]'
