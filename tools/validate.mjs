@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Checks every concept graph in content/concepts/.
+ * Checks every concept graph in content/02 - concepts/.
  * Exits non-zero if anything is wrong, so CI blocks the push.
  *
  *   node tools/validate.mjs
@@ -18,7 +18,7 @@ const err = (m) => { errors++; console.error("  ✗ " + m); };
 const warn = (m) => { warnings++; console.warn("  ! " + m); };
 
 const topics = listTopics();
-if (!topics.length) { console.error("No topics found under content/concepts/."); process.exit(1); }
+if (!topics.length) { console.error("No topics found — expected content/[NN - ]concepts/<topic>/."); process.exit(1); }
 
 for (const topic of topics) {
   console.log(`\n${topic}`);
@@ -119,8 +119,17 @@ if (implied.length) {
 const cast = loadCharacters();
 console.log(`\ncharacters`);
 console.log(`  ${cast.length} in the cast`);
+const castIds = new Set();
 for (const ch of cast) {
-  if (!ch.name) err(`${ch.file}: missing name`);
+  if (!ch.id) err(`${ch.file}: missing id`);
+  else {
+    if (!/^[a-z0-9-]+$/.test(ch.id)) err(`${ch.file}: id "${ch.id}" must be lower-case kebab-case`);
+    if (ch.slug !== ch.id) err(`${ch.file}: filename does not match id "${ch.id}"`);
+    if (castIds.has(ch.id)) err(`${ch.file}: duplicate id "${ch.id}"`);
+    castIds.add(ch.id);
+  }
+  if (!ch.name?.en) err(`${ch.file}: missing name.en`);
+  if (!ch.name?.uk) warn(`${ch.file}: missing name.uk`);
   if (!ch.role) warn(`${ch.file}: missing role — what is this character FOR?`);
 }
 

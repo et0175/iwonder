@@ -1,4 +1,17 @@
-The Edge of the World
+---
+id: the-edge-of-the-world
+lang: en
+title: "The Edge of the World"
+question:
+concepts: [earth-ball]
+ages: [5-7]
+characters: [max, kira, strange, professor-ada]
+memory_hook:
+bridge:
+status: draft
+---
+
+# The Edge of the World
 
 Max was lying on his stomach at the end of the pier.
 

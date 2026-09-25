@@ -1,15 +1,23 @@
-# Character: Professor
+---
+id: professor-ada
+name: { en: Professor Ada, uk: Професорка Ада }
+image:
+one_line:
+tagline: Let's find out
+role: Guide, evidence-keeper, and voice of scientific reasoning. Primary educator and model of scientific thinking
+archetype: The mentor who knows, but remains curious. Don't rush to teach but encourage to think
+appearance: Woman in her 40-50s
+hobby: gardening, collection of interesting questions, puzzles
+status: sketch
+---
 
-## Identity
+# Professor Ada
 
-**Name**: Professor Ada
-**Appearance** Woman in her 40-50s. Elegant, short hair, probably Asian looking
-**Role**: Guide, evidence-keeper, and voice of scientific reasoning
-**Archetype**: The mentor who knows, but remains curious
+## Current Professor Ada v0.1 in one sentence
 
 ## Philosophy
 
-The Professor doesn't pretend to know everything. Being a scientist doesn't mean knowing all answers—it means knowing *how to find things out*.
+Professor Ada doesn't pretend to know everything. Being a scientist doesn't mean knowing all answers—it means knowing *how to find things out*.
 
 Her character teaches:
 - Critical thinking over memorization
@@ -29,7 +37,7 @@ Her character teaches:
 
 ## Dialogue Principles
 
-### What the Professor Does
+### What Professor Ada Does
 
 ✅ **Explains simply** → but not wrong
 ✅ **Introduces evidence** → "Here's what we actually know..."
@@ -41,7 +49,7 @@ Her character teaches:
 ✅ **Admits complexity** → "This is trickier than it looks..."
 ✅ **Shows scientific reasoning** → Hypotheses → experiments → conclusions
 
-### What the Professor Doesn't Do
+### What Professor Ada Doesn't Do
 
 ❌ **Pretend certainty about uncertain things**
 ❌ **Use jargon without explanation**
@@ -49,7 +57,6 @@ Her character teaches:
 ❌ **Rush to the answer**
 ❌ **Make things "magical" to avoid explanation**
 ❌ **Oversimplify dishonestly**
-
 
 
 ## Dialogue Style
@@ -63,22 +70,22 @@ Her character teaches:
 
 | With | Dynamic |
 |------|---------|
-| **Boy** | Guides his hypotheses toward evidence. "That's an interesting idea. How could we test it?" |
-| **Girl** | Welcomes her deeper questions. "Now that's a harder question..." |
+| **Max** | Guides his hypotheses toward evidence. "That's an interesting idea. How could we test it?" |
+| **Kira** | Welcomes her deeper questions. "Now that's a harder question..." |
 | **Strange** | Acknowledges absurdist observations with respect. "That's actually not a bad way to think about it..." |
 
 ## Example Interactions
 
 ### Correcting Without Dismissing
 
-**Boy**: Cats purr because they're happy.
+**Max**: Cats purr because they're happy.
 **Professor**: Sometimes they do. But it's not the whole story. Can you think of other times animals make sounds?
-**Boy**: When they're scared?
+**Max**: When they're scared?
 **Professor**: Exactly! So cats use sounds in different situations. Let's explore all the reasons they purr.
 
 ### Showing Uncertainty Honestly
 
-**Girl**: But why does gravity pull things?
+**Kira**: But why does gravity pull things?
 **Professor**: Now that is a much harder question. We know *that* gravity pulls things. We can measure it. But *why* it does? That's still something physicists are investigating.
 **Strange**: So nobody knows?
 **Professor**: We have theories, but not a complete answer yet. That's where science still has mysteries.
@@ -86,12 +93,12 @@ Her character teaches:
 ### Demonstrating Scientific Reasoning
 
 **Child**: Why do we sleep?
-**Boy**: Because we get tired.
+**Max**: Because we get tired.
 **Professor**: Right. And that's a clue. When we get tired, it's our body telling us something. Let's investigate what our body actually needs during sleep...
 
 ### Celebrating Curiosity
 
-**Girl**: Why don't birds fall out of the sky?
+**Kira**: Why don't birds fall out of the sky?
 **Professor**: Excellent question! That's exactly the kind of question scientists ask. What do you think keeps them up?
 
 ## Character Skills & Strengths
@@ -104,16 +111,6 @@ Her character teaches:
 | **Showing evidence** | Points to experiments, observations, data that support conclusions |
 | **Admitting limits** | "We don't know yet" or "That's beyond what we can explore today" |
 
-## Visual/Physical Characteristics
-
-*To be developed by design team*
-
-Suggestions:
-- Approachable but authoritative
-- Thoughtful expression (not stern)
-- Could be any age/gender/appearance (multiple interpretations okay)
-- Often shown gesturing, pointing to diagrams, or holding a book/notes
-- Eyes that light up with curiosity
 
 ## Sample Dialogues by Age
 
@@ -162,13 +159,11 @@ Suggestions:
 
 ## Related Characters
 
-- **Boy**: She guides his imagination toward evidence
-- **Girl**: She welcomes and explores her deeper questions
+- **Max**: She guides his imagination toward evidence
+- **Kira**: She welcomes and explores her deeper questions
 - **Strange**: She engages seriously with his absurd observations
 
 ---
-
-**Role in Encyclopedia**: Primary educator and model of scientific thinking
 **Used in**: Every dialogue
 **Dialogue frequency**: 30-40% of lines
 **Tone stability**: High (should feel consistent)
@@ -371,7 +366,7 @@ That would be much funnier than making her perfectly prepared.
 
 I think this deserves to become a core character principle, not just an occasional joke.
 
-The Professor has enormous knowledge.
+Professor Ada has enormous knowledge.
 
 But she doesn't have a monopoly on insight.
 
@@ -394,7 +389,7 @@ but:
 
 Experienced investigator ↔ curious investigators
 
-The Professor simply has more accumulated knowledge and better investigative tools.
+Professor Ada simply has more accumulated knowledge and better investigative tools.
 
 That's a much healthier relationship for the encyclopedia.
 
@@ -490,13 +485,13 @@ That would be very Professor-like.
 
 I would preserve this model:
 
-Professor ↔ Boy
+Professor ↔ Max
 
 Hypothesis → evidence
 
 "Interesting idea. How could we test it?"
 
-Professor ↔ Girl
+Professor ↔ Kira
 
 Question → deeper question
 
@@ -534,7 +529,7 @@ They're participating.
 
 9. Age adaptation
 
-I agree with our earlier conclusion: the Professor herself does not change with age.
+I agree with our earlier conclusion: Professor Ada herself does not change with age.
 
 The depth of her interaction changes.
 

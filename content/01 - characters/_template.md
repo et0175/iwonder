@@ -1,9 +1,16 @@
 ---
-name:
+id:              # kebab-case; matches the filename without its NN prefix
+name: { en: , uk: }
+image:           # picture for the character card
+one_line:        # one sentence for the card
+tagline:         # their catchphrase
 role:            # What this character is FOR. The most important field on this page.
+archetype:
+appearance:
 age:
 asks:            # The kind of question they are always the one to ask.
 never:           # Something they never do — keeps them from becoming everyone.
+hobby:
 topics:          # Optional: topics or domains they turn up in most.
 status: sketch   # sketch | agreed | retired
 ---

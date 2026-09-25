@@ -1,6 +1,6 @@
 # Concept file schema
 
-One file per concept: `content/concepts/<topic>/<id>.md`.
+One file per concept: `content/02 - concepts/<topic>/<id>.md`.
 The filename must match the `id`. The validator enforces everything below.
 
 ```markdown

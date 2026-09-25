@@ -1,27 +1,33 @@
-# Character: Boy
+---
+id: max
+name: { en: Max, uk: Макс }
+image:
+one_line:
+tagline: What if...?
+role: The enthusiastic hypothesis maker, initial questioner and imagination source. He turns questions into experiments.
+archetype: The intuitive thinker who tests ideas
+appearance: A boy of the age for which the story is intended.
+hobby: Craftsmanship
+status: sketch
+---
 
-## Identity
-
-**Name**: Max
-**Role**: Hypothesis maker and imagination source. He turns questions into experiments.
-**Archetype**: The intuitive thinker who tests ideas
-**Hobby**: Not decided
+# Max
 
 ## Philosophy
 
-The Boy represents the first instinct—often right, sometimes confidently wrong. His role is to show that hypotheses aren't failures. They're the *beginning* of investigation.
+Max represents the first instinct—often right, sometimes confidently wrong. His role is to show that hypotheses aren't failures. They're the *beginning* of investigation.
 
 His character teaches:
 - Intuition has value
 - First guesses are often based on real observation
 - Wrong hypotheses aren't shameful—they're learning
 - Testing ideas is how we discover
-  When the Girl asks:
+ 
 
-When the Girl asks:
+When Kira asks:
 "Why does this happen?"
 
-the Boy naturally responds:
+Max naturally responds:
 
 "Maybe it's because... Let's try it."
 
@@ -37,10 +43,8 @@ the Boy naturally responds:
 | **Optimist** | He tends to assume things will work. |
 
 energetic
-optimistic
 spontaneous
 inventive
-playful
 brave
 sociable
 competitive perhaps
@@ -52,16 +56,16 @@ quick to recover from failure
 
 His curiosity is active rather than contemplative.
 
-The Girl might stare at something for five minutes thinking.
+Kira might stare at something for five minutes thinking.
 
-The Boy has already picked it up.
+Max has already picked it up.
 
 ## His main weakness
 - He acts before thinking things through. But I wouldn't make him constantly reckless. That becomes annoying and teaches the wrong lesson.
 - He jumps to conclusions.
 ## Dialogue Principles
 
-### What the Boy Does
+### What Max Does
 
 ✅ **Makes initial guesses** → "I think it's because..."
 ✅ **Offers intuitive explanations** → Often simple, sometimes surprisingly insightful
@@ -71,12 +75,12 @@ The Boy has already picked it up.
 ✅ **Shows joy in discovery** → "Wow, I didn't know that!"
 ✅ **Asks "why" follow-ups** → "But where does it come from?"
 
-### What the Boy Doesn't Do
+### What Max Doesn't Do
 
 ❌ **Persist stubbornly after being corrected**
 ❌ **Claim certainty he doesn't have** (except as play)
 ❌ **Dismiss other ideas as stupid**
-❌ **Ask "boring" questions** (his curiosity is more surface-level than Girl's)
+❌ **Ask "boring" questions** (his curiosity is more surface-level than Kira's)
 
 ## Dialogue Style
 
@@ -90,7 +94,7 @@ The Boy has already picked it up.
 | With | Dynamic |
 |------|---------|
 | **Professor** | She guides and refines his hypotheses. He brings enthusiasm. |
-| **Girl** | She questions his answers. He suggests initial ideas for her to dig into. |
+| **Kira** | She questions his answers. He suggests initial ideas for her to dig into. |
 | **Strange** | They sometimes agree on absurd ideas (then laugh together). |
 
 ## Example Interactions
@@ -98,26 +102,26 @@ The Boy has already picked it up.
 ### Offering Initial Hypotheses
 
 **Question**: Why don't birds fall out of the sky?
-**Boy**: Because they're flying? The air holds them up?
+**Max**: Because they're flying? The air holds them up?
 **Professor**: Interesting. Let's think about what "held up" means...
 
 ### Quick Acceptance of Correction
 
-**Boy**: Cats purr because they're happy.
-**Girl**: But what if they purr for other reasons?
-**Boy**: Oh yeah, like when they're hurt? So purring means different things!
+**Max**: Cats purr because they're happy.
+**Kira**: But what if they purr for other reasons?
+**Max**: Oh yeah, like when they're hurt? So purring means different things!
 
 ### Making Simple Connections
 
 **Child**: Why do we sleep?
-**Boy**: Because our bodies need a break, like when I'm tired from playing.
+**Max**: Because our bodies need a break, like when I'm tired from playing.
 **Professor**: That's a good comparison. Let's see what "tired" really means...
 
 ### Bouncing to New Ideas
 
-**Boy**: Maybe it's because the sky is blue paint.
+**Max**: Maybe it's because the sky is blue paint.
 **Strange**: Yeah! Blue paint in the air!
-**Boy**: Or maybe it's like when you look through colored glass?
+**Max**: Or maybe it's like when you look through colored glass?
 **Professor**: Interesting. Let's examine both ideas...
 
 ## Character Skills & Strengths
@@ -134,13 +138,6 @@ The Boy has already picked it up.
 
 *To be developed by design team*
 
-Suggestions:
-- Youthful, energetic appearance
-- Gestures while talking (animated)
-- Often drawn with raised hand or questioning expression
-- Could be any age/gender/appearance
-- Shown with objects to play with, test, experiment
-
 ## Sample Dialogues by Age
 
 ### Ages 5-7
@@ -151,9 +148,9 @@ Suggestions:
 - Enthusiastic
 
 **Example**:
-> Boy: I think it's because the sky is blue!
-> Girl: But why is it blue?
-> Boy: Um... because blue paint?
+> Max: I think it's because the sky is blue!
+> Kira: But why is it blue?
+> Max: Um... because blue paint?
 > Professor: Let's look at what's actually happening...
 
 ### Ages 8-10
@@ -164,7 +161,7 @@ Suggestions:
 - Still concrete, but more abstract than younger
 
 **Example**:
-> Boy: Maybe birds have invisible wings that work even better than the ones we see?
+> Max: Maybe birds have invisible wings that work even better than the ones we see?
 > Professor: That's an interesting idea. How would we test that?
 
 ### Ages 11-13
@@ -175,7 +172,7 @@ Suggestions:
 - More nuanced reasoning
 
 **Example**:
-> Boy: I'd guess it's aerodynamic lift, but I'm not sure exactly how the shape creates pressure differences.
+> Max: I'd guess it's aerodynamic lift, but I'm not sure exactly how the shape creates pressure differences.
 > Professor: Let's explore that mechanism...
 
 ## Consistency Rules
@@ -190,32 +187,26 @@ Suggestions:
 ## Related Characters
 
 - **Professor**: She refines and tests his ideas
-- **Girl**: She digs deeper into his surface answers
+- **Kira**: She digs deeper into his surface answers
 - **Strange**: Sometimes allies in silliness, but in different ways
 
-## Common Boy Patterns
+## Common Max Patterns
 
 **Pattern 1**: Surface observation
-> Boy: I think plants are alive because they grow.
-> Girl: But so do crystals. Are they alive?
-> Boy: Oh, I didn't think of that...
+> Max: I think plants are alive because they grow.
+> Kira: But so do crystals. Are they alive?
+> Max: Oh, I didn't think of that...
 
 **Pattern 2**: Intuitive correctness
-> Boy: I think it's about air moving really fast.
+> Max: I think it's about air moving really fast.
 > Professor: Exactly! Let's look at how...
 
 **Pattern 3**: Playful testing
-> Boy: Can I lift this plant? How heavy is it?
+> Max: Can I lift this plant? How heavy is it?
 > Professor: Good observation. What does that tell us?
 
 ---
 
-**Role in Encyclopedia**: The enthusiastic hypothesis maker and initial questioner
-**Used in**: Most dialogues
-**Dialogue frequency**: 25-35% of lines
-**Tone stability**: Consistent enthusiasm, but adaptable to topic seriousness
-
 ## Note: 
-One important thing: don't make him "the funny boy"
-I think this is worth explicitly putting into the character bible.
+One important thing: don't make him "the funny Boy"
 Strange should eventually be much more responsible for absurdity and surreal humor.

@@ -34,11 +34,13 @@ Full reasoning in [`docs/PRINCIPLES.md`](docs/PRINCIPLES.md).
 
 ```
 content/
-  concepts/          the prerequisite graphs — the spine of the project
-    space/           one folder per topic
+  00-product/        vision and story outline
+  01 - characters/   the cast; one file each
+  02 - concepts/     the prerequisite graphs — the spine of the project
+    01 space/        one folder per topic
       _topic.yml     topic metadata and layer names
       earth-ball.md  one file per concept
-  characters/        the cast; one file each
+  stories/           the stories, one file per story
   articles/          written articles, once concepts graduate from mapped
 docs/
   PRINCIPLES.md      why the book is built this way
@@ -73,15 +75,19 @@ links (`[[far-small]]`) resolve, so **Obsidian's graph view is the concept
 atlas** — live, while you write, with no build step. Both tools read the same
 plain markdown files; git is what syncs them.
 
+Folder and file names may start with an ordering prefix (`02 - `, `01 `) so
+they sort nicely in Obsidian. The tools ignore it: `01 space` is the topic
+`space`, `04 max.md` is the character `max`.
+
 ### Adding a concept
 
-Create `content/concepts/<topic>/<id>.md`. The filename must match the `id`.
+Create `content/02 - concepts/<topic>/<id>.md`. The filename must match the `id`.
 Copy the shape of an existing one, or see
 [`docs/CONCEPT-SCHEMA.md`](docs/CONCEPT-SCHEMA.md). Then `npm run check`.
 
 ### Adding a topic
 
-Create `content/concepts/<topic>/_topic.yml`, add concept files beside it, and
+Create `content/02 - concepts/<topic>/_topic.yml`, add concept files beside it, and
 it appears on the site automatically. Prerequisites currently resolve **within**
 a topic only — see the open question in `docs/DECISIONS.md`.
 

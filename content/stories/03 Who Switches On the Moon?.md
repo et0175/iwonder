@@ -1,4 +1,17 @@
-Story 2 — Who Switches On the Moon?
+---
+id: who-switches-on-the-moon
+lang: en
+title: "Who Switches On the Moon?"
+question:
+concepts: [moon-borrows]
+ages: [5-7]
+characters: [max, kira, strange, professor-ada]
+memory_hook:
+bridge:
+status: draft
+---
+
+# Who Switches On the Moon?
 
 Strange was standing in the garden with a torch.
 

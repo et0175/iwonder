@@ -3,7 +3,36 @@ import path from "node:path";
 import yaml from "js-yaml";
 
 export const CONTENT = "content";
-export const CONCEPTS = path.join(CONTENT, "concepts");
+
+/**
+ * Folders and files may carry an ordering prefix so they sort nicely in
+ * Obsidian — `01 - characters`, `01 space`, `02 professor-ada.md`. The prefix
+ * is never part of the name the site uses.
+ */
+export const stripOrder = (name) => name.replace(/^\d+(\s*-\s*|\s+)/, "");
+
+/** Find `<parent>/<name>` whether or not the folder has an ordering prefix. */
+function findDir(parent, name) {
+  if (!fs.existsSync(parent)) return null;
+  const hit = fs
+    .readdirSync(parent, { withFileTypes: true })
+    .find((d) => d.isDirectory() && stripOrder(d.name) === name);
+  return hit ? path.join(parent, hit.name) : null;
+}
+
+export const CONCEPTS = findDir(CONTENT, "concepts");
+export const CHARACTERS = findDir(CONTENT, "characters");
+
+/** Topic name → its folder, e.g. "space" → "content/02 - concepts/01 space". */
+function topicDirs() {
+  if (!CONCEPTS) return {};
+  return Object.fromEntries(
+    fs
+      .readdirSync(CONCEPTS, { withFileTypes: true })
+      .filter((d) => d.isDirectory() && !stripOrder(d.name).startsWith("_"))
+      .map((d) => [stripOrder(d.name), path.join(CONCEPTS, d.name)])
+  );
+}
 
 /** Split `---\nyaml\n---\nbody` into [frontmatter, body]. */
 export function splitFrontmatter(raw, where) {
@@ -34,17 +63,12 @@ const unwiki = (s) => String(s).replace(/^\[\[|\]\]$/g, "").trim();
 const unquote = (s) => s.replace(/^>\s?/gm, "").trim();
 
 export function listTopics() {
-  if (!fs.existsSync(CONCEPTS)) return [];
-  return fs
-    .readdirSync(CONCEPTS, { withFileTypes: true })
-    .filter((d) => d.isDirectory() && !d.name.startsWith("_"))
-    .map((d) => d.name)
-    .sort();
+  return Object.keys(topicDirs()).sort();
 }
 
 /** Load one topic: its meta plus every concept file in it. */
 export function loadTopic(topic) {
-  const dir = path.join(CONCEPTS, topic);
+  const dir = topicDirs()[topic];
   const metaPath = path.join(dir, "_topic.yml");
   const meta = fs.existsSync(metaPath)
     ? yaml.load(fs.readFileSync(metaPath, "utf8")) || {}
@@ -127,15 +151,15 @@ export function graph(concepts) {
 }
 
 export function loadCharacters() {
-  const dir = path.join(CONTENT, "characters");
-  if (!fs.existsSync(dir)) return [];
+  const dir = CHARACTERS;
+  if (!dir) return [];
   return fs
     .readdirSync(dir)
-    .filter((f) => f.endsWith(".md") && !f.startsWith("_") && f !== "README.md")
+    .filter((f) => f.endsWith(".md") && !stripOrder(f).startsWith("_") && f !== "README.md")
     .sort()
     .map((f) => {
       const where = path.join(dir, f);
       const [fm, body] = splitFrontmatter(fs.readFileSync(where, "utf8"), where);
-      return { file: where, ...fm, sections: sections(body) };
+      return { file: where, slug: stripOrder(path.basename(f, ".md")), ...fm, sections: sections(body) };
     });
 }

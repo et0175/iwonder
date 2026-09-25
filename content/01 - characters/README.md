@@ -1,7 +1,9 @@
 # The cast
 
 One file per character. Copy `_template.md`, name it after them in kebab-case
-(`nina.md`), and they appear on the site the next time it is built.
+(`06 nina.md` — the number is only for sort order), set `id: nina`, and they
+appear on the site the next time it is built. Files starting with `_` (after
+the number) are notes, not characters.
 
 The field that matters is **`role`** — what the character is *for*. Personality
 is easy and can be changed later; function cannot. If two characters have the
@@ -24,6 +26,6 @@ cover several of these with one character, and fine to leave some empty.
 ## A caution
 
 Characters who exist to explain things turn the book into a lecture with names
-on it. The concepts in `content/concepts/` are designed so that a *phenomenon*
+on it. The concepts in `content/02 - concepts/` are designed so that a *phenomenon*
 does the explaining. Characters are there to be curious, to be wrong, and to
 do the experiment — not to know the answer in advance.

@@ -1,5 +1,5 @@
 ---
-concept: <concept-id>      # the concept in content/concepts/ this article teaches
+concept: <concept-id>      # the concept in content/02 - concepts/ this article teaches
 topic:
 title:                     # the child's question, verbatim — this is the article's title
 ages:

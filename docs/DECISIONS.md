@@ -37,7 +37,7 @@ Right now they resolve within one topic folder. The Space graph already contains
 nine roots that are not about space at all — distance, shadows, air, falling.
 When a second topic is mapped, those roots will almost certainly be shared.
 
-Options: a `content/concepts/_foundations/` folder that every topic can link
+Options: a `content/02 - concepts/_foundations/` folder that every topic can link
 into; or allow `[[topic/id]]` cross-references. The second is more flexible and
 more fragile. **Decide when the second topic exists, not before.**
 

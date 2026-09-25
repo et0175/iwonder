@@ -1,3 +1,16 @@
+---
+id: can-you-run-away-from-your-shadow
+lang: en
+title: "Can You Run Away From Your Shadow?"
+question:
+concepts: [straight-light]
+ages: [5-7]
+characters: [max, kira, strange, professor-ada]
+memory_hook:
+bridge:
+status: draft
+---
+
 # Can You Run Away From Your Shadow?
 
 Max was running across the garden.

@@ -82,8 +82,8 @@ const cast = loadCharacters();
 const hub = fs.readFileSync("tools/templates/hub.html", "utf8")
   .replaceAll("__TOPICS__", JSON.stringify(summaries))
   .replaceAll("__CAST__", JSON.stringify(cast.map((c) => ({
-    name: c.name, role: c.role ?? "", age: c.age ?? "", asks: c.asks ?? "",
-    blurb: (c.sections?.["in one line"] ?? "").split("\n")[0],
+    name: c.name?.en ?? c.name, role: c.role ?? "", age: c.age ?? "", asks: c.asks ?? "",
+    blurb: c.one_line ?? c.archetype ?? "",
   }))));
 fs.writeFileSync(path.join(OUT, "index.html"), hub);
 

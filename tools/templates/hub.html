@@ -142,13 +142,13 @@ document.getElementById("topics").innerHTML = TOPICS.length ? TOPICS.map(t => {
     '</div>' +
     '<a class="go" href="atlas/' + esc(t.topic) + '.html">Open the atlas</a>' +
   '</article>';
-}).join("") : '<div class="empty"><b>No topics yet</b>Add a folder under <code>content/concepts/</code> with a <code>_topic.yml</code> and one markdown file per concept.</div>';
+}).join("") : '<div class="empty"><b>No topics yet</b>Add a folder under <code>content/02 - concepts/</code> with a <code>_topic.yml</code> and one markdown file per concept.</div>';
 
 document.getElementById("cast").innerHTML = CAST.length
   ? '<div class="cast">' + CAST.map(c =>
       '<div class="who"><h4>' + esc(c.name) + '</h4><span class="role">' + esc(c.role || "role not set") + '</span>' +
       '<p>' + esc(c.blurb || c.asks || "") + '</p></div>').join("") + '</div>'
-  : '<div class="empty"><b>Nobody yet</b>Copy <code>content/characters/_template.md</code>, fill it in, and they appear here. The one field that matters is <code>role</code> — what this character is <em>for</em>.</div>';
+  : '<div class="empty"><b>Nobody yet</b>Copy <code>content/01 - characters/_template.md</code>, fill it in, and they appear here. The one field that matters is <code>role</code> — what this character is <em>for</em>.</div>';
 </script>
 </body>
 </html>

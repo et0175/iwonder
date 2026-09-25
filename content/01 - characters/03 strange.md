@@ -1,12 +1,18 @@
-# Character: Strange
+---
+id: strange
+name: { en: Strange, uk: Дивак }
+image:
+one_line:
+tagline: Wait... what?!
+role: The Perspective Changer, The Disruptor, Myth detector, The Imagination, absurdist observer, and connection-finder
+archetype: The one who notices what nobody else thought of
+asks: What if we're looking at this the wrong way?
+appearance: Adult, young man in his 26-30s who knows nothing (his origin is unknown but we don't care much about it)
+hobby: playing guitar
+status: sketch
+---
 
-## Identity
-
-**Name**: Strange 
-**Appearance** Adult, young man in his 26-30s who knows nothing (his origin is unknown)
-**Hobby** playing guitar. 
-**Role**: Myth detector, absurdist observer, and connection-finder
-**Archetype**: The one who notices what nobody else thought of
+# Strange
 
 ## Philosophy
 
@@ -27,6 +33,19 @@ His character teaches:
 | **Funny** | Makes unexpected connections that produce laughter. |
 | **Confident** | States ridiculous ideas without apology. |
 | **Genuine** | Isn't trying to be funny—just pointing out what he notices. |
+imaginative
+unpredictable
+playful
+observant
+unconventional
+fearless about saying strange things
+occasionally philosophical
+surprisingly perceptive
+difficult to categorize
+
+And importantly:
+
+He doesn't care very much about sounding sensible.
 
 ## Dialogue Principles
 
@@ -60,8 +79,8 @@ His character teaches:
 | With | Dynamic |
 |------|---------|
 | **Professor** | She engages seriously with his observations. "That's actually not a bad way to think about it..." |
-| **Boy** | Sometimes they agree on absurd ideas, then laugh together. |
-| **Girl** | She sometimes asks why his observation matters, making him explain. |
+| **Max** | Sometimes they agree on absurd ideas, then laugh together. |
+| **Kira** | She sometimes asks why his observation matters, making him explain. |
 
 ## Example Interactions
 
@@ -86,13 +105,13 @@ His character teaches:
 **Question**: Why do we sleep?
 **Professor**: Your brain needs time to process memories and regulate systems.
 **Strange**: So sleeping is basically your brain doing office work?
-**Boy**: With your eyes closed!
+**Max**: With your eyes closed!
 **Professor**: That's... surprisingly accurate.
 
 ### Catching Logical Problems
 
 **Professor**: Gravity pulls everything toward Earth.
-**Boy**: That's why we don't float away.
+**Max**: That's why we don't float away.
 **Strange**: Wait. If gravity pulls everything toward Earth, why doesn't the moon fall down?
 **Professor**: Excellent observation. Let's explore that...
 
@@ -108,14 +127,6 @@ His character teaches:
 
 ## Visual/Physical Characteristics
 
-*To be developed by design team*
-
-Suggestions:
-- Could be a creature (alien, robot, abstract being)
-- Expressive face that shows surprise and curiosity
-- Visual design conveys "not quite normal"
-- Often shown with raised eyebrows or tilted head
-- Could be playful but not childish
 
 ## Sample Dialogues by Age
 
@@ -139,7 +150,7 @@ Suggestions:
 - Questions that make you think
 
 **Example**:
-> Boy: Birds have hollow bones so they're lighter.
+> Max: Birds have hollow bones so they're lighter.
 > Strange: So if I made my bones hollow, I could fly?
 > Professor: Not quite, but you're thinking about the right problem...
 
@@ -153,7 +164,7 @@ Suggestions:
 **Example**:
 > Professor: The sun has been burning for 4.6 billion years.
 > Strange: But isn't that basically infinite compared to humans?
-> Girl: So we're like mayflies from the sun's perspective?
+> Kira: So we're like mayflies from the sun's perspective?
 > Professor: That's an interesting way to think about scale...
 
 ## Consistency Rules
@@ -181,7 +192,7 @@ Professor: That's actually a famous myth...
 
 **Use case**: Revealing problem with an explanation
 ```
-Boy: Gravity pulls everything toward Earth.
+Max: Gravity pulls everything toward Earth.
 Strange: So why doesn't the moon fall down?
 Prof: Excellent question, let's explore that...
 ```
@@ -192,7 +203,7 @@ Prof: Excellent question, let's explore that...
 ```
 Prof: Your brain processes memories while you sleep.
 Strange: So sleep is basically your brain doing office work?
-Boy: 😂 With your eyes closed!
+Max: 😂 With your eyes closed!
 ```
 
 ### 4. Weird Question Asking
@@ -201,21 +212,21 @@ Boy: 😂 With your eyes closed!
 ```
 Prof: Earth is spinning really fast.
 Strange: But why don't we feel it?
-Girl: Wait, that's actually a great question...
+Kira: Wait, that's actually a great question...
 ```
 
 ## Related Characters
 
 - **Professor**: Her serious engagement with his absurdity makes it work
-- **Boy**: They sometimes make absurd suggestions together
-- **Girl**: She sometimes asks him to explain why his observation matters
+- **Max**: They sometimes make absurd suggestions together
+- **Kira**: She sometimes asks him to explain why his observation matters
 
 ## Common Strange Patterns
 
 **Pattern 1**: Reductio ad absurdum
 > Prof: Cats have retractable claws.
 > Strange: So they're secretly armed?
-> Boy: 😂
+> Max: 😂
 > Prof: Well... yes.
 
 **Pattern 2**: The logical extension
@@ -224,8 +235,8 @@ Girl: Wait, that's actually a great question...
 > Prof: That's... actually not wrong.
 
 **Pattern 3**: The noticed contradiction
-> Boy: We're made of matter.
-> Girl: And matter can't be created or destroyed.
+> Max: We're made of matter.
+> Kira: And matter can't be created or destroyed.
 > Strange: So we can't actually die, we just... rearrange?
 > Prof: Well, let's talk about what we mean by "dying"...
 
@@ -242,8 +253,66 @@ Strange's humor should:
 **Ratio**: 20-30% of dialogue at most. Strange adds flavor, not substance.
 
 ---
+Three sample dialogues
+🌙 Moon
 
-**Role in Encyclopedia**: Myth detector, absurdist observer, humor provider, unexpected question-asker
+Boy: Why does the Moon follow us?
+
+Professor: It doesn't actually follow us. Because it's so far away, it appears to stay in roughly the same position as we move.
+
+Girl: So it only looks like it's following us?
+
+Strange: Maybe we're following it.
+
+Boy: We're not.
+
+Strange: How do you know?
+
+Boy: Because we're going home.
+
+Strange: Maybe that's where the Moon is going.
+
+🐜 Ants
+
+Professor: Ants can communicate using chemical signals.
+
+Boy: Like talking?
+
+Professor: Not with words.
+
+Girl: So how do they know where to go?
+
+Professor: They leave chemical trails—
+
+Strange: What if we're the ants?
+
+Silence.
+
+Boy: We're definitely not ants.
+
+Strange: That's exactly what an ant would say.
+
+🌌 The universe
+
+Girl: What is outside the universe?
+
+Professor: That's difficult to answer because "outside" may not even have the meaning we imagine it does.
+
+Boy: So what's there?
+
+Professor: We don't know.
+
+Strange: Maybe "outside" is just a word our brains invented because they don't like edges.
+
+The Professor looks at him.
+
+Professor: ...
+
+Girl: What?
+
+Professor: I'm writing that one down.
+
+And she reaches for the Question Book.
 **Used in**: Most dialogues (but sparingly)
 **Dialogue frequency**: 15-25% of lines
 **Tone stability**: Consistently absurdist, but intensity varies by topic seriousness
