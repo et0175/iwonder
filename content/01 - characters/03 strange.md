@@ -1,7 +1,7 @@
 ---
 id: strange
 name: { en: Strange, uk: Дивак }
-image:
+image: images/strange.jpg
 one_line:
 tagline: Wait... what?!
 role: The Perspective Changer, The Disruptor, Myth detector, The Imagination, absurdist observer, and connection-finder

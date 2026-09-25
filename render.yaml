@@ -1,0 +1,23 @@
+# Render Blueprint — deploys the I Wonder blueprint site.
+# Render → New → Blueprint → pick this repo. Every push to main rebuilds it.
+#
+# It is a small Node web service rather than a static site so that it can sit
+# behind a password: the book is unpublished. Set SITE_PASSWORD in the Render
+# dashboard (it is not stored in this file); leave it empty to make the site open.
+services:
+  - type: web
+    name: i-wonder-blueprint
+    runtime: node
+    plan: free            # sleeps after ~15 min idle; first visit then takes ~30 s
+    branch: main
+    buildCommand: npm ci --no-audit --no-fund && npm run build
+    startCommand: npm start
+    healthCheckPath: /healthz
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: SITE_PASSWORD
+        sync: false       # asked for once when the Blueprint is created
+      - key: SITE_USER
+        value: iwonder

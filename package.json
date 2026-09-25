@@ -7,9 +7,14 @@
   "scripts": {
     "check": "node tools/validate.mjs",
     "build": "node tools/validate.mjs && node tools/build.mjs",
-    "serve": "npm run build && npx --yes serve site"
+    "start": "node tools/serve.mjs",
+    "serve": "npm run build && node tools/serve.mjs"
   },
   "dependencies": {
-    "js-yaml": "^4.1.0"
+    "js-yaml": "^4.1.0",
+    "marked": "^18.0.14"
+  },
+  "engines": {
+    "node": ">=22"
   }
 }

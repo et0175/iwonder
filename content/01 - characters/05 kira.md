@@ -1,7 +1,7 @@
 ---
 id: kira
 name: { en: Kira, uk: Кіра }
-image:
+image: images/kira.jpg
 one_line: A deeply curious, observant girl who refuses to accept explanations that don't quite make sense
 tagline: But why?
 role: Persistent questioner, Depth-seeker, "Something doesn't fit" detector, gives human perspective

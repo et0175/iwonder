@@ -234,7 +234,7 @@ apart.
 
 | ID | Requirement |
 |---|---|
-| NFR-1 | Static site. `npm run build` → `site/`. No server or database. Can be hosted on GitHub Pages from CI. |
+| NFR-1 | Static pages. `npm run build` → `site/`. No database. Served on Render by `tools/serve.mjs`, which adds only the password check. |
 | NFR-2 | The build is deterministic: the same content always produces the same output. It takes under 5 seconds for about 500 concepts. |
 | NFR-3 | Zero manual steps: a new file appears on the site after the next build. |
 | NFR-4 | `content/` stays a valid Obsidian vault, and wikilinks still resolve there. |
@@ -275,12 +275,16 @@ pass. Kept for history:
 | D2 | Can one story cover **several concepts**? | Yes. `concepts:` is a list and the first one is the main concept. |
 | D3 | Can one concept have **several stories** (for example, one per age band)? | Yes. |
 | D4 | Where do character images live, and in what format? | `content/assets/characters/<id>.png` |
-| D5 | Is the site private or public (for reviewers)? | Private repo, and GitHub Pages is switched on only when needed. |
+| D5 | Is the site private or public (for reviewers)? | **Decided:** Render, behind a shared password (`SITE_PASSWORD`). |
 | D6 | Keep the numbered folder prefixes? | Keep them, and the loader strips them (see §8.1). |
 
 ---
 
 ## 10. Suggested MVP slice
+
+**Status: built 2026-09-25.** Everything below is built. Also done: FR-CHR-5 (appears in),
+FR-CON-4/5 (frontier, load-bearing), FR-QUE-4 (where a question came from),
+FR-X-1 (stable URLs), and deployment to Render behind a password (D5).
 
 1. Fix §8 (the loader paths, and frontmatter for the 4 characters and 3 stories).
 2. Character cards and character screen (FR-CHR-1…3).

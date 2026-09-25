@@ -61,6 +61,10 @@ export function sections(body) {
 
 const unwiki = (s) => String(s).replace(/^\[\[|\]\]$/g, "").trim();
 const unquote = (s) => s.replace(/^>\s?/gm, "").trim();
+/** `_Not written yet._` and friends mean the section is empty. */
+const placeholder = (s) => (/^_?(not (yet )?(written|flagged)|nothing flagged)[^]*_?$/i.test(s.trim()) ? "" : s);
+/** `ages: 5-7` or `ages: [5-7, 8-10]` → ["5-7", "8-10"]. */
+export const ageList = (a) => (a == null || a === "" ? [] : [].concat(a).map(String));
 
 export function listTopics() {
   return Object.keys(topicDirs()).sort();
@@ -94,16 +98,21 @@ export function loadTopic(topic) {
       name: fm.proposition ?? fm.title ?? "",
       status: fm.status ?? "mapped",
       impliedOk: fm.implied_ok === true,
-      ages: fm.ages ?? meta.ages ?? "",
+      topic: meta.topic,
+      ages: ageList(fm.ages ?? meta.ages),
       see: s["what they can see"] ?? "",
       ask: unquote(s["what they ask"] ?? ""),
-      experiment: s["the experiment"] ?? "",
-      note: /not (yet )?(written|flagged)/i.test(s["watch out"] ?? "")
-        ? ""
-        : s["watch out"] ?? "",
+      experiment: placeholder(s["the experiment"] ?? ""),
+      hook: placeholder(s["memory hook"] ?? ""),
+      note: placeholder(s["watch out"] ?? ""),
       pre: (fm.prerequisites ?? []).map(unwiki),
       next: (fm.opens ?? []).map((o) =>
         typeof o === "string" ? [o, "Space"] : [o.question, o.domain ?? "—"]
+      ),
+      opens: (fm.opens ?? []).map((o) =>
+        typeof o === "string"
+          ? { question: o, domain: "—", leadsTo: null }
+          : { question: o.question, domain: o.domain ?? "—", leadsTo: o.leads_to ? unwiki(o.leads_to) : null }
       ),
     };
   });
@@ -160,6 +169,76 @@ export function loadCharacters() {
     .map((f) => {
       const where = path.join(dir, f);
       const [fm, body] = splitFrontmatter(fs.readFileSync(where, "utf8"), where);
-      return { file: where, slug: stripOrder(path.basename(f, ".md")), ...fm, sections: sections(body) };
+      return { file: where, dir, slug: stripOrder(path.basename(f, ".md")), ...fm, body, sections: sections(body) };
     });
+}
+
+/**
+ * Split a markdown body into `## sections`, each with its `### subsections`.
+ * Text before the first `##` is dropped (it is the `# Title`).
+ */
+export function outline(body) {
+  return body.split(/^##(?!#)\s*/m).slice(1).map((part) => {
+    const nl = part.indexOf("\n");
+    const title = (nl === -1 ? part : part.slice(0, nl)).trim().replace(/:$/, "");
+    const text = nl === -1 ? "" : part.slice(nl + 1);
+    const [intro, ...rest] = text.split(/^###\s*/m);
+    const subs = rest.map((p) => {
+      const i = p.indexOf("\n");
+      return { title: (i === -1 ? p : p.slice(0, i)).trim(), text: (i === -1 ? "" : p.slice(i + 1)).trim() };
+    });
+    return { title, text: text.trim(), intro: intro.trim(), subs };
+  });
+}
+
+/**
+ * Stories: `content/stories/<file>.md` or `content/stories/<id>/<lang>.md`.
+ * Every file carries `id` and `lang`; files with the same id are translations
+ * of one story. Structure (concepts, ages, characters) comes from the English
+ * file, and a translation may override only its own wording.
+ */
+export function loadStories() {
+  const dir = path.join(CONTENT, "stories");
+  if (!fs.existsSync(dir)) return [];
+  const files = [];
+  const walk = (d) =>
+    fs.readdirSync(d, { withFileTypes: true }).forEach((e) => {
+      const p = path.join(d, e.name);
+      if (e.isDirectory()) walk(p);
+      else if (e.name.endsWith(".md") && !stripOrder(e.name).startsWith("_") && e.name !== "README.md") files.push(p);
+    });
+  walk(dir);
+
+  const byId = new Map();
+  for (const where of files.sort()) {
+    const [fm, body] = splitFrontmatter(fs.readFileSync(where, "utf8"), where);
+    const id = fm.id ?? stripOrder(path.basename(where, ".md"));
+    if (!byId.has(id)) byId.set(id, { id, versions: {}, files: [] });
+    const story = byId.get(id);
+    story.files.push({ file: where, lang: fm.lang });
+    story.versions[fm.lang ?? "en"] ??= {
+      file: where,
+      lang: fm.lang ?? "en",
+      title: fm.title ?? id,
+      question: fm.question ?? "",
+      memoryHook: fm.memory_hook ?? "",
+      bridge: fm.bridge ?? "",
+      status: fm.status ?? "draft",
+      // the body without its leading `# Title`
+      body: body.replace(/^\s*#\s+.*\n/, "").trim(),
+      fm,
+    };
+  }
+
+  return [...byId.values()].map((s) => {
+    const base = (s.versions.en ?? Object.values(s.versions)[0]).fm;
+    return {
+      ...s,
+      order: path.basename(s.files[0].file),
+      concepts: [].concat(base.concepts ?? []).map(unwiki),
+      ages: ageList(base.ages),
+      characters: [].concat(base.characters ?? []).map(unwiki),
+      bridgeTo: base.bridge_to ? unwiki(base.bridge_to) : null,
+    };
+  }).sort((a, b) => a.order.localeCompare(b.order));
 }

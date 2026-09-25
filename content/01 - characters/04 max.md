@@ -1,7 +1,7 @@
 ---
 id: max
 name: { en: Max, uk: Макс }
-image:
+image: images/max.jpg
 one_line:
 tagline: What if...?
 role: The enthusiastic hypothesis maker, initial questioner and imagination source. He turns questions into experiments.

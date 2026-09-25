@@ -40,7 +40,7 @@ content/
     01 space/        one folder per topic
       _topic.yml     topic metadata and layer names
       earth-ball.md  one file per concept
-  stories/           the stories, one file per story
+  stories/           the stories; frontmatter links each to its concepts and cast
   articles/          written articles, once concepts graduate from mapped
 docs/
   PRINCIPLES.md      why the book is built this way
@@ -49,6 +49,8 @@ docs/
 tools/
   validate.mjs       graph and schema checks — run in CI
   build.mjs          generates the site from content/
+  serve.mjs          serves site/, optionally behind a password
+  lib/pages.mjs      one function per kind of page
 site/                generated; not committed
 ```
 
@@ -58,10 +60,22 @@ site/                generated; not committed
 
 ```bash
 npm install
-npm run check     # validate every graph: dangling prerequisites, cycles, missing fields
+npm run check     # validate graphs, characters and stories
 npm run build     # check, then generate site/
-npx serve site    # look at it
+npm start         # serve site/ on http://localhost:3000
 ```
+
+`site/` is the **blueprint**: characters, concept cards, the prerequisite graph,
+every question, and the stories in English and Ukrainian. It is generated
+entirely from `content/`; nothing in it is edited by hand. Requirements are in
+[`inputs/website-requirements.md`](inputs/website-requirements.md).
+
+### Online (Render)
+
+`render.yaml` deploys the blueprint to Render and rebuilds it on every push to
+`main`. In Render choose **New → Blueprint**, pick this repository, and set
+`SITE_PASSWORD` when asked. Visitors then log in as `iwonder` with that
+password. Leave `SITE_PASSWORD` empty to make the site open to anyone with the link.
 
 `npm run check` runs on every push. It fails the build if a prerequisite points
 at a concept that does not exist, if a chain becomes circular, or if a concept

@@ -1,7 +1,7 @@
 ---
 id: professor-ada
 name: { en: Professor Ada, uk: Професорка Ада }
-image:
+image: images/professor-ada.jpg
 one_line:
 tagline: Let's find out
 role: Guide, evidence-keeper, and voice of scientific reasoning. Primary educator and model of scientific thinking
