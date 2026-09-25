@@ -15,7 +15,7 @@ const missing = (what) => `<div class="missing">${what}</div>`;
 const statusBadge = (s) => `<span class="badge ${esc(s)}">${esc(s)}</span>`;
 const conceptChip = (c) => `<a class="chip" href="${url.concept(c.topic, c.id)}">${esc(c.short)}</a>`;
 const characterChip = (c) =>
-  `<a class="chip" href="${url.character(c.id)}">${c.imageUrl ? `<img src="${c.imageUrl}" alt="">` : ""}${esc(nameOf(c))}</a>`;
+  `<a class="chip${c.imageUrl ? " has-pic" : ""}" href="${url.character(c.id)}">${c.imageUrl ? `<img src="${c.imageUrl}" alt="">` : ""}${esc(nameOf(c))}</a>`;
 const storyChip = (s, lang = "en") =>
   `<a class="chip" href="${url.story(s.id, lang)}">${esc(s.versions[lang]?.title ?? s.id)}</a>`;
 
@@ -53,11 +53,12 @@ export function hubPage(db) {
         <div class="fig"><b>${cs.filter((c) => !c.pre.length).length}</b><span>roots</span></div>
         <div class="fig"><b>${out}/${onward.length}</b><span>doors out</span></div>
       </div>
-      <div class="chips"><a class="go" href="${url.atlas(t.meta.topic)}">Open the graph →</a><a class="go" href="${url.concepts()}">Concept cards</a></div>
+      <div class="actions"><a class="go" href="${url.atlas(t.meta.topic)}">Open the graph <span aria-hidden="true">→</span></a><a class="go quiet" href="${url.concepts()}">Concept cards</a></div>
     </div>`;
   }).join("");
 
-  const cast = db.characters.map((c) => characterChip(c)).join("");
+  const cast = db.characters.map((c) =>
+    `<a href="${url.character(c.id)}">${portrait(c, "pic")}<span><b>${esc(nameOf(c))}</b>${c.tagline ? `<i>“${esc(c.tagline)}”</i>` : ""}</span></a>`).join("");
 
   return page({
     title: "I Wonder — blueprint",
@@ -75,13 +76,13 @@ export function hubPage(db) {
 <section class="block">
   <h2>The cast</h2>
   <p class="sub">Four ways of thinking, investigating together.</p>
-  <div class="chips">${cast || '<span class="chip none">Nobody yet</span>'}</div>
+  ${cast ? `<div class="cast-row stagger">${cast}</div>` : '<div class="empty">Nobody yet.</div>'}
 </section>
 
 <section class="block">
   <h2>Topics</h2>
   <p class="sub">Each topic is a prerequisite graph. Nothing can be told until the concepts to its left are in place.</p>
-  <div class="grid">${topics}</div>
+  <div class="grid stagger">${topics}</div>
 </section>
 
 <section class="block">
@@ -106,12 +107,11 @@ export function charactersPage(db) {
   const cards = db.characters.map((c) => `
     <a class="card who" href="${url.character(c.id)}">
       ${portrait(c, "pic")}
-      <div class="txt">
-        <h3>${esc(nameOf(c))} ${c.name?.uk ? `<span class="uk">· ${esc(c.name.uk)}</span>` : ""}</h3>
-        ${c.tagline ? `<span class="tagline">“${esc(c.tagline)}”</span>` : ""}
-        <p>${esc(c.one_line || c.archetype || c.role || "")}</p>
-        <div class="foot">${statusBadge(c.status ?? "sketch")}</div>
-      </div>
+      <h3>${esc(nameOf(c))}</h3>
+      ${c.name?.uk ? `<span class="uk">${esc(c.name.uk)}</span>` : ""}
+      ${c.tagline ? `<span class="tagline">“${esc(c.tagline)}”</span>` : ""}
+      <p>${esc(c.one_line || c.archetype || c.role || "")}</p>
+      <div class="foot">${statusBadge(c.status ?? "sketch")}</div>
     </a>`).join("");
 
   return page({
@@ -125,7 +125,7 @@ export function charactersPage(db) {
   <p class="lede">Each one is a way of thinking. Open a card for their philosophy, what they do and never do, their weaknesses, relationships and how they talk at each age.</p>
   ${db.castImage ? `<img class="cast-hero" src="${db.castImage}" alt="The cast of I Wonder together">` : ""}
 </header>
-<section class="block"><div class="grid">${cards || '<div class="empty">Nobody yet.</div>'}</div></section>`,
+<section class="block"><div class="grid cast-grid stagger">${cards || '<div class="empty">Nobody yet.</div>'}</div></section>`,
   });
 }
 
@@ -186,7 +186,7 @@ function ageTabs(parts, idp) {
     }
   }
   const tabs = AGE_BANDS.map((b, i) =>
-    `<button role="tab" id="${idp}-t${i}" aria-controls="${idp}-p${i}" aria-selected="${i === 0}">Ages ${b.replace("-", "–")}${bands[b].length ? "" : " ·  —"}</button>`).join("");
+    `<button role="tab" id="${idp}-t${i}" aria-controls="${idp}-p${i}" aria-selected="${i === 0}">Ages ${b.replace("-", "–")}${bands[b].length ? "" : ' <span class="soon">empty</span>'}</button>`).join("");
   const panels = AGE_BANDS.map((b, i) =>
     `<div class="tabpanel prose" role="tabpanel" id="${idp}-p${i}" aria-labelledby="${idp}-t${i}"${i ? " hidden" : ""}>${
       bands[b].length ? bands[b].map(md).join("<hr>") : missing(`No dialogue sample for ages ${b} yet.`)}</div>`).join("");
@@ -227,22 +227,43 @@ export function characterPage(db, c) {
   <div class="char-head">
     ${portrait(c)}
     <div>
-      <h1>${esc(nameOf(c))}${c.name?.uk ? ` <span class="uk" style="font-weight:500;color:var(--ink-faint)">· ${esc(c.name.uk)}</span>` : ""}</h1>
-      ${c.tagline ? `<p class="tagline" style="font-size:20px;margin:0 0 8px">“${esc(c.tagline)}”</p>` : ""}
+      <h1>${esc(nameOf(c))}${c.name?.uk ? ` <span class="uk">· ${esc(c.name.uk)}</span>` : ""}</h1>
+      ${c.tagline ? `<p class="tagline">“${esc(c.tagline)}”</p>` : ""}
       ${c.one_line ? `<p class="lede">${esc(c.one_line)}</p>` : ""}
     </div>
   </div>
   ${facts ? `<dl class="facts">${facts}</dl>` : ""}
-  <div style="margin-top:18px;display:flex;flex-wrap:wrap;gap:18px">
-    <div><span class="tag">Appears in</span><div class="chips" style="margin-top:6px">${stories.map((s) => storyChip(s)).join("") || '<span class="chip none">No stories yet</span>'}</div></div>
-    <div><span class="tag">With</span><div class="chips" style="margin-top:6px">${others.map(characterChip).join("")}</div></div>
+  <div class="relations">
+    <div><span class="tag">Appears in</span><div class="chips">${stories.map((s) => storyChip(s)).join("") || '<span class="chip none">No stories yet</span>'}</div></div>
+    <div><span class="tag">With</span><div class="chips">${others.map(characterChip).join("")}</div></div>
   </div>
 </header>
 <nav class="toc" aria-label="On this page">${toc}</nav>
 ${body}`,
-    script: TABS_JS,
+    script: TABS_JS + TOC_JS,
   });
 }
+
+// Highlight the section you are reading in the sticky contents bar.
+const TOC_JS = `
+const links = [...document.querySelectorAll('.toc a')];
+const slots = links.map(a => document.getElementById(a.hash.slice(1)));
+const bar = document.querySelector('.toc');
+let ticking = false;
+function mark() {
+  ticking = false;
+  // the section whose heading has passed just under the sticky bars
+  const line = bar.getBoundingClientRect().bottom + 24;
+  let i = slots.findLastIndex(s => s.getBoundingClientRect().top <= line);
+  if (innerHeight + scrollY >= document.documentElement.scrollHeight - 2) i = slots.length - 1;
+  links.forEach((a, j) => a.classList.toggle('on', j === i));
+  const on = links[i];
+  if (on && (on.offsetLeft < bar.scrollLeft || on.offsetLeft + on.offsetWidth > bar.scrollLeft + bar.clientWidth))
+    bar.scrollTo({ left: on.offsetLeft - 16, behavior: 'smooth' });
+}
+addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(mark); } }, { passive: true });
+addEventListener('load', mark);
+mark();`;
 
 const TABS_JS = `
 document.querySelectorAll('[role=tablist]').forEach(list => {
@@ -363,9 +384,9 @@ export function conceptPage(db, c) {
     <div><span class="tag">Stories</span><div class="chips">${stories.map((s) => storyChip(s)).join("") || '<span class="chip none">No story yet</span>'}</div></div>
     <div><span class="tag">Needs first</span><div class="chips">${pre.map(conceptChip).join("") || '<span class="chip none">Nothing — a child already has this</span>'}</div></div>
     <div><span class="tag">Unlocks</span><div class="chips">${kids.map(conceptChip).join("") || '<span class="chip none">Nothing yet — on the frontier</span>'}</div></div>
-    <div><span class="tag">Load-bearing</span>${c.descendants} concept${c.descendants === 1 ? "" : "s"} depend on this, directly or further down.</div>
+    <div><span class="tag">Load-bearing</span><p>${c.descendants} concept${c.descendants === 1 ? "" : "s"} depend on this, directly or further down.</p></div>
     <div><span class="tag">id</span><code>${esc(c.id)}</code></div>
-    <a class="go" href="${url.atlas(c.topic, c.id)}">Show in the graph →</a>
+    <a class="go" href="${url.atlas(c.topic, c.id)}">Show in the graph <span aria-hidden="true">→</span></a>
   </aside>
 </div>`,
   });
@@ -431,7 +452,7 @@ function render() {
   const groups = new Map();
   rows.slice().sort((a, b) => a.dom.localeCompare(b.dom)).forEach(q => { if (!groups.has(q.dom)) groups.set(q.dom, []); groups.get(q.dom).push(q); });
   $('out').innerHTML = rows.length ? [...groups].map(([d, qs]) =>
-    '<section class="group"><div class="gh"><h2>' + esc(d) + '</h2><span class="tag">' + qs.length + '</span></div>' + qs.map(row).join('') + '</section>').join('')
+    '<section class="group"><div class="gh"><h2>' + esc(d) + '</h2><span class="tag">' + qs.length + '</span></div><div class="qrows">' + qs.map(row).join('') + '</div></section>').join('')
     : '<div class="empty" style="margin-top:24px">Nothing matches these filters.</div>';
   $('count').textContent = rows.length + ' of ' + Q.length;
 }
@@ -520,9 +541,9 @@ export function storyPage(db, s, lang, i) {
   const tabs = Object.entries(LANGS).map(([l, label]) =>
     s.versions[l]
       ? `<a href="${url.story(s.id, l)}" lang="${l}"${l === lang ? ' aria-current="page"' : ""}>${label}</a>`
-      : `<span class="off" title="Not written yet">${label}</span>`).join("");
+      : `<span class="off" title="Not written yet">${label} <span class="soon">not yet</span></span>`).join("");
   const row = (k, html) => `<dt class="tag">${k}</dt><dd>${html}</dd>`;
-  const none = (t) => `<span style="color:var(--ink-faint);font-style:italic">${t}</span>`;
+  const none = (t) => `<span class="none">${t}</span>`;
 
   return page({
     title: `${v.title} — I Wonder`,
@@ -544,8 +565,8 @@ export function storyPage(db, s, lang, i) {
 </header>
 <article class="story" lang="${lang}">${md(v.body)}</article>
 <nav class="pager">
-  ${prev ? `<a href="${url.story(prev.id, prev.versions[lang] ? lang : "en")}"><span class="tag">← Previous</span>${esc((prev.versions[lang] ?? prev.versions.en).title)}</a>` : "<span></span>"}
-  ${next ? `<a href="${url.story(next.id, next.versions[lang] ? lang : "en")}" style="text-align:right"><span class="tag">Next →</span>${esc((next.versions[lang] ?? next.versions.en).title)}</a>` : ""}
+  ${prev ? `<a href="${url.story(prev.id, prev.versions[lang] ? lang : "en")}"><span class="tag">← Previous story</span>${esc((prev.versions[lang] ?? prev.versions.en).title)}</a>` : ""}
+  ${next ? `<a class="next" href="${url.story(next.id, next.versions[lang] ? lang : "en")}"><span class="tag">Next story →</span>${esc((next.versions[lang] ?? next.versions.en).title)}</a>` : ""}
 </nav>
 </div>`,
   });

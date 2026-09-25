@@ -3,9 +3,15 @@
  * Every link is root-absolute ("/concepts/space/tides/") so pages can live at
  * any depth; the site is always served from the domain root.
  */
+import fs from "node:fs";
+import crypto from "node:crypto";
 import { marked } from "marked";
 
-marked.setOptions({ gfm: true, breaks: false });
+/** Changes whenever site.css does, so browsers never keep a stale stylesheet. */
+const CSS_VERSION = crypto.createHash("sha1").update(fs.readFileSync("tools/templates/site.css")).digest("hex").slice(0, 10);
+
+// breaks: a line break in the markdown is a line break on the page — dialogue is written one line per speaker
+marked.setOptions({ gfm: true, breaks: true });
 
 export const esc = (s) =>
   String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -63,7 +69,7 @@ ${description ? `<meta name="description" content="${esc(description)}">` : ""}
 <meta name="robots" content="noindex">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>?</text></svg>">
 ${FONTS}
-<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/site.css?v=${CSS_VERSION}">
 </head>
 <body>
 ${nav(active, atlasHref)}
