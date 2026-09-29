@@ -27,8 +27,24 @@ fs.mkdirSync(path.join(OUT, "data"), { recursive: true });
 fs.mkdirSync(path.join(OUT, "assets", "characters"), { recursive: true });
 fs.copyFileSync("tools/templates/site.css", path.join(OUT, "assets", "site.css"));
 
+/**
+ * Inline scripts are built by string concatenation, so a stray quote would ship
+ * a page whose JavaScript never runs. Parse every one at build time instead.
+ */
+const checkScripts = (route, html) => {
+  for (const [, code] of html.matchAll(/<script>([\s\S]*?)<\/script>/g)) {
+    try {
+      new Function(code);
+    } catch (e) {
+      console.error(`\n  \u2717 ${route}: inline script does not parse \u2014 ${e.message}`);
+      process.exitCode = 1;
+    }
+  }
+};
+
 /** Write `html` to site/<route>index.html (routes end in "/") or site/<route>. */
 const write = (route, html) => {
+  checkScripts(route, html);
   const file = path.join(OUT, route.endsWith("/") ? route + "index.html" : route);
   fs.mkdirSync(path.dirname(file), { recursive: true });
   fs.writeFileSync(file, html);
@@ -45,7 +61,11 @@ const topics = listTopics().map((topic) => {
     while (stack.length) { const x = stack.pop(); if (seen.has(x)) continue; seen.add(x); g.kids[x].forEach((y) => stack.push(y)); }
     return seen.size;
   };
+  // Catalogue number, as the atlas already computes it: layer · position.
+  // Prefixed with the topic so it stays unique across books: "SP · 1·05".
+  const prefix = meta.code ?? meta.title.slice(0, 2).toUpperCase();
   concepts.forEach((c) => {
+    c.catalogue = `${prefix} · ${c.cat}`;
     c.topicTitle = meta.title;
     c.layerName = layers[c.layer];
     c.kids = g.kids[c.id];

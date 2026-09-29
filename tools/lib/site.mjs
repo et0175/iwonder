@@ -54,9 +54,9 @@ export function nav(active, atlasHref) {
   return `<header class="topnav"><div class="in"><a class="brand" href="/">I Wonder</a><nav aria-label="Sections">${links}</nav></div></header>`;
 }
 
-const FONTS =
+export const FONTS =
   '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' +
-  '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&display=swap">';
+  '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=IBM+Plex+Mono:wght@500;600&family=Caveat:wght@500&display=swap">';
 
 export function page({ title, description = "", active = "", atlasHref = "/", body, script = "" }) {
   return `<!doctype html>

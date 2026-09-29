@@ -7,7 +7,7 @@ concepts, the prerequisite graph, questions and stories. It is the
 Sources: `inputs/environment_setup.md`, `README.md`, `docs/PRINCIPLES.md`,
 `docs/CONCEPT-SCHEMA.md`, `docs/DECISIONS.md`, `content/00-product/*`.
 
-Status: draft v0.1 · 2026-09-25
+Status: draft v0.1 · 2026-09-25 · visual direction chosen 2026-09-29 (see §11)
 
 ---
 
@@ -295,3 +295,37 @@ FR-X-1 (stable URLs), and deployment to Render behind a password (D5).
 
 Everything marked **S** / **C** comes after the first real story is linked
 end-to-end (question → concept → story → next question).
+
+---
+
+## 11. Visual direction
+
+**Chosen 2026-09-29: Question Book, with the Specimen Cabinet on the dense lists.**
+
+The site is Professor Ada's Question Book. Ruled paper with a red margin rule,
+blue-black fountain-pen ink on cool paper, portraits pasted in slightly askew,
+and **status as a rubber stamp** rather than a coloured pill — the same three
+states her Question Book uses in `content/01 - characters/02 professor-ada.md`:
+
+| Stamp | Means |
+|---|---|
+| `✓ written` / `✓ final` | Answered. |
+| `drafted` / `investigating` | Being worked on. |
+| `we don't know yet` | A question no concept answers — the frontier. |
+
+**Concepts and Questions** are the working pages, so they leave the paper behind
+and use the museum-cabinet treatment: a hairline grid, no rounded corners, and a
+**manila catalogue label** carrying the concept's number — `SP · 1·05`, meaning
+the Space topic, layer 1, fifth in that layer. The number is computed from the
+graph (the atlas already showed it), never authored.
+
+Type: Newsreader for everything read, IBM Plex Mono for labels and stamps,
+Caveat only for handwritten margin notes. One accent — pen blue — plus stamp red
+for "we don't know yet" and green for finished work.
+
+Both themes are designed: light is paper, dark is the same notebook by lamplight.
+The atlas shares the palette and typefaces.
+
+Rejected: **Observatory** (too tied to space for a book that will cover animals
+and history) and **Curiosity Lab** (six chalk colours risk reading as childish,
+which the vision rules out).

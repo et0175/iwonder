@@ -12,7 +12,13 @@ const portrait = (c, cls = "portrait") =>
     ? `<img class="${cls}" src="${c.imageUrl}" alt="${esc(nameOf(c))}" loading="lazy">`
     : `<div class="${cls} blank" aria-hidden="true">${initial(c)}</div>`;
 const missing = (what) => `<div class="missing">${what}</div>`;
-const statusBadge = (s) => `<span class="badge ${esc(s)}">${esc(s)}</span>`;
+// Status is a rubber stamp, the way Ada marks her Question Book.
+const TONE = { drafted: "pen", draft: "pen", edited: "pen", written: "ok", agreed: "ok", final: "ok" };
+const DONE = new Set(["written", "agreed", "final"]);
+const statusBadge = (s, flat = false) =>
+  `<span class="stamp${TONE[s] ? " " + TONE[s] : ""}${flat ? " flat" : ""}">${DONE.has(s) ? "✓ " : ""}${esc(s)}</span>`;
+const unknownStamp = '<span class="stamp red flat" title="No concept answers this yet">we don\'t know yet</span>';
+const catLabel = (c) => `<span class="label"><b>${esc(c.catalogue)}</b>${esc(c.dom)}</span>`;
 const conceptChip = (c) => `<a class="chip" href="${url.concept(c.topic, c.id)}">${esc(c.short)}</a>`;
 const characterChip = (c) =>
   `<a class="chip${c.imageUrl ? " has-pic" : ""}" href="${url.character(c.id)}">${c.imageUrl ? `<img src="${c.imageUrl}" alt="">` : ""}${esc(nameOf(c))}</a>`;
@@ -68,7 +74,7 @@ export function hubPage(db) {
     body: `
 <header class="mast big">
   <p class="eyebrow">Blueprint · a curiosity encyclopaedia for children</p>
-  <h1>I Wonder</h1>
+  <h1>I <em>Wonder</em></h1>
   <p class="lede">A book organised by <b>what a child can already understand</b>, not by subject. Every article starts from something visible in the world and a question a child actually asks. It can only be told once the concepts underneath it are in place.</p>
   <div class="stats">${stats}</div>
 </header>
@@ -82,7 +88,7 @@ export function hubPage(db) {
 <section class="block">
   <h2>Topics</h2>
   <p class="sub">Each topic is a prerequisite graph. Nothing can be told until the concepts to its left are in place.</p>
-  <div class="grid stagger">${topics}</div>
+  <div class="grid topics stagger">${topics}</div>
 </section>
 
 <section class="block">
@@ -281,7 +287,7 @@ document.querySelectorAll('[role=tablist]').forEach(list => {
 
 export function conceptsPage(db) {
   const data = db.concepts.map((c) => ({
-    id: c.id, topic: c.topic, topicTitle: c.topicTitle, title: c.short, q: c.ask, see: c.see,
+    id: c.id, cat: c.catalogue, topic: c.topic, topicTitle: c.topicTitle, title: c.short, q: c.ask, see: c.see,
     dom: c.dom, ages: c.ages, status: c.status, layer: c.layer, layerName: c.layerName,
     stories: db.storiesByConcept.get(c.id)?.length ?? 0, url: url.concept(c.topic, c.id),
   }));
@@ -297,7 +303,7 @@ export function conceptsPage(db) {
 <header class="mast">
   <p class="eyebrow">Concepts · ${db.concepts.length} in ${db.topics.length} topic${db.topics.length === 1 ? "" : "s"}</p>
   <h1>Concepts</h1>
-  <p class="lede">Each card is one idea, shown as the question a child actually asks. Group them by <b>topic</b> (which book), <b>domain</b> (which field of knowledge) or <b>layer</b> (how much has to be understood first).</p>
+  <p class="lede">Each specimen is one idea, labelled with its catalogue number (<b>layer · position</b> in the graph) and shown as the question a child actually asks. Group them by <b>topic</b>, <b>domain</b> or <b>layer</b>.</p>
 </header>
 <div class="toolbar" role="search">
   <div class="seg" role="group" aria-label="Group by">
@@ -319,12 +325,13 @@ let group = 'topic';
 const h = new URLSearchParams(location.hash.slice(1));
 if (h.get('dom')) $('f-dom').value = h.get('dom');
 if (h.get('group')) group = h.get('group');
+const TONE = { drafted: 'pen', written: 'ok' };
 function card(c) {
-  return '<a class="card" href="' + c.url + '"><span class="tag">' + esc(c.dom) + ' · layer ' + c.layer + '</span>' +
-    '<div class="q">' + esc(c.q || c.title) + '</div><p>' + esc(c.title) + '</p>' +
-    '<div class="foot"><span class="badge ' + c.status + '">' + c.status + '</span>' +
-    (c.stories ? '<span class="badge story">' + c.stories + ' stor' + (c.stories > 1 ? 'ies' : 'y') + '</span>' : '') +
-    c.ages.map(a => '<span class="badge">' + esc(a) + '</span>').join('') + '</div></a>';
+  return '<a class="spec" href="' + c.url + '"><span class="lab"><b>' + esc(c.cat) + '</b><span>' + esc(c.dom) + '</span></span>' +
+    '<span class="body"><span class="q">' + esc(c.q || c.title) + '</span><p>' + esc(c.title) + '</p>' +
+    '<span class="foot"><span class="' + (TONE[c.status] || '') + '">' + (c.status === 'written' ? '✓ ' : '') + c.status + '</span>' +
+    (c.stories ? '<span class="pen">' + c.stories + ' stor' + (c.stories > 1 ? 'ies' : 'y') + '</span>' : '') +
+    '<span>ages ' + esc(c.ages.join(', ')) + '</span></span></span></a>';
 }
 function render() {
   document.querySelectorAll('[data-g]').forEach(b => b.setAttribute('aria-pressed', b.dataset.g === group));
@@ -339,7 +346,7 @@ function render() {
   rows.slice().sort((a, b) => group === 'layer' ? a.layer - b.layer : String(key(a)).localeCompare(String(key(b))) || a.layer - b.layer)
     .forEach(c => { const k = key(c); if (!groups.has(k)) groups.set(k, { label: label(c), items: [] }); groups.get(k).items.push(c); });
   $('out').innerHTML = rows.length ? [...groups.values()].map(g =>
-    '<section class="group"><div class="gh"><h2>' + esc(g.label) + '</h2><span class="tag">' + g.items.length + '</span></div><div class="grid">' +
+    '<section class="group"><div class="gh"><h2>' + esc(g.label) + '</h2><span class="tag">' + g.items.length + '</span></div><div class="cabinet">' +
     g.items.map(card).join('') + '</div></section>').join('') : '<div class="empty" style="margin-top:24px">Nothing matches these filters.</div>';
   $('count').textContent = rows.length + ' of ' + C.length;
 }
@@ -356,7 +363,7 @@ export function conceptPage(db, c) {
   const opens = c.opens.map((o) => {
     const target = o.leadsTo && db.conceptById.get(o.leadsTo);
     return `<li><span>${target ? `<a href="${url.concept(target.topic, target.id)}">${esc(o.question)}</a>` : esc(o.question)}</span>
-      <span class="end">${target ? "" : '<span class="badge absent" title="No concept answers this yet">frontier</span>'}<span class="badge${o.domain !== c.topicTitle ? " story" : ""}">${esc(o.domain)}</span></span></li>`;
+      <span class="end">${target ? "" : unknownStamp}<span class="badge${o.domain !== c.topicTitle ? " story" : ""}">${esc(o.domain)}</span></span></li>`;
   }).join("");
   const sec = (label, html) => `<div class="sec"><span class="tag">${label}</span>${html}</div>`;
 
@@ -366,7 +373,7 @@ export function conceptPage(db, c) {
     atlasHref: db.atlasHref,
     body: `
 <header class="mast">
-  <p class="eyebrow"><a href="${url.concepts()}">Concepts</a> · ${esc(c.topicTitle)} · layer ${c.layer} ${esc(c.layerName)} · ${esc(c.dom)}</p>
+  <p class="eyebrow"><a href="${url.concepts()}">Concepts</a> ${catLabel(c)} <span>${esc(c.topicTitle)} · layer ${c.layer} · ${esc(c.layerName)}</span> ${statusBadge(c.status)}</p>
   <h1>${esc(c.short)}</h1>
   <p class="lede">${esc(c.name)}</p>
 </header>
@@ -380,7 +387,7 @@ export function conceptPage(db, c) {
     ${sec(`Next questions · ${c.opens.length}`, c.opens.length ? `<ul class="qlist">${opens}</ul>` : missing("No onward questions."))}
   </div>
   <aside>
-    <div class="chips">${statusBadge(c.status)}${c.ages.map((a) => `<span class="badge">${esc(a)}</span>`).join("")}<span class="badge">${esc(c.dom)}</span></div>
+    <div class="chips">${c.ages.map((a) => `<span class="badge">ages ${esc(a)}</span>`).join("")}<span class="badge">${esc(c.dom)}</span></div>
     <div><span class="tag">Stories</span><div class="chips">${stories.map((s) => storyChip(s)).join("") || '<span class="chip none">No story yet</span>'}</div></div>
     <div><span class="tag">Needs first</span><div class="chips">${pre.map(conceptChip).join("") || '<span class="chip none">Nothing — a child already has this</span>'}</div></div>
     <div><span class="tag">Unlocks</span><div class="chips">${kids.map(conceptChip).join("") || '<span class="chip none">Nothing yet — on the frontier</span>'}</div></div>
@@ -399,6 +406,7 @@ export function conceptPage(db, c) {
 export function questionsPage(db) {
   const data = db.questions.map((q) => ({
     q: q.question, see: q.see ?? "", kind: q.kind, dom: q.domain, topic: q.topicTitle, ages: q.ages,
+    cat: (q.kind === "asks" ? q.target : q.from).catalogue,
     href: q.target ? url.concept(q.target.topic, q.target.id) : null,
     targetTitle: q.target?.short ?? null,
     from: q.kind === "opens" ? { title: q.from.short, href: url.concept(q.from.topic, q.from.id) } : null,
@@ -414,11 +422,11 @@ export function questionsPage(db) {
 <header class="mast">
   <p class="eyebrow">Questions · ${data.length}</p>
   <h1>Questions</h1>
-  <p class="lede">Every question in the book. <b>Asked</b> questions open a concept, together with what the child can see. <b>Onward</b> questions are the doors a concept opens. If no concept answers one yet, it is marked <b>frontier</b>.</p>
+  <p class="lede">Every question in the book, catalogued by the concept it belongs to. <b>Asked</b> questions open a concept. <b>Onward</b> questions are the doors a concept opens; the ones no concept answers yet are stamped <b>we don't know yet</b>.</p>
 </header>
 <div class="toolbar" role="search">
   <div class="seg" role="group" aria-label="Kind">
-    <button data-k="" aria-pressed="true">All</button><button data-k="asks" aria-pressed="false">Asked</button><button data-k="opens" aria-pressed="false">Onward</button><button data-k="frontier" aria-pressed="false">Frontier</button>
+    <button data-k="" aria-pressed="true">All</button><button data-k="asks" aria-pressed="false">Asked</button><button data-k="opens" aria-pressed="false">Onward</button><button data-k="frontier" aria-pressed="false">Don't know yet</button>
   </div>
   <label><span class="tag">Domain</span><select id="f-dom"><option value="">All</option>${domains.map((d) => `<option>${esc(d)}</option>`).join("")}</select></label>
   <label><span class="tag">Age</span><select id="f-age"><option value="">All</option>${AGE_BANDS.map((a) => `<option>${a}</option>`).join("")}</select></label>
@@ -433,16 +441,17 @@ const esc = s => String(s ?? '').replace(/[&<>"]/g, m => ({'&':'&amp;','<':'&lt;
 let kind = '';
 function row(q) {
   const title = q.href ? '<a class="qq" href="' + q.href + '">' + esc(q.q) + '</a>' : '<span class="qq">' + esc(q.q) + '</span>';
-  const badges = (q.kind === 'asks' ? '<span class="badge">asked</span>' : '<span class="badge">onward</span>') +
-    (q.kind === 'opens' && !q.href ? '<span class="badge absent">frontier</span>' : '') +
-    (q.stories.length ? '<span class="badge story">story</span>' : '');
   const meta = [];
   if (q.from) meta.push('from <a href="' + q.from.href + '">' + esc(q.from.title) + '</a>');
-  if (q.href && q.targetTitle) meta.push('→ concept <a href="' + q.href + '">' + esc(q.targetTitle) + '</a>');
+  if (q.kind === 'opens' && q.href && q.targetTitle) meta.push('→ answered by <a href="' + q.href + '">' + esc(q.targetTitle) + '</a>');
   q.stories.forEach(s => meta.push('→ story <a href="' + s.href + '">' + esc(s.title) + '</a>'));
-  return '<div class="qrow">' + title + '<div class="right">' + badges + '</div>' +
-    (q.see ? '<p class="see">' + esc(q.see) + '</p>' : '') +
-    (meta.length ? '<div class="meta">' + meta.join(' · ') + '</div>' : '') + '</div>';
+  const state = (q.kind === 'asks' ? '<span>asked</span>' : '<span>onward</span>') +
+    (q.kind === 'opens' && !q.href ? '<span class="stamp red flat">don\\'t know yet</span>' : '') +
+    (q.stories.length ? '<span class="pen">story</span>' : '');
+  return '<div class="qrow"><span class="cat">' + esc(q.cat) + '<small>' + (q.kind === 'asks' ? 'concept' : 'from') + '</small></span>' +
+    '<div class="main">' + title + (q.see ? '<p class="see">' + esc(q.see) + '</p>' : '') +
+    (meta.length ? '<div class="meta">' + meta.join(' · ') + '</div>' : '') + '</div>' +
+    '<span class="state">' + state + '</span></div>';
 }
 function render() {
   document.querySelectorAll('[data-k]').forEach(b => b.setAttribute('aria-pressed', b.dataset.k === kind));
@@ -452,7 +461,7 @@ function render() {
   const groups = new Map();
   rows.slice().sort((a, b) => a.dom.localeCompare(b.dom)).forEach(q => { if (!groups.has(q.dom)) groups.set(q.dom, []); groups.get(q.dom).push(q); });
   $('out').innerHTML = rows.length ? [...groups].map(([d, qs]) =>
-    '<section class="group"><div class="gh"><h2>' + esc(d) + '</h2><span class="tag">' + qs.length + '</span></div><div class="qrows">' + qs.map(row).join('') + '</div></section>').join('')
+    '<section class="group"><div class="gh"><h2>' + esc(d) + '</h2><span class="tag">' + qs.length + '</span></div><div class="register">' + qs.map(row).join('') + '</div></section>').join('')
     : '<div class="empty" style="margin-top:24px">Nothing matches these filters.</div>';
   $('count').textContent = rows.length + ' of ' + Q.length;
 }
@@ -509,7 +518,7 @@ function card(s) {
     '<h3>' + esc(s.title) + '</h3>' + (s.uk ? '<p>' + esc(s.uk) + '</p>' : '') +
     (s.question ? '<p><i>' + esc(s.question) + '</i></p>' : '') +
     '<div class="foot">' + s.langs.map(([l, ok]) => '<span class="badge ' + (ok ? 'have' : 'absent') + '">' + l + '</span>').join('') +
-    '<span class="badge ' + s.status + '">' + s.status + '</span>' +
+    '<span class="stamp flat ' + ({draft:'pen',edited:'pen',final:'ok'}[s.status] || '') + '">' + s.status + '</span>' +
     s.ages.map(a => '<span class="badge">' + esc(a) + '</span>').join('') + '</div></a>';
 }
 function render() {

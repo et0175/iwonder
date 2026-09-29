@@ -19,6 +19,14 @@ This is the one thing a repo gives this project that no writing tool does.
 Layers come from the graph. Naming them in `_topic.yml` is editorial decoration
 only. If the layers look wrong, the prerequisites are wrong.
 
+**2026-09 · The blueprint site looks like the Question Book.**
+Professor Ada's notebook is the interface: ruled paper, blue-black ink, index
+cards, and her three stamps for status (`✓ answered`, `investigating`,
+`we don't know yet`). The two dense list pages — Concepts and Questions — drop
+the paper and use a museum-cabinet grid instead: hairline rules and a manila
+catalogue label carrying the concept's `layer · position` from the graph.
+Tokens live in `tools/templates/site.css`; the atlas shares the palette.
+
 **2026-09 · Concepts are named by their idea, not their title.**
 `title` is a handle for the author. The child only ever meets the question.
 
