@@ -26,6 +26,10 @@ Hide the giant rising Moon behind your little fingernail at arm's length. Do it 
 
 > Why is the Moon so big tonight?
 
+## Short answer
+
+The low Moon measures exactly the same as the high Moon; a photograph proves it and so does a fingernail at arm's length. The enlargement happens in visual processing, probably because the horizon supplies distance cues that nothing at the zenith does.
+
 ## The experiment
 
 _Not written yet._

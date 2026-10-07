@@ -25,6 +25,10 @@ Saturn is lighter than water. Jupiter has nowhere to land — you would simply k
 
 > Could I stand on Jupiter?
 
+## Short answer
+
+The inner planets are rock and metal; the outer ones are mostly hydrogen and helium with no surface to stand on, pressure and density simply increasing until you are inside the planet. The split traces back to how far from the young Sun ice could survive.
+
 ## The experiment
 
 _Not written yet._

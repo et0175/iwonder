@@ -24,6 +24,10 @@ Wind on your face; a paper ball blown across the table; bubbles escaping a bottl
 
 > What am I blowing when I blow out a candle?
 
+## Short answer
+
+Air is matter: it has weight, takes up space, resists movement and can be pushed around. It is invisible because it neither absorbs nor scatters much light. Every demonstration of air is really a demonstration that something invisible can still push.
+
 ## The experiment
 
 _Not written yet._

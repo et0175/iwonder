@@ -26,6 +26,10 @@ The sea walks away from the beach and comes back, twice a day, on a timetable th
 
 > Where does the sea go when the tide is out?
 
+## Short answer
+
+The Moon pulls the near side of the Earth more strongly than the far side, and the difference stretches the oceans into two bulges, one facing the Moon and one opposite. The Earth rotates through both, so most coasts get two high tides a day.
+
 ## The experiment
 
 _Not written yet._

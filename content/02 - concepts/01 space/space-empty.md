@@ -26,6 +26,10 @@ Mountaineers carry oxygen. Astronauts wear sealed suits. In footage from high al
 
 > Why do astronauts wear those big helmets?
 
+## Short answer
+
+Air is held down by gravity and thins out rapidly with height; by 100 km there is effectively none. There is no wall, just a gradient. Without air there is no pressure, no sound and no protection, which is why a spacesuit is a sealed pressure vessel rather than warm clothing.
+
 ## The experiment
 
 _Not written yet._

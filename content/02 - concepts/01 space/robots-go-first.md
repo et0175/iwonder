@@ -27,6 +27,10 @@ Photographs taken on the surface of Mars by something with wheels, a camera and 
 
 > Has anybody actually been to Mars?
 
+## Short answer
+
+Machines tolerate radiation, vacuum, extreme temperature and journeys measured in years, and they need no return trip. They go first because the engineering is a fraction of the cost and nobody dies if it fails.
+
 ## The experiment
 
 _Not written yet._

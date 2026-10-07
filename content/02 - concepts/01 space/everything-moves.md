@@ -29,6 +29,10 @@ Nothing in the sky stays put if you watch long enough — days, months, years, e
 
 > Is anything ever completely still?
 
+## Short answer
+
+The Earth spins, orbits the Sun, and is carried with the Sun around the galaxy; the galaxy itself moves too. There is no stationary reference point anywhere, so all motion is relative to something else you have to name.
+
 ## The experiment
 
 _Not written yet._

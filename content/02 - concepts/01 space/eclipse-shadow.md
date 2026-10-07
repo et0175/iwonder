@@ -27,6 +27,10 @@ A bite taken out of the Sun in broad daylight; or a full Moon turning slowly cop
 
 > Who put the lid on the Sun?
 
+## Short answer
+
+An eclipse is one body's shadow falling on another. It does not happen monthly because the Moon's orbit is tilted about 5 degrees, so most months the shadow passes above or below. The alignments are predictable centuries ahead.
+
 ## The experiment
 
 _Not written yet._

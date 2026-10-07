@@ -28,6 +28,10 @@ On the Moon, astronauts in heavy suits bounce in slow, floating hops and still c
 
 > Why can astronauts jump so high on the Moon?
 
+## Short answer
+
+Every mass attracts every other; strength depends on mass and distance. The Moon has gravity too, about one sixth of ours, which is why an astronaut in a heavy suit can still bounce. Your own body pulls on the Earth as well, just immeasurably weakly.
+
 ## The experiment
 
 _Not written yet._

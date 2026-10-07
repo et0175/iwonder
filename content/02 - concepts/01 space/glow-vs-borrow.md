@@ -24,6 +24,10 @@ A lamp glows in a dark room. A mirror, a moon-white wall, a spoon — all dark u
 
 > Why doesn't the mirror shine at night?
 
+## Short answer
+
+Objects fall into two classes: sources, which make light, and everything else, which only scatters light that arrived from elsewhere. A mirror is dark in a dark room because it has nothing to return. Almost everything a child calls shiny belongs to the second class.
+
 ## The experiment
 
 _Not written yet._

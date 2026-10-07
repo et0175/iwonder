@@ -26,6 +26,10 @@ Two stars side by side in the Plough, one of them twice as far away as the other
 
 > Who drew the pictures in the sky?
 
+## Short answer
+
+Constellations are projections: the stars in them lie at wildly different distances and are not physically grouped. The pattern is a feature of our viewpoint, not of space, which is why different cultures drew entirely different figures from the same dots.
+
 ## The experiment
 
 _Not written yet._

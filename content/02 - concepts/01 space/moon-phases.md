@@ -29,6 +29,10 @@ Slice, half, full, back again — always in the same order, always with the brig
 
 > Who is eating the Moon?
 
+## Short answer
+
+Exactly half the Moon is lit at all times. The phase is how much of that lit half we can see from our angle, which changes as the Moon orbits. The Earth's shadow has nothing to do with it; that only happens during an eclipse.
+
 ## The experiment
 
 _Not written yet._

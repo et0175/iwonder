@@ -26,6 +26,10 @@ Juice sits flat in the cup on a fast, smooth train; you only spill it when the d
 
 > Are we moving? I can't feel anything.
 
+## Short answer
+
+The body senses acceleration, not velocity. Constant motion in a straight line is physically indistinguishable from standing still, so there is no experiment you can do inside a smooth vehicle to tell which is happening.
+
 ## The experiment
 
 _Not written yet._

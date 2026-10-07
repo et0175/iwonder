@@ -24,6 +24,10 @@ Hands held towards a campfire; stepping back from the oven door.
 
 > Why is it hotter when I stand close to the fire?
 
+## Short answer
+
+Heat and light spread out from a source in all directions, so the amount reaching you drops steeply with distance: at twice the distance you receive a quarter. This single relationship later explains both the seasons and why the outer planets are frozen.
+
 ## The experiment
 
 _Not written yet._

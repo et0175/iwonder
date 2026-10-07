@@ -27,6 +27,10 @@ On a dark night a pale band of cloud crosses the entire sky — and binoculars t
 
 > What is that milky stripe?
 
+## Short answer
+
+We live inside a flat spiral of a few hundred billion stars, so looking along the plane of the disc shows a dense band and looking out of it shows few stars. The band is unresolved starlight; binoculars turn it back into individual stars.
+
 ## The experiment
 
 _Not written yet._

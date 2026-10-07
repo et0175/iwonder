@@ -25,6 +25,10 @@ The same dark patches, the same rabbit or man, every night, for every person who
 
 > Has the Moon got a back?
 
+## Short answer
+
+Tidal forces have locked the Moon's rotation to its orbit: it turns exactly once per lap, so the same hemisphere always faces us. There is no permanently dark side, the far side gets just as much sunlight, we simply never see it.
+
 ## The experiment
 
 _Not written yet._

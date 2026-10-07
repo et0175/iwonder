@@ -26,6 +26,10 @@ The stars of winter are not the stars of summer — and they come back, exactly,
 
 > Why is Orion only there in the winter?
 
+## Short answer
+
+The Earth circles the Sun once a year, so the night side faces a different direction in space in each season. That is why winter and summer constellations differ and why the cycle repeats exactly every twelve months.
+
 ## The experiment
 
 _Not written yet._

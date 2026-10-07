@@ -24,6 +24,10 @@ The dropped spoon, the dropped ball, the dropped leaf — different speeds, same
 
 > Why does everything want the floor?
 
+## Short answer
+
+Everything is pulled toward the Earth at the same rate regardless of weight; a feather lags only because air resists it. In a vacuum a feather and a hammer land together, which was actually tested on the Moon.
+
 ## The experiment
 
 _Not written yet._

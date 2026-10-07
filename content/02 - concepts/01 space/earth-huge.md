@@ -25,6 +25,10 @@ Walk all day towards the horizon and the horizon has not come one step closer.
 
 > How long would it take to walk all the way round?
 
+## Short answer
+
+The Earth's curvature is about 8 cm per kilometre, far too gentle to notice while walking. The planet is roughly 40,000 km round, so a person walking eight hours a day would need over three years. Flatness at human scale is a consequence of size, not shape.
+
 ## The experiment
 
 _Not written yet._

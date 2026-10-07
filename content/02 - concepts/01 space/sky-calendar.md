@@ -29,6 +29,10 @@ The words give it away: Monday is Moon-day, a month is a moonth — and the same
 
 > Who decided how long a year is?
 
+## Short answer
+
+Day, month and year are each one full cycle of a different motion: one rotation, one lunar orbit, one solar orbit. They do not divide into each other evenly, which is the entire reason calendars are complicated and leap years exist.
+
 ## The experiment
 
 _Not written yet._

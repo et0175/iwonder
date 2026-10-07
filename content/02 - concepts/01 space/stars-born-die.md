@@ -26,6 +26,10 @@ The middle star of Orion's sword is not a star — it is a glowing cloud with br
 
 > How old is the Sun?
 
+## Short answer
+
+Stars condense out of cold gas clouds, shine while fusing hydrogen, and end when the fuel runs out, small ones fading and large ones exploding. The Sun is about 4.6 billion years old and roughly halfway through.
+
 ## The experiment
 
 _Not written yet._

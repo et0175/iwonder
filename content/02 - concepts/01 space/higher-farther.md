@@ -25,6 +25,10 @@ From the beach you see a few kilometres of sea; from the lighthouse, four times 
 
 > Why do sailors climb up the mast to look?
 
+## Short answer
+
+The distance to the horizon grows with the square root of your height: about 5 km at eye level, 11 km from a 10-metre mast, 350 km from orbit. Height buys sightline over the curve, which is the whole reason for masts, lighthouses and satellites.
+
 ## The experiment
 
 _Not written yet._

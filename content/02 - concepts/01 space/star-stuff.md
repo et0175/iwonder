@@ -28,6 +28,10 @@ The same iron sits in a meteorite, in a nail, and in your blood.
 
 > Where did all the stuff come from?
 
+## Short answer
+
+Hydrogen and helium are primordial; every heavier element, carbon, oxygen, iron, was made inside stars and scattered when they died. The Earth and everything on it, including us, is assembled from that debris.
+
 ## The experiment
 
 _Not written yet._

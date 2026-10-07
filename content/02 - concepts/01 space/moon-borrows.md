@@ -26,6 +26,10 @@ The Moon's bright side always points towards wherever the Sun is — even in the
 
 > Who switches the Moon on at night?
 
+## Short answer
+
+The Moon is a rock reflecting sunlight, which is why its lit side always faces the Sun no matter where it is in the sky. Its surface is actually dark grey, roughly the colour of asphalt; it looks bright only against a black sky.
+
 ## The experiment
 
 _Not written yet._

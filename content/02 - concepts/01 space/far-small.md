@@ -24,6 +24,10 @@ Mum at the far end of the park fits behind your thumb; the plane overhead is sma
 
 > Why did that aeroplane get so tiny?
 
+## Short answer
+
+Apparent size is distance and real size multiplied together, so one on its own tells you nothing. This is why the Sun and a coin can cover the same amount of sky, and why no question about how big something in the sky is can be answered before the distance is known.
+
 ## The experiment
 
 _Not written yet._

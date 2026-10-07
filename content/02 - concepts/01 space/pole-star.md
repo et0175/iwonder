@@ -26,6 +26,10 @@ A long camera exposure: every star draws an arc, and one draws a dot.
 
 > Do the stars move too?
 
+## Short answer
+
+The Earth's axis points almost exactly at Polaris, so that star stays put while the whole sky appears to wheel around it. Nothing is special about the star itself: it is simply where our axis happens to aim, and in a few thousand years it will aim elsewhere.
+
 ## The experiment
 
 _Not written yet._

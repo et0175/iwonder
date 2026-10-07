@@ -48,7 +48,8 @@ export function hubPage(db) {
     const cs = t.concepts;
     const w = cs.filter((c) => c.status === "written").length, d = cs.filter((c) => c.status === "drafted").length;
     const onward = cs.flatMap((c) => c.opens);
-    const out = onward.filter((o) => o.domain !== t.meta.title).length;
+    const inside = new Set(t.meta.domains ?? [t.meta.title]);
+    const out = onward.filter((o) => !inside.has(o.domain)).length;
     return `<div class="card">
       <span class="tag">Topic · ages ${esc([].concat(t.meta.ages ?? "—").join(", "))} · ${esc(t.meta.status ?? "")}</span>
       <h3>${esc(t.meta.title)}</h3>
@@ -381,6 +382,7 @@ export function conceptPage(db, c) {
   <div>
     ${sec("What they can see", `<div class="prose">${md(c.see) || missing("Not written yet.")}</div>`)}
     ${sec("The question", c.ask ? `<p class="ask">${esc(c.ask)}</p>` : missing("Not written yet."))}
+    ${sec("Short answer", c.answer ? `<div class="prose">${md(c.answer)}</div>` : missing("Not written yet. Add a <code>## Short answer</code> section."))}
     ${sec("The experiment", c.experiment ? `<div class="prose">${md(c.experiment)}</div>` : missing("Not written yet."))}
     ${sec("Memory hook", c.hook ? `<div class="prose">${md(c.hook)}</div>` : missing("Not written yet. Add a <code>## Memory hook</code> section."))}
     ${sec("Watch out", c.note ? `<div class="note prose">${md(c.note)}</div>` : missing("Nothing flagged yet."))}

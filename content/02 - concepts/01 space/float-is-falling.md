@@ -28,6 +28,10 @@ Everything aboard the station floats at once — the people, the water, the crum
 
 > Why do astronauts float?
 
+## Short answer
+
+Gravity at the space station is about 90% of its strength at ground level. Astronauts float because the station and everything in it are falling together, so nothing presses against anything. Weightlessness is the absence of support, not the absence of gravity.
+
 ## The experiment
 
 _Not written yet._

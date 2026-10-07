@@ -101,7 +101,7 @@ for (const topic of topics) {
     `  ${concepts.length} concepts · ${g.maxL + 1} layers · ${roots.length} roots · ${leaves.length} leaves`
   );
   console.log(
-    `  ${onward.length} onward questions, ${onward.filter((q) => q[1] !== meta.title).length} leaving ${meta.title}`
+    `  ${onward.length} onward questions, ${onward.filter((q) => !(meta.domains ?? [meta.title]).includes(q[1])).length} leaving ${meta.title}`
   );
   console.log(`  status: ${Object.entries(byStatus).map(([k, v]) => `${v} ${k}`).join(", ")}`);
   if (deadEnds.length) {

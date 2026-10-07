@@ -24,6 +24,10 @@ A torch is useless outdoors at noon and blinding in a dark corridor. A phone scr
 
 > Why is my torch no good in the daytime?
 
+## Short answer
+
+The eye adjusts to the brightest thing in view, so a weak light is only visible against a darker background. Nothing is added or removed from the faint source; the threshold moves. This is why stars vanish at dawn without going anywhere.
+
 ## The experiment
 
 _Not written yet._

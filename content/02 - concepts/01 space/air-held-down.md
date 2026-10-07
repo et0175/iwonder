@@ -27,6 +27,10 @@ From orbit the whole atmosphere is a thin bright rim round the planet — thinne
 
 > Why doesn't our air float off into space?
 
+## Short answer
+
+The atmosphere is held by gravity, and whether a body keeps one depends on its gravity against the temperature of the gas. The Earth is heavy enough; the Moon is not, which is why it has none. In proportion our atmosphere is thinner than the skin of an apple.
+
 ## The experiment
 
 _Not written yet._

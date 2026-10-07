@@ -102,6 +102,7 @@ export function loadTopic(topic) {
       ages: ageList(fm.ages ?? meta.ages),
       see: s["what they can see"] ?? "",
       ask: unquote(s["what they ask"] ?? ""),
+      answer: placeholder(s["short answer"] ?? ""),
       experiment: placeholder(s["the experiment"] ?? ""),
       hook: placeholder(s["memory hook"] ?? ""),
       note: placeholder(s["watch out"] ?? ""),

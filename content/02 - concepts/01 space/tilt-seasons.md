@@ -29,6 +29,10 @@ In summer the Sun climbs high and the day is long. In winter it stays low and th
 
 > Where does the Sun go in the winter?
 
+## Short answer
+
+The Earth's axis is tilted 23.5 degrees, so each hemisphere alternately leans toward and away from the Sun. Leaning toward means steeper sunlight concentrated on less ground, and longer days. Distance plays no part: the Earth is nearest the Sun in January.
+
 ## The experiment
 
 _Not written yet._

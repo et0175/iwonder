@@ -27,6 +27,10 @@ Blue overhead, whitish near the horizon, and pure black in every photograph take
 
 > Why is the sky blue?
 
+## Short answer
+
+Air molecules scatter short wavelengths far more strongly than long ones, so blue light is bounced around the sky while red passes through. At sunset the light travels through more air and the blue is scattered away entirely, leaving red. No air means no scattering and a black sky.
+
 ## The experiment
 
 _Not written yet._

@@ -28,6 +28,10 @@ Nobody at the bottom of the globe falls off. Down points a different way in Kyiv
 
 > Why don't the people at the bottom fall off?
 
+## Short answer
+
+Gravity pulls everything toward the Earth's centre, so down is a direction that differs at every point on the surface. Nobody is upside down relative to their own location. The word down describes a local direction of pull, not a universal one.
+
 ## The experiment
 
 _Not written yet._

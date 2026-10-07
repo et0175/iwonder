@@ -26,6 +26,10 @@ Earth has oceans. Venus boiled its water away. Mars has its locked up as ice.
 
 > Why doesn't anybody live on the other planets?
 
+## Short answer
+
+Life as we know it needs liquid water, which requires a temperature range that depends on distance from the star and on the atmosphere. Venus lost its water to heat, Mars to lack of atmosphere; Earth kept both the temperature and the air.
+
 ## The experiment
 
 _Not written yet._

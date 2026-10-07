@@ -1,0 +1,20 @@
+topic: living-nature
+title: Living nature
+ages: 5-7
+status: mapped
+start: useful-traits-spread   # which concept the atlas opens on
+# Domains that count as "inside" this topic. Onward questions in any other
+# domain are counted as doors out of it.
+domains: [Life, Evolution, Plants, Animals, Insects, Birds, Body, Behaviour]
+# Names for each prerequisite depth, shallowest first. Purely editorial —
+# the depths themselves are computed from the prerequisites, never set by hand.
+layers:
+  - Що таке живе
+  - Спадковість і мінливість
+  - Добір
+  - Пристосування
+  - Будова і робота тіла
+  - Поведінка і зв'язки
+  - Складні випадки
+  - Далі
+  - Край карти

@@ -24,6 +24,10 @@ Spinning on an office chair; the playground roundabout; turning your head slowly
 
 > Why does the room run away when I spin?
 
+## Short answer
+
+When you rotate, everything stationary appears to sweep past in the opposite direction. The apparent motion of the surroundings and your own rotation are the same event described from two viewpoints, which is the whole of the day-and-night argument in miniature.
+
 ## The experiment
 
 _Not written yet._

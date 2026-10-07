@@ -26,6 +26,10 @@ Stars twinkle; the Moon never does. The air over hot tarmac in summer wobbles ev
 
 > Why do stars blink at me?
 
+## Short answer
+
+Twinkling happens in our atmosphere: pockets of air at different temperatures bend the incoming beam slightly and randomly. Stars are point sources so the whole image flickers; planets are small discs and the flickers average out, which is why they shine steadily.
+
 ## The experiment
 
 _Not written yet._

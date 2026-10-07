@@ -29,6 +29,10 @@ Mercury bakes. Noon on Neptune is dimmer than our dusk.
 
 > Is it hot on all the planets?
 
+## Short answer
+
+Sunlight weakens with the square of distance, so Neptune receives about a thousandth of what we do. Temperature follows, except where an atmosphere traps heat, which is why Venus is hotter than Mercury despite being further out.
+
 ## The experiment
 
 _Not written yet._

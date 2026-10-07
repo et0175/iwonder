@@ -26,6 +26,10 @@ A bright line that lasts one second and is gone. Meteorites in a museum case, pi
 
 > Do stars fall down?
 
+## Short answer
+
+A grain of dust entering the atmosphere at tens of kilometres per second compresses the air in front of it, and the heat makes both it and the air glow. The streak is the glowing trail, not a falling star, and most of these objects are smaller than a pea.
+
 ## The experiment
 
 _Not written yet._

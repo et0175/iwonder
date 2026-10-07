@@ -25,6 +25,10 @@ Night after night the Moon sits against different stars, and rises noticeably la
 
 > Does the Moon go home in the morning?
 
+## Short answer
+
+The Moon circles the Earth once every 27 days, so it shifts about 13 degrees against the stars each night and rises roughly 50 minutes later. Its changing position relative to the Sun is what produces the phases.
+
 ## The experiment
 
 _Not written yet._

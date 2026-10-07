@@ -26,6 +26,10 @@ Let go of an inflated balloon. Step off a boat and watch the boat slide away ben
 
 > What does a rocket push against if there is nothing there?
 
+## Short answer
+
+A rocket throws mass backwards and is pushed forwards by the same amount; nothing external is involved. Air is irrelevant and in fact only gets in the way, which is why rockets work better in vacuum, not worse.
+
 ## The experiment
 
 _Not written yet._

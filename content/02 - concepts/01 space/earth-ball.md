@@ -28,6 +28,10 @@ A ship sailing away does not shrink to a dot — it sinks, hull first, mast last
 
 > What happens to the boat when it goes over the edge?
 
+## Short answer
+
+On a curved surface, distant objects are hidden from the bottom upwards, because the bulge between you and them blocks the lower part first. A flat Earth would make them shrink uniformly instead. The horizon is the edge of the curve, and it stays the same distance away wherever you walk.
+
 ## The experiment
 
 _Not written yet._

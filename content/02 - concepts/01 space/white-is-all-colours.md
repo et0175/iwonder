@@ -26,6 +26,10 @@ A rainbow after rain, a prism on the windowsill, oil on a puddle, the back of a 
 
 > Where do the colours in a rainbow come from?
 
+## Short answer
+
+Sunlight is every visible wavelength mixed; a prism or a raindrop separates them because each colour bends by a slightly different amount. The colours are not created by the prism, they were always present and merely overlapping.
+
 ## The experiment
 
 _Not written yet._

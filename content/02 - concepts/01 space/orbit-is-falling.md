@@ -28,6 +28,10 @@ Throw a ball harder and it lands further away. A conker whirled on a string.
 
 > Why doesn't the Moon fall on our heads?
 
+## Short answer
+
+An orbit is continuous free fall combined with enough sideways speed that the surface curves away as fast as you drop. The Moon is falling toward us permanently and permanently missing. Nothing holds it up; it simply never arrives.
+
 ## The experiment
 
 _Not written yet._

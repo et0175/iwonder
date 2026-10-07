@@ -26,6 +26,10 @@ A coin sits still on the tray table of an aeroplane doing nine hundred kilometre
 
 > If we are spinning, why am I not dizzy?
 
+## Short answer
+
+The Earth's rotation is perfectly smooth and everything, ground, air and people, moves together, so there is nothing to feel. We would notice only a change in the rate, not the rate itself.
+
 ## The experiment
 
 _Not written yet._

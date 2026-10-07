@@ -24,6 +24,10 @@ Your shadow copying you on the pavement; a hand between the torch and the wall.
 
 > Why does my shadow always do what I do?
 
+## Short answer
+
+Light goes in straight lines and does not bend round obstacles, so anything solid leaves a hole in the light behind it. A shadow is that hole. Its shape is a projection of the blocker, which is why it changes as the angle changes but never as the object's colour does.
+
 ## The experiment
 
 _Not written yet._

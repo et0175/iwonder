@@ -30,6 +30,10 @@ The phenomenon. Concrete, observable without permission or equipment.
 ## What they ask
 > The child's question, verbatim, as a blockquote.
 
+## Short answer
+The mechanism, in adult language, 2–4 sentences. This is author-facing: it is
+what you read before choosing a metaphor, not what the child is told.
+
 ## The experiment
 What they do, with what. `_Not written yet._` while status is `mapped`.
 
@@ -93,3 +97,17 @@ concept whose questions all stay in its own domain is usually a dead end.
 C. Often deliberate: an article can lean directly on *light travels straight*
 even though its other prerequisite happens to imply it. Worth reviewing once,
 then silence a file with `implied_ok: true` in its frontmatter.
+
+
+## Language
+
+Structural fields and `##` headings are always English — the loader keys on
+them. Prose inside the sections follows the topic: `space` is written in
+English, `living-nature` in Ukrainian. One file is never half and half.
+
+## `domains` in `_topic.yml`
+
+Optional list of the domains that count as inside the topic. Onward questions
+in any other domain are counted as doors out of it. Without it, only the
+topic's own title counts as inside, which under-reports badly for a topic
+whose concepts span several domains.

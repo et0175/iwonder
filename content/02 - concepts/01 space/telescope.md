@@ -28,6 +28,10 @@ Jupiter is a dot to the eye and a striped disc with four moons of its own in che
 
 > How does anybody know what is on Mars?
 
+## Short answer
+
+A telescope collects far more light than a pupil and spreads the image over a larger angle. Both matter: the extra light reveals faint objects, the magnification reveals detail. This is why aperture, not magnification, is the number that counts.
+
 ## The experiment
 
 _Not written yet._

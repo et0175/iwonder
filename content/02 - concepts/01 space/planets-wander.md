@@ -28,6 +28,10 @@ That brilliant point has moved right across the constellation since last month â
 
 > Why doesn't that big star blink?
 
+## Short answer
+
+Planets orbit the Sun with us, so their position against the fixed stars changes over weeks. They also show small discs rather than points, which is why they do not twinkle. The word planet is Greek for wanderer.
+
 ## The experiment
 
 _Not written yet._

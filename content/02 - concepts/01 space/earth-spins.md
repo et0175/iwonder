@@ -29,6 +29,10 @@ The Sun rises on one side and sets on the exactly opposite side, every single da
 
 > Where does the Sun go in the evening?
 
+## Short answer
+
+The Earth turns once every 24 hours, carrying each place into and out of sunlight. Day and night are not something happening to the Sun but a consequence of our rotation, which is why the Sun always rises on one horizon and sets on the opposite one.
+
 ## The experiment
 
 _Not written yet._

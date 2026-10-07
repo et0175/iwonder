@@ -27,6 +27,10 @@ The photograph taken from the Moon: the whole world, all of it, small enough to 
 
 > What does our house look like from up there?
 
+## Short answer
+
+From the Moon the Earth is a small bright sphere with a thin bright rim of atmosphere and nothing else around it. The photograph changed how people argued about the planet, which is a rare thing for a picture to do.
+
 ## The experiment
 
 _Not written yet._

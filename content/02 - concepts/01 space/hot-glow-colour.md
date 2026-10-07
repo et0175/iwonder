@@ -25,6 +25,10 @@ The stove ring goes dull red, then orange. The blue heart of a candle flame is h
 
 > Why is the middle of the flame blue?
 
+## Short answer
+
+Anything hot enough glows, and the colour depends only on temperature: dull red is coolest, then orange, yellow, white, blue. This is a universal law, which is why it works equally on a stove ring, a candle flame and a star 400 light-years away.
+
 ## The experiment
 
 _Not written yet._

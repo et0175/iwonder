@@ -28,6 +28,10 @@ Through the cheapest binoculars the edge of the Moon is visibly dented, like pas
 
 > What are the spots on the Moon?
 
+## Short answer
+
+The Moon's surface records four billion years of impacts because it has no air to burn arrivals up, no water to erode and no geology to resurface. The Earth received just as many and erased nearly all of them, which is why one world is pocked and the other smooth.
+
 ## The experiment
 
 _Not written yet._

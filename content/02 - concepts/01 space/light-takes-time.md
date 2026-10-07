@@ -26,6 +26,10 @@ Thunder always arrives after the lightning. Sunlight leaving now reaches your fa
 
 > Am I seeing that star as it is right now?
 
+## Short answer
+
+Light travels at a finite speed, so everything is seen as it was when the light left it: the Sun eight minutes ago, the nearest star four years ago. Looking far away is unavoidably looking into the past.
+
 ## The experiment
 
 _Not written yet._

@@ -26,6 +26,10 @@ You can find the Moon in a pale blue sky at four in the afternoon — but not a 
 
 > Where do the stars go in the morning?
 
+## Short answer
+
+Stars shine continuously; sunlight scattered by the atmosphere floods the sky and raises the background far above their brightness. The Moon survives the comparison because it is much brighter, which is why it can be seen in daylight and stars cannot.
+
 ## The experiment
 
 _Not written yet._

@@ -27,6 +27,10 @@ The wandering planets never leave one narrow band of sky — the very same band 
 
 > Are we all going round together?
 
+## Short answer
+
+All eight planets orbit the Sun in the same direction and in nearly the same plane, which is why they are always found in a narrow band of sky. That shared plane is a fossil of the flat disc of gas and dust the whole system formed from.
+
 ## The experiment
 
 _Not written yet._

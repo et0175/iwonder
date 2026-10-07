@@ -30,6 +30,21 @@ Tokens live in `tools/templates/site.css`; the atlas shares the palette.
 **2026-09 · Concepts are named by their idea, not their title.**
 `title` is a handle for the author. The child only ever meets the question.
 
+**2026-10 · Short answer is author-facing, not child-facing.**
+Every concept carries a 2–4 sentence mechanical answer in adult language. It
+exists so the metaphor can be chosen with the mechanism in view, and it never
+appears in the book.
+
+**2026-10 · Topics may differ in language; files may not.**
+`space` is English throughout, `living-nature` Ukrainian throughout. Frontmatter
+keys and `##` headings stay English everywhere because the loader parses them.
+
+**2026-10 · Evolution is the spine of living nature, in two halves.**
+Inheritance plus variation produce the raw material; survival and mate choice
+are two separate forces acting on it. Nearly every Animals / Plants / Insects /
+Birds question needs both, and a third concept — that nothing changes within one
+lifetime — is needed to stop the whole thing collapsing into Lamarckism.
+
 ---
 
 ## Open
@@ -78,3 +93,15 @@ taught badly, most of the rest cannot be rescued.
 
 **The frontier.** 20 concepts have nothing depending on them yet. Those are
 where the map stops, and where a second topic will most naturally attach.
+
+### Shared roots across topics
+`living-nature` repeats four ideas that `space` already has in its own words:
+air being real, light travelling straight, nearer meaning warmer, and things
+falling. They are deliberately separate concepts with separate ids for now,
+because prerequisites still resolve inside one topic only. When cross-topic
+prerequisites land, these are the first merge candidates.
+
+### Is 111 concepts too many for one topic?
+`living-nature` covers 98 questions and adds 12 foundations. It is twice the
+size of `space`. Either that is the honest size of the subject, or the topic
+wants splitting — plants and animals are nearly independent subgraphs.

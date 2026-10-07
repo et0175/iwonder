@@ -27,6 +27,10 @@ From the car, the fence blurs, the hills drift, and the Moon appears to run alon
 
 > Why does the Moon follow our car?
 
+## Short answer
+
+When you move, near objects shift across your field of view quickly and far ones barely at all. The Moon seems to follow the car because at 380,000 km its angular shift is immeasurable. The same effect, measured precisely, is how the distance to nearby stars is found.
+
 ## The experiment
 
 _Not written yet._

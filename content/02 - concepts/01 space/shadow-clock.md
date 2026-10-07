@@ -26,6 +26,10 @@ A stick's shadow: long at breakfast, short at lunch, long the other way at suppe
 
 > Why is my shadow taller than me in the evening?
 
+## Short answer
+
+A shadow points away from the Sun and its length depends on the Sun's altitude, so direction gives the time of day and length gives the season. A stick in the ground is a complete astronomical instrument, and was the first one.
+
 ## The experiment
 
 _Not written yet._
