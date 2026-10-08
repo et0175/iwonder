@@ -10,7 +10,7 @@ ages: 5-7
 status: mapped
 prerequisites:
   - '[[down-is-center]]'
-  - '[[orbit-is-falling]]'
+  - '[[things-fall]]'
 opens:
   - question: How much would I weigh on Mars?
     domain: Space

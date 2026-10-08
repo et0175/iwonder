@@ -8,6 +8,7 @@ ages: 5-7
 status: mapped
 prerequisites:
   - '[[jellyfish-without-a-brain]]'
+  - '[[space/rocket-pushes-self]]'
 opens:
   - question: Як працює ракетний двигун?
     domain: Engineering

@@ -21,11 +21,20 @@ const topics = listTopics();
 const allConcepts = new Map(); // id → topic, across every topic
 if (!topics.length) { console.error("No topics found — expected content/[NN - ]concepts/<topic>/."); process.exit(1); }
 
-for (const topic of topics) {
+// Load every topic up front: prerequisites may point across topics, and a
+// reference forward to a topic not yet read must still resolve.
+const loaded = topics.map((t) => ({ topic: t, ...loadTopic(t) }));
+const globalById = new Map();
+for (const L of loaded) for (const c of L.concepts) {
+  const clash = globalById.get(c.id);
+  if (clash) err(`${c.file}: id "${c.id}" is also used in topic "${clash.topic}" — ids must be unique across all topics`);
+  globalById.set(c.id, c);
+  allConcepts.set(c.id, L.topic);
+}
+
+for (const { topic, meta, concepts } of loaded) {
   console.log(`\n${topic}`);
-  const { meta, concepts } = loadTopic(topic);
   const ids = new Set();
-  concepts.forEach((c) => allConcepts.set(c.id, topic));
 
   for (const c of concepts) {
     const at = c.file;
@@ -53,7 +62,12 @@ for (const topic of topics) {
       if (!ids.has(p)) err(`${c.file}: prerequisite "${p}" does not exist in topic "${topic}"`);
       if (p === c.id) err(`${c.file}: is its own prerequisite`);
     }
-    if (new Set(c.pre).size !== c.pre.length) err(`${c.file}: the same prerequisite is listed twice`);
+    if (new Set(c.preAll).size !== c.preAll.length) err(`${c.file}: the same prerequisite is listed twice`);
+    for (const r of c.preExt) {
+      const target = globalById.get(r.id);
+      if (!target) err(`${c.file}: prerequisite "${r.topic}/${r.id}" does not exist in any topic`);
+      else if (target.topic !== r.topic) err(`${c.file}: prerequisite "${r.topic}/${r.id}" actually lives in topic "${target.topic}"`);
+    }
   }
 
   // cycles + layers
@@ -115,6 +129,22 @@ if (implied.length) {
   console.log("  something another of its prerequisites already implies. Set");
   console.log("  `implied_ok: true` in the frontmatter to stop listing a file.");
   implied.forEach((m) => console.log("  · " + m));
+}
+
+// A cycle can now span topics, which per-topic layering cannot see.
+{
+  const state = new Map();
+  const walk = (id, trail) => {
+    if (state.get(id) === "done") return;
+    if (state.get(id) === "open") {
+      err(`circular prerequisite chain across topics: ${trail.slice(trail.indexOf(id)).concat(id).join(" → ")}`);
+      return;
+    }
+    state.set(id, "open");
+    for (const p of globalById.get(id)?.preAll ?? []) if (globalById.has(p)) walk(p, trail.concat(id));
+    state.set(id, "done");
+  };
+  for (const id of globalById.keys()) walk(id, []);
 }
 
 // characters

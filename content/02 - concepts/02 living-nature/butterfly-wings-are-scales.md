@@ -9,6 +9,7 @@ status: mapped
 prerequisites:
   - '[[chosen-traits-spread]]'
   - '[[hiding-and-being-seen]]'
+  - '[[space/white-is-all-colours]]'
 opens:
   - question: Чому мильна бульбашка переливається так само?
     domain: Light

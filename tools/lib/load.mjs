@@ -60,6 +60,11 @@ export function sections(body) {
 }
 
 const unwiki = (s) => String(s).replace(/^\[\[|\]\]$/g, "").trim();
+/** `[[id]]` stays in this topic; `[[topic/id]]` points at another one. */
+export const splitRef = (s) => {
+  const r = unwiki(s), i = r.indexOf("/");
+  return i === -1 ? { topic: null, id: r } : { topic: r.slice(0, i).trim(), id: r.slice(i + 1).trim() };
+};
 const unquote = (s) => s.replace(/^>\s?/gm, "").trim();
 /** `_Not written yet._` and friends mean the section is empty. */
 const placeholder = (s) => (/^_?(not (yet )?(written|flagged)|nothing flagged)[^]*_?$/i.test(s.trim()) ? "" : s);
@@ -90,6 +95,8 @@ export function loadTopic(topic) {
     const where = path.join(dir, f);
     const [fm, body] = splitFrontmatter(fs.readFileSync(where, "utf8"), where);
     const s = sections(body);
+    const refs = (fm.prerequisites ?? []).map(splitRef);
+    const isLocal = (r) => !r.topic || r.topic === meta.topic;
     return {
       file: where,
       id: fm.id ?? path.basename(f, ".md"),
@@ -106,7 +113,10 @@ export function loadTopic(topic) {
       experiment: placeholder(s["the experiment"] ?? ""),
       hook: placeholder(s["memory hook"] ?? ""),
       note: placeholder(s["watch out"] ?? ""),
-      pre: (fm.prerequisites ?? []).map(unwiki),
+      // `pre` stays local so layering is per-topic; `preExt` is assumed known.
+      pre: refs.filter(isLocal).map((r) => r.id),
+      preExt: refs.filter((r) => !isLocal(r)),
+      preAll: refs.map((r) => r.id),
       next: (fm.opens ?? []).map((o) =>
         typeof o === "string" ? [o, "Space"] : [o.question, o.domain ?? "—"]
       ),

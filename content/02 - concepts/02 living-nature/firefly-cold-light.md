@@ -8,6 +8,7 @@ ages: 5-7
 status: mapped
 prerequisites:
   - '[[chosen-traits-spread]]'
+  - '[[space/hot-glow-colour]]'
 opens:
   - question: Чому лампочка гаряча, а світлячок ні?
     domain: Physics

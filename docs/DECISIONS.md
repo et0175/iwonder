@@ -105,3 +105,52 @@ prerequisites land, these are the first merge candidates.
 `living-nature` covers 98 questions and adds 12 foundations. It is twice the
 size of `space`. Either that is the honest size of the subject, or the topic
 wants splitting — plants and animals are nearly independent subgraphs.
+
+
+---
+
+## 2026-10 · Six topics, physics underneath
+
+**Physics is a foundation, not a topic.** Water's three states hold up rain,
+clouds, dew, frost, the fridge and the kettle. Writing them six times would
+have meant six versions drifting apart. `03 physics` is 29 concepts and almost
+nothing in it is interesting on its own — that is the point.
+
+**Cross-topic prerequisites are on.** `[[topic/id]]` resolves across topics.
+`pre` stays local so each atlas keeps its own layering; external prerequisites
+are listed separately as *assumed known*. Ids must now be unique across the
+whole project, and cycles are checked globally, not per topic.
+
+**A chain is a reading order, and it is checked.** `content/03 - chains/`
+holds one file per book; `npm run chain` fails if a concept is used before its
+prerequisites. The first chain found five ordering problems in its own draft —
+and one modelling error in the graph (`gravity-everywhere` did not need
+`orbit-is-falling`; astronauts bouncing on the Moon prove it without orbits).
+
+**`npm run select` proposes a book.** It scores concepts by how much of the map
+leans on them and only takes what it can afford, prerequisites included.
+
+---
+
+## Open
+
+### The load-bearing concepts are not the interesting ones
+`npm run select 13` returns 68 concepts — the evolution engine, the physics
+foundation, the space roots. Not one of them is a rainbow, a lightning bolt or
+a mountain, because those are leaves and nothing depends on them. A book built
+only from the selection would be a well-ordered textbook.
+
+The tool now also lists what is **free to add**: 60 concepts whose prerequisites
+the selection already covers. That is where the delight is, and choosing among
+them is an editorial job, not an algorithmic one. Rough shape for book one:
+the 68 as the spine, plus 20–30 chosen leaves.
+
+### Living nature is twice the size of anything else
+111 concepts against 24–32 elsewhere. Plants and animals are nearly independent
+subgraphs and could split. Deferred until a second chain shows whether it
+actually hurts.
+
+### Nature and technology are thin in the selection
+They came out at 6 and 10 against a budget of 13, because their prerequisites in
+physics were already spent. Either raise the budget for them or accept that
+book one is light on weather and machines.

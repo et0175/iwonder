@@ -359,7 +359,9 @@ render();`,
 
 export function conceptPage(db, c) {
   const pre = c.pre.map((p) => db.conceptIn(c.topic, p)).filter(Boolean);
-  const kids = c.kids.map((k) => db.conceptIn(c.topic, k)).filter(Boolean);
+  const preExt = (c.preExt ?? []).map((r) => db.conceptById.get(r.id)).filter(Boolean);
+  const kids = c.kids.map((k) => db.conceptIn(c.topic, k)).filter(Boolean)
+    .concat((c.kidsExt ?? []).map((k) => db.conceptById.get(k)).filter(Boolean));
   const stories = db.storiesByConcept.get(c.id) ?? [];
   const opens = c.opens.map((o) => {
     const target = o.leadsTo && db.conceptById.get(o.leadsTo);
@@ -392,6 +394,7 @@ export function conceptPage(db, c) {
     <div class="chips">${c.ages.map((a) => `<span class="badge">ages ${esc(a)}</span>`).join("")}<span class="badge">${esc(c.dom)}</span></div>
     <div><span class="tag">Stories</span><div class="chips">${stories.map((s) => storyChip(s)).join("") || '<span class="chip none">No story yet</span>'}</div></div>
     <div><span class="tag">Needs first</span><div class="chips">${pre.map(conceptChip).join("") || '<span class="chip none">Nothing — a child already has this</span>'}</div></div>
+    ${preExt.length ? `<div><span class="tag">Assumed known</span><div class="chips">${preExt.map(conceptChip).join("")}</div></div>` : ""}
     <div><span class="tag">Unlocks</span><div class="chips">${kids.map(conceptChip).join("") || '<span class="chip none">Nothing yet — on the frontier</span>'}</div></div>
     <div><span class="tag">Load-bearing</span><p>${c.descendants} concept${c.descendants === 1 ? "" : "s"} depend on this, directly or further down.</p></div>
     <div><span class="tag">id</span><code>${esc(c.id)}</code></div>

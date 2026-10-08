@@ -1,0 +1,15 @@
+topic: human-body
+title: Human body
+ages: 5-7
+status: mapped
+start: body-is-made-of-cells
+# Domains that count as inside this topic; anything else is a door out.
+domains: [Body, Human, Mind, Health]
+# Names for each prerequisite depth. Editorial only — depth is computed.
+layers:
+  - З чого я зроблений
+  - Постачання
+  - Захист
+  - Сигнали
+  - Мозок і відчуття
+  - Далі

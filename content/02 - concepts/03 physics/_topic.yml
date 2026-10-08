@@ -1,0 +1,14 @@
+topic: physics
+title: Physics
+ages: 5-7
+status: mapped
+start: three-states
+# Domains that count as inside this topic; anything else is a door out.
+domains: [Matter, Heat, Motion, Sound, Light, Electricity, Energy]
+# Names for each prerequisite depth. Editorial only — depth is computed.
+layers:
+  - Чим усе є
+  - Тепло і стан
+  - Рух і сила
+  - Перетворення
+  - Струм і світло

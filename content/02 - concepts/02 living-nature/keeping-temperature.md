@@ -6,7 +6,8 @@ domain: Body
 topic: living-nature
 ages: 5-7
 status: mapped
-prerequisites: []
+prerequisites:
+  - '[[space/near-hot]]'
 opens:
   - question: Чому слон не може спітніти?
     domain: Animals

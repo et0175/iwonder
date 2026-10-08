@@ -6,7 +6,8 @@ domain: Life
 topic: living-nature
 ages: 5-7
 status: mapped
-prerequisites: []
+prerequisites:
+  - '[[space/air-real]]'
 opens:
   - question: Чому під водою не можна дихати?
     domain: Human

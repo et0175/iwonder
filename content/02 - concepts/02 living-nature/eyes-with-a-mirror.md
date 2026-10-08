@@ -8,6 +8,7 @@ ages: 5-7
 status: mapped
 prerequisites:
   - '[[owl-eyes-collect-light]]'
+  - '[[space/glow-vs-borrow]]'
 opens:
   - question: Чому очі світяться різним кольором?
     domain: Light

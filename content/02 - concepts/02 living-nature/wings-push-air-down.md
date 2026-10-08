@@ -9,6 +9,7 @@ status: mapped
 prerequisites:
   - '[[feathers-do-three-jobs]]'
   - '[[living-things-breathe]]'
+  - '[[space/air-real]]'
 opens:
   - question: Чому літак не махає крилами?
     domain: Engineering

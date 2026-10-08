@@ -6,7 +6,8 @@ domain: Earth
 topic: living-nature
 ages: 5-7
 status: mapped
-prerequisites: []
+prerequisites:
+  - '[[space/tilt-seasons]]'
 opens:
   - question: Чому ведмідь спить, а вовк ні?
     domain: Animals

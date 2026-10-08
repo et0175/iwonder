@@ -9,6 +9,7 @@ status: mapped
 prerequisites:
   - '[[needs-to-live]]'
   - '[[living-things-breathe]]'
+  - '[[space/sun-far-huge]]'
 opens:
   - question: Чому рослину не можна годувати супом?
     domain: Plants

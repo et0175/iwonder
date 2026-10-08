@@ -8,6 +8,8 @@ ages: 5-7
 status: mapped
 prerequisites:
   - '[[plants-make-food-from-light]]'
+  - '[[space/white-is-all-colours]]'
+  - '[[space/glow-vs-borrow]]'
 opens:
   - question: Чому бувають червоні листки?
     domain: Plants

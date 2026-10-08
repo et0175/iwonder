@@ -9,6 +9,7 @@ status: mapped
 prerequisites:
   - '[[seasons-change-food]]'
   - '[[roots-drink-and-lift]]'
+  - '[[space/tilt-seasons]]'
 opens:
   - question: Чи можна дізнатися, яка погода була сто років тому?
     domain: Earth

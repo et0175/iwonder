@@ -107,6 +107,10 @@ const questions = concepts.flatMap((c) => [
   })),
 ]);
 
+// A concept in another topic that depends on this one still counts as unlocked.
+for (const c of concepts) c.kidsExt = [];
+for (const c of concepts) for (const r of c.preExt ?? []) conceptById.get(r.id)?.kidsExt.push(c.id);
+
 const db = {
   topics, concepts, conceptById, characters, stories, storiesByConcept, questions,
   charById: new Map(characters.map((c) => [c.id, c])),

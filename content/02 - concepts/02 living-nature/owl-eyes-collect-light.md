@@ -11,6 +11,7 @@ status: mapped
 prerequisites:
   - '[[who-eats-whom]]'
   - '[[body-parts-are-tools]]'
+  - '[[space/faint-needs-dark]]'
 opens:
   - question: Чому вночі все сіре?
     domain: Perception

@@ -1,0 +1,13 @@
+topic: technology
+title: Technology
+ages: 5-7
+status: mapped
+start: engine-burns-fuel-to-push
+# Domains that count as inside this topic; anything else is a door out.
+domains: [Engineering, Computing, Energy, Matter]
+# Names for each prerequisite depth. Editorial only — depth is computed.
+layers:
+  - Речі й матеріали
+  - Машини
+  - Прилади
+  - Сигнали

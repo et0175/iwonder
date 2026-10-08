@@ -8,7 +8,9 @@
     "check": "node tools/validate.mjs",
     "build": "node tools/validate.mjs && node tools/build.mjs",
     "start": "node tools/serve.mjs",
-    "serve": "npm run build && node tools/serve.mjs"
+    "serve": "npm run build && node tools/serve.mjs",
+    "chain": "node tools/chain.mjs",
+    "select": "node tools/select.mjs"
   },
   "dependencies": {
     "js-yaml": "^4.1.0",

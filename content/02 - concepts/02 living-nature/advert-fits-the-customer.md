@@ -11,6 +11,7 @@ status: mapped
 prerequisites:
   - '[[flowers-are-adverts]]'
   - '[[useful-traits-spread]]'
+  - '[[space/faint-needs-dark]]'
 opens:
   - question: Хто літає вночі?
     domain: Insects

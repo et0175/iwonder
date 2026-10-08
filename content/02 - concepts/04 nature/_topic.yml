@@ -1,0 +1,15 @@
+topic: nature
+title: Nature
+ages: 5-7
+status: mapped
+start: clouds-are-droplets
+# Domains that count as inside this topic; anything else is a door out.
+domains: [Nature, Earth, Weather, Matter, Light]
+# Names for each prerequisite depth. Editorial only — depth is computed.
+layers:
+  - Вода в повітрі
+  - Хмари і вітер
+  - Погода
+  - Планета під ногами
+  - Клімат
+  - Далі
