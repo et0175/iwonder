@@ -22,6 +22,7 @@ function findDir(parent, name) {
 
 export const CONCEPTS = findDir(CONTENT, "concepts");
 export const CHARACTERS = findDir(CONTENT, "characters");
+export const CHAINS = findDir(CONTENT, "chains");
 
 /** Topic name → its folder, e.g. "space" → "content/02 - concepts/01 space". */
 function topicDirs() {
@@ -59,7 +60,7 @@ export function sections(body) {
   return out;
 }
 
-const unwiki = (s) => String(s).replace(/^\[\[|\]\]$/g, "").trim();
+export const unwiki = (s) => String(s).replace(/^\[\[|\]\]$/g, "").trim();
 /** `[[id]]` stays in this topic; `[[topic/id]]` points at another one. */
 export const splitRef = (s) => {
   const r = unwiki(s), i = r.indexOf("/");
@@ -252,4 +253,42 @@ export function loadStories() {
       bridgeTo: base.bridge_to ? unwiki(base.bridge_to) : null,
     };
   }).sort((a, b) => a.order.localeCompare(b.order));
+}
+
+/**
+ * Chains: `content/03 - chains/<file>.md`, one per book. A chain is a reading
+ * order — one walk through the concept graph, held together by a setting rather
+ * than by subject. The frontmatter carries the walk; the body is the editorial
+ * note about it. Nothing here is derived: the ordering checks live in
+ * tools/chain.mjs and (for the site) in tools/build.mjs.
+ */
+export function loadChains() {
+  if (!CHAINS) return [];
+  return fs
+    .readdirSync(CHAINS)
+    .filter((f) => f.endsWith(".md") && !stripOrder(f).startsWith("_") && f !== "README.md")
+    .sort()
+    .map((f, i) => {
+      const where = path.join(CHAINS, f);
+      const [fm, body] = splitFrontmatter(fs.readFileSync(where, "utf8"), where);
+      const id = fm.id ?? stripOrder(path.basename(f, ".md"));
+      return {
+        file: where,
+        order: i,
+        id,
+        title: fm.title ?? id,
+        status: fm.status ?? "draft",
+        ages: ageList(fm.ages),
+        sets: (fm.sets ?? []).map((s) => ({
+          title: s.title ?? "",
+          setting: s.setting ?? "",
+          steps: (s.steps ?? []).map((st) => ({
+            concept: unwiki(st.concept ?? ""),
+            question: st.question ?? "",
+          })),
+        })),
+        // the editorial note: `## Про цей ланцюжок` and anything else written
+        outline: outline(body),
+      };
+    });
 }

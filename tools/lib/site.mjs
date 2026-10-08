@@ -33,6 +33,8 @@ export const url = {
   questions: () => "/questions/",
   stories: () => "/stories/",
   story: (id, lang = "en") => (lang === "en" ? `/stories/${id}/` : `/stories/${id}/${lang}/`),
+  chains: () => "/chains/",
+  chain: (id) => `/chains/${id}/`,
 };
 
 export const LANGS = { en: "English", uk: "Українська" };
@@ -44,6 +46,7 @@ const NAV = [
   ["atlas", "Graph", null], // filled in per build: first topic's atlas
   ["questions", "Questions", url.questions()],
   ["stories", "Stories", url.stories()],
+  ["chains", "Chains", url.chains()],
 ];
 
 export function nav(active, atlasHref) {

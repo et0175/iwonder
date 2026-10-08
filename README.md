@@ -61,12 +61,14 @@ site/                generated; not committed
 ```bash
 npm install
 npm run check     # validate graphs, characters and stories
+npm run chain     # check every reading order in content/03 - chains/
 npm run build     # check, then generate site/
 npm start         # serve site/ on http://localhost:3000
 ```
 
 `site/` is the **blueprint**: characters, concept cards, the prerequisite graph,
-every question, and the stories in English and Ukrainian. It is generated
+every question, the stories in English and Ukrainian, and the **chains** — each
+reading order walked step by step, showing which earlier steps each one rests on. It is generated
 entirely from `content/`; nothing in it is edited by hand. Requirements are in
 [`inputs/website-requirements.md`](inputs/website-requirements.md).
 

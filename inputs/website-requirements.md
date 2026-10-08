@@ -8,6 +8,7 @@ Sources: `inputs/environment_setup.md`, `README.md`, `docs/PRINCIPLES.md`,
 `docs/CONCEPT-SCHEMA.md`, `docs/DECISIONS.md`, `content/00-product/*`.
 
 Status: draft v0.1 · 2026-09-25 · visual direction chosen 2026-09-29 (see §11)
+· chains added 2026-10-08 (see §4.7)
 
 ---
 
@@ -51,7 +52,8 @@ Hub (index)
 ├── Concepts          cards grouped by topic / domain → concept screen
 ├── Concept graph     one interactive atlas per topic (already exists)
 ├── Questions         every question with its "what they can see" → concept / story
-└── Stories           by question / concept / age → story reader (EN | UK)
+├── Stories           by question / concept / age → story reader (EN | UK)
+└── Chains            the reading orders → one chain walked step by step
 ```
 
 Every screen links to the others. A concept links to its characters' stories, a
@@ -121,7 +123,27 @@ Priority: **M** = MVP, **S** = should have next, **C** = could have later.
 | FR-STO-4 | Show the story arc from `outline.md` as a structure checklist: Question · False hypothesis · Experiments · Discovery · Aha moments · Memory hook · Bridge question. Each item shows whether the story contains it. | S |
 | FR-STO-5 | Prerequisite warning: if the story's concept needs concepts that have no story yet, list them ("tell these first"). | S |
 
-### 4.7 Cross-cutting
+### 4.7 Chains (reading orders)
+
+A chain is one walk through the graph: the order a book actually meets its
+concepts in, grouped into **sets** that share a setting. It is the only place
+the site shows the book as a sequence rather than as a map.
+
+| ID | Requirement | P |
+|---|---|---|
+| FR-CHN-1 | List every chain with its sets, step count, topics crossed, and how much of it is written. | M |
+| FR-CHN-2 | Walk one chain step by step: step number, the question **as it is asked in that setting**, the concept it teaches, its catalogue number and status. | M |
+| FR-CHN-3 | For each step, name the **earlier steps it rests on** — the prerequisites already met, by step number, as links. A step that rests on nothing says so. | M |
+| FR-CHN-4 | Flag a step that leans forward: a prerequisite that comes later, or never appears. Same rule as `npm run chain`; the page says which step and why. | M |
+| FR-CHN-5 | Show where the chain's own wording differs from the concept's wording, so the rewrite work is visible. | S |
+| FR-CHN-6 | Coverage: how many concepts of each topic the walk uses, including the topics it never touches. | S |
+| FR-CHN-7 | **Doors it leaves open**: questions these concepts open that this chain does not answer — where the next book starts. | S |
+| FR-CHN-8 | A concept page says which chains it appears in, and at which step. | M |
+
+Nothing on these screens is authored. The chain file carries the walk and an
+editorial note; every number, link and warning is arithmetic on that walk.
+
+### 4.8 Cross-cutting
 
 | ID | Requirement | P |
 |---|---|---|
@@ -204,7 +226,24 @@ The structure fields (`concepts`, `ages`, `characters`) are only required in
 the `en` file. The other language inherits them and only overrides `title`,
 `question`, `memory_hook` and `bridge`.
 
-### 5.4 Questions
+### 5.4 Chain — `content/chains/<id>.md`
+
+```yaml
+id: book-one
+title: Book one
+status: draft
+sets:
+  - title: Поїздка в машині        # what holds this stretch together
+    setting: Дитина дивиться у вікно машини на трасі.
+    steps:
+      - concept: smooth-ride       # must exist in some topic
+        question: Ми їдемо? Я зовсім цього не відчуваю.   # the article's title
+```
+
+The body is the editorial note — why the order is what it is. It is rendered
+under the walk, not parsed.
+
+### 5.5 Questions
 
 There is **no separate file**. Questions are always computed from concepts and
 stories. This keeps a question from existing in two places that could drift

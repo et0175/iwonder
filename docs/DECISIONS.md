@@ -130,6 +130,14 @@ and one modelling error in the graph (`gravity-everywhere` did not need
 **`npm run select` proposes a book.** It scores concepts by how much of the map
 leans on them and only takes what it can afford, prerequisites included.
 
+**The chain is a screen, not just a check.** `/chains/` walks a reading order
+step by step: the question as the child asks it *in that setting*, the concept
+it teaches, and — the part worth the page — **the earlier steps it rests on**,
+by number. The same rule `npm run chain` enforces is shown rather than printed,
+so an order that leans forward is marked on the row that does it. The page also
+counts what the walk does not reach: how little of each topic it uses, and the
+55 doors it opens and leaves open.
+
 ---
 
 ## Open
