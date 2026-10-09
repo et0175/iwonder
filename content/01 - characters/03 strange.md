@@ -8,7 +8,7 @@ role: The Perspective Changer, The Disruptor, Myth detector, The Imagination, ab
 archetype: The one who notices what nobody else thought of
 asks: What if we're looking at this the wrong way?
 appearance: Adult, young man in his 26-30s who knows nothing (his origin is unknown but we don't care much about it)
-hobby: playing guitar
+hobby: playing guitar; trying things out — he would rather test something badly than be told the answer well
 status: sketch
 ---
 

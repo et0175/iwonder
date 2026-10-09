@@ -20,7 +20,10 @@ sets:
       - concept: near-hot
         question: Чому біля вікна, куди світить сонце, тепліше?
       - concept: sun-far-huge
-        question: Сонце не меншає і не відстає — воно що, їде за нами?
+        question: Сонце не меншає і не відстає — воно що,їде за нами?
+      - concept: rubbing-makes-heat
+        kind: delight
+        question: Чому колеса й гальма гарячі після довгого спуску?
 
   - title: На березі
     setting: Море, горизонт, корабель, пісок і тінь від парасолі.
@@ -35,6 +38,12 @@ sets:
         question: Чому люди на іншому боці Землі не падають?
       - concept: gravity-everywhere
         question: Земля тягне мене — чи я теж тягну Землю?
+      - concept: higher-farther
+        kind: delight
+        question: Чому моряки лізли на щоглу, а маяк роблять високим?
+      - concept: earth-huge
+        kind: delight
+        question: Скільки довелося б іти, щоб обійти Землю навколо?
 
   - title: У саду
     setting: Вечір у саду, пересаджування квітів, кішка з кошенятами.
@@ -51,6 +60,12 @@ sets:
         question: Чому з цієї насінини не виросте троянда?
       - concept: everyone-is-different
         question: Чому кошенята схожі між собою, але різні?
+      - concept: shadow-clock
+        kind: delight
+        question: Чи можна дізнатися час по паличці, встромленій у землю?
+      - concept: no-feel-spin
+        kind: delight
+        question: Якщо Земля крутиться — чому мене не нудить?
 ---
 
 ## Про цей ланцюжок

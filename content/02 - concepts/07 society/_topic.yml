@@ -1,0 +1,14 @@
+topic: society
+title: Society
+ages: 5-7
+status: mapped
+start: people-agree-on-things
+# Domains that count as inside this topic; anything else is a door out.
+domains: [Society, History, Money, Language, Human]
+# Names for each prerequisite depth. Editorial only — depth is computed.
+layers:
+  - Домовленості й сліди
+  - Свідчення
+  - Обмін
+  - Гроші
+  - Розходження
