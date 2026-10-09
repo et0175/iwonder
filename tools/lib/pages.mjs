@@ -600,8 +600,8 @@ export function storyPage(db, s, lang, i) {
 </header>
 <article class="story" lang="${lang}">${md(v.body)}</article>
 <nav class="pager">
-  ${prev ? `<a href="${url.story(prev.id, prev.versions[lang] ? lang : "en")}"><span class="tag">← Previous story</span>${esc((prev.versions[lang] ?? prev.versions.en).title)}</a>` : ""}
-  ${next ? `<a class="next" href="${url.story(next.id, next.versions[lang] ? lang : "en")}"><span class="tag">Next story →</span>${esc((next.versions[lang] ?? next.versions.en).title)}</a>` : ""}
+  ${prev ? `<a href="${url.story(prev.id, prev.versions[lang] ? lang : prev.versions.en ? "en" : Object.keys(prev.versions)[0])}"><span class="tag">← Previous story</span>${esc((prev.versions[lang] ?? prev.versions.en ?? Object.values(prev.versions)[0]).title)}</a>` : ""}
+  ${next ? `<a class="next" href="${url.story(next.id, next.versions[lang] ? lang : next.versions.en ? "en" : Object.keys(next.versions)[0])}"><span class="tag">Next story →</span>${esc((next.versions[lang] ?? next.versions.en ?? Object.values(next.versions)[0]).title)}</a>` : ""}
 </nav>
 </div>`,
   });

@@ -162,3 +162,39 @@ actually hurts.
 They came out at 6 and 10 against a budget of 13, because their prerequisites in
 physics were already spent. Either raise the budget for them or accept that
 book one is light on weather and machines.
+
+
+---
+
+## 2026-10 · Delights are part of the format
+
+A chain step can be `kind: delight`, and `npm run chain` enforces that nothing
+on the spine depends on one. That makes the definition exact: **a delight is a
+step you could delete.** A set with none gets a warning.
+
+Applied to `01 book-one`: all three sets were pure spine. Five delights added,
+all of them already free — brakes hot after a descent, the lighthouse, walking
+round the Earth, the stick as a sundial, and why a spinning planet does not
+make you dizzy.
+
+## 2026-10 · Three kinds of test, not one
+
+Principle 5a. A thing you do, evidence you can find, or a consequence you can
+follow. Only the first is an experiment, and all three are legitimate as long
+as the child does the deciding. This was already true of the book — the giraffe
+neck has always been settled by the third kind — it just had no name.
+
+## 2026-10 · Society is in, with one topic-level caveat
+
+`07 society`, 16 concepts: agreement, evidence, exchange, money, drift. Added
+after the objection that humanities cannot be tested turned out to be wrong in
+the interesting cases. Ten apples and twenty tokens is a real experiment, and
+"if everyone had a million, who bakes the bread?" is a real refutation.
+
+The genuinely valuable part is `separated-things-drift-apart`: the mechanism
+behind species works unchanged on languages, dialects, recipes and borders. It
+is the first place in the project where one idea does a second job in a
+completely different material, and that is worth building a chapter around.
+
+If it turns out not to fit the book, the topic is self-contained and five
+cross-topic links — one `git rm -r` and a `npm run check`.

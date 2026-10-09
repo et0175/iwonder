@@ -50,6 +50,29 @@ will.
 Ordinary objects only — a ball, a torch, a stick, string, water, flour, a
 coin. **If it needs buying, it needs rewriting.**
 
+## 5a. There are three kinds of test, not one
+
+Principle 5 says the experiment decides. In practice the book uses three
+different ways of letting the child, rather than the narrator, settle it — and
+it is worth naming all three, because only the first is an experiment.
+
+**A thing you do.** A ball and a torch, a toy boat over a beach ball, ten
+apples and twenty tokens. Strongest, and the default wherever it is possible.
+
+**Evidence you can go and find.** You cannot repeat the formation of a
+mountain, but you can look at seashells on its summit and at the growth rings
+in a stump. This is how the past is tested — in geology as much as in history.
+
+**A consequence you can follow.** "If giraffes stretched their necks, why has
+mine not grown?" — nothing is done and nothing is found, but the wrong answer
+still fails in front of the child. "If everyone got a million, who would bake
+the bread?" is the same move.
+
+The third is not weaker than the first; it is what makes the wrong answer
+collapse rather than merely get contradicted. What all three share is that the
+child does the deciding. **An article where the narrator decides has failed, no
+matter which of the three it claims to use.**
+
 ## 6. Prerequisites are real constraints, not suggestions
 
 An article whose prerequisites are not in place does not teach half of
@@ -87,3 +110,19 @@ The point is not to deliver facts wrapped in charm. It is that the world is
 strange and that noticing is a thing you can get better at. An article that
 ends with the child satisfied has done half the job; one that ends with them
 looking at something ordinary differently has done all of it.
+
+
+## 10. Every chapter needs something that is there purely for joy
+
+A set made only of load-bearing concepts is a textbook with characters in it.
+The project has the evidence: `npm run select 13` returns the sixty-eight most
+load-bearing concepts in the whole map, and not one of them is a rainbow, a
+lightning bolt or a spider's web — those are leaves, and nothing depends on
+leaves.
+
+So a chain marks some steps `kind: delight`, and the rule is that they must be
+cuttable: nothing on the spine may depend on one. That makes them free to move,
+free to drop and free to add — which is exactly why they can be chosen for
+delight alone. One or two per set. `npm run chain` warns when a set has none,
+and `npm run select` lists the leaves whose prerequisites a selection already
+covers, which is where to shop for them.

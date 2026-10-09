@@ -2,9 +2,15 @@
 /**
  * Checks every reading order in content/03 - chains/.
  *
- * A chain is a walk through the concept graph. The one rule: a concept may not
- * appear until every one of its prerequisites has already appeared earlier in
- * the same chain. Anything else is a story that cannot be told yet.
+ * A chain is a walk through the concept graph. Two rules:
+ *
+ *   1. A concept may not appear before its prerequisites. Anything else is a
+ *      story that cannot be told yet.
+ *   2. A step marked `kind: delight` must be cuttable. Nothing on the spine may
+ *      depend on it — delights are there for joy, not for load-bearing, so the
+ *      book still stands if every one of them is removed.
+ *
+ * A set with no delight at all is a warning: that is a textbook chapter.
  *
  *   node tools/chain.mjs
  */
@@ -25,7 +31,8 @@ let errors = 0, warnings = 0;
 for (const f of fs.readdirSync(CHAINS).filter((f) => f.endsWith(".md") && !f.startsWith("_")).sort()) {
   const where = path.join(CHAINS, f);
   const [fm] = splitFrontmatter(fs.readFileSync(where, "utf8"), where);
-  const steps = (fm.sets ?? []).flatMap((s) => (s.steps ?? []).map((st) => ({ ...st, set: s.title })));
+  const steps = (fm.sets ?? []).flatMap((s) => (s.steps ?? []).map((st) => ({ kind: "spine", ...st, set: s.title })));
+  const delights = new Set(steps.filter((s) => s.kind === "delight").map((s) => s.concept));
   console.log(`\n${fm.title ?? fm.id} — ${(fm.sets ?? []).length} sets, ${steps.length} steps`);
 
   const seen = new Set();
@@ -44,7 +51,8 @@ for (const f of fs.readdirSync(CHAINS).filter((f) => f.endsWith(".md") && !f.sta
     const unmet = (c.preAll ?? c.pre).filter((p) => !seen.has(p) && all[p]);
     seen.add(st.concept);
     if (!unmet.length) {
-      console.log(`  ${String(n).padStart(2)}. ${st.concept}  ·  ${c.topic}`);
+      const tag = st.kind === "delight" ? "  ✦" : "   ";
+      console.log(`  ${String(n).padStart(2)}.${tag} ${st.concept.padEnd(32)} ${c.topic}`);
       continue;
     }
     errors++;
@@ -57,6 +65,28 @@ for (const f of fs.readdirSync(CHAINS).filter((f) => f.endsWith(".md") && !f.sta
     console.log(`  ${String(n).padStart(2)}. ✗ ${st.concept}  needs:`);
     why.forEach((w) => console.log(`         ${w}`));
   }
+
+  // rule 2: the spine must survive deleting every delight
+  for (const st of steps) {
+    if (st.kind === "delight") continue;
+    const c = all[st.concept];
+    if (!c) continue;
+    const leaning = (c.preAll ?? c.pre).filter((p) => delights.has(p));
+    if (leaning.length) {
+      errors++;
+      console.log(`  ✗ ${st.concept} is on the spine but needs ${leaning.join(", ")}, marked as a delight`);
+      console.log(`      either promote those to the spine, or make this one a delight too`);
+    }
+  }
+  for (const s0 of fm.sets ?? []) {
+    const kinds = (s0.steps ?? []).map((x) => x.kind ?? "spine");
+    if (kinds.length > 2 && !kinds.includes("delight")) {
+      warnings++;
+      console.log(`  ! "${s0.title}" is all spine — no delight in ${kinds.length} steps`);
+    }
+  }
+  const nd = steps.filter((s) => s.kind === "delight").length;
+  console.log(`  ${steps.length - nd} spine, ${nd} delight`);
 
   // a chain that never leaves one topic is a textbook chapter, not a book
   const topics = new Set(steps.map((s) => all[s.concept]?.topic).filter(Boolean));
