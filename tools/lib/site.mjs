@@ -34,6 +34,7 @@ export const url = {
   stories: () => "/stories/",
   story: (id, lang = "en") => (lang === "en" ? `/stories/${id}/` : `/stories/${id}/${lang}/`),
   chains: () => "/chains/",
+  notebook: () => "/notebook/",
   chain: (id) => `/chains/${id}/`,
 };
 
@@ -47,6 +48,7 @@ const NAV = [
   ["questions", "Questions", url.questions()],
   ["stories", "Stories", url.stories()],
   ["chains", "Chains", url.chains()],
+  ["notebook", "Notebook", url.notebook()],
 ];
 
 export function nav(active, atlasHref) {

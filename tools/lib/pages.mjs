@@ -654,6 +654,11 @@ export function chainPage(db, ch) {
   const step = (st) => {
     const c = st.c;
     const bad = !c || st.unmet.length;
+    const kindTag = st.kind === "delight"
+      ? '<span class="badge story" title="Cuttable — nothing on the spine leans on it">✦ delight</span>'
+      : st.kind === "seeded"
+        ? `<span class="badge" title="Established without its mechanism">⊙ seeded${st.defers?.length ? " · defers " + st.defers.map((d) => esc(d.short)).join(", ") : ""}</span>`
+        : "";
     const q = st.question || c?.ask || "";
     const title = c
       ? `<a class="cq" href="${url.concept(c.topic, c.id)}">${esc(q)}</a>`
@@ -663,6 +668,8 @@ export function chainPage(db, ch) {
       : `<span class="rests"><span class="root">rests on nothing — a child already has this</span></span>`;
     const why = !c
       ? `<p class="broke">No concept with the id <code>${esc(st.concept)}</code> in any topic.</p>`
+      : st.kind === "seeded"
+        ? `<p class="rests"><span class="tag">deferred</span>${st.defers?.length ? st.defers.map((d) => `<b>${esc(d.short)}</b>`).join(", ") : "nothing named"} — established here, explained later.</p>`
       : st.unmet.length
         ? `<p class="broke">Needs ${st.unmet.map((u) => `<b>${esc(u.c.short)}</b>${u.later ? ` — comes later, at step ${stepNo(u.later)}` : " — never appears in this chain"}`).join("; ")}.</p>`
         : "";
@@ -672,7 +679,8 @@ export function chainPage(db, ch) {
         ${title}
         ${c ? `<p class="teaches"><span class="tag">teaches</span><b>${esc(c.short)}</b><span>${esc(c.name)}</span></p>` : ""}
         ${c && c.ask && c.ask !== st.question ? `<p class="generic">The concept's own wording: <i>${esc(c.ask)}</i></p>` : ""}
-        ${c ? rests : ""}
+        ${kindTag}
+        ${c && st.kind !== "seeded" ? rests : ""}
         ${why}
       </div>
       <span class="end">${c ? `<span class="label"><b>${esc(c.catalogue)}</b>${esc(c.topicTitle)}</span>${statusBadge(c.status, true)}` : '<span class="stamp red flat">no such concept</span>'}</span>
@@ -738,5 +746,82 @@ ${ch.open.length ? `<section class="block">
   ${ch.open.length > 12 ? `<p class="sub" style="margin-top:12px">…and ${ch.open.length - 12} more. <a href="${url.questions()}">See every question →</a></p>` : ""}
 </section>` : ""}
 ${notes}`,
+  });
+}
+
+/* ====================================================================== */
+/* Ada's notebook — mechanisms a chain used before it explained them       */
+/* ====================================================================== */
+
+export function notebookPage(db) {
+  const debts = db.debts ?? [];
+  const owed = debts.filter((d) => !d.repaidBy);
+  const paid = debts.filter((d) => d.repaidBy);
+  const borrowers = [...new Set(debts.map((d) => d.borrowedBy.id))].length;
+
+  const row = (d) => {
+    const c = d.owed;
+    const ch = d.borrowedBy;
+    const st = d.atStep;
+    // What has to be in place before this one can actually be explained.
+    const needs = (c.preAll ?? []).map((id) => db.conceptById.get(id)).filter(Boolean);
+    return `<div class="step${d.repaidBy ? "" : " bad"}">
+      <span class="n"><b>${d.repaidBy ? "✓" : "⊙"}</b><small>${d.repaidBy ? "paid" : "owed"}</small></span>
+      <div class="main">
+        <a class="cq" href="${url.concept(c.topic, c.id)}">${esc(c.ask || c.short)}</a>
+        <p class="teaches"><span class="tag">mechanism</span><b>${esc(c.short)}</b><span>${esc(c.name)}</span></p>
+        <p class="rests"><span class="tag">borrowed by</span>
+          <a class="chip" href="${url.chain(ch.id)}#s${st.n}">${esc(ch.title)} · step ${stepNo(st.n)}</a>
+          <span class="generic">${esc(st.question || st.c?.ask || "")}</span></p>
+        ${needs.length ? `<p class="rests"><span class="tag">needs first</span>${needs.map(conceptChip).join("")}</p>` : `<p class="rests"><span class="root">rests on nothing — it can be explained wherever it fits</span></p>`}
+        ${d.repaidBy
+          ? `<p class="rests"><span class="tag">explained in</span><a class="chip" href="${url.chain(d.repaidBy.ch.id)}#s${d.repaidBy.st.n}">${esc(d.repaidBy.ch.title)} · step ${stepNo(d.repaidBy.st.n)}</a></p>`
+          : `<p class="broke">No chain explains this yet. Until one does, a child has been told that it is so and not why.</p>`}
+      </div>
+      <span class="end"><span class="label"><b>${esc(c.catalogue)}</b>${esc(c.topicTitle)}</span>${statusBadge(c.status, true)}</span>
+    </div>`;
+  };
+
+  const section = (sigil, title, sub, list) => !list.length ? "" : `
+    <section class="set">
+      <div class="sh">
+        <span class="n">${sigil}</span>
+        <div><h2>${esc(title)}</h2><p class="setting">${esc(sub)}</p></div>
+        <span class="tag">${list.length} entr${list.length === 1 ? "y" : "ies"}</span>
+      </div>
+      <div class="walk">${list.map(row).join("")}</div>
+    </section>`;
+
+  return page({
+    title: "Ada's notebook — I Wonder",
+    description: "Every mechanism a story established before it explained it, and whether it has been paid back.",
+    active: "notebook",
+    atlasHref: db.atlasHref,
+    body: `
+<header class="mast">
+  <p class="eyebrow">Notebook · ${debts.length} deferral${debts.length === 1 ? "" : "s"} · ${owed.length} still owed</p>
+  <h1>Ada's notebook</h1>
+  <p class="lede">A story is allowed to establish something it cannot yet explain: a child can feel that wet skin cools before meeting evaporation. The step is marked <b>⊙ seeded</b> in its chain and must name what it borrows — and the borrowing is written down here. This is the ledger: <b>a promise that the mechanism gets explained somewhere</b>, not a licence to skip it. Everything on this page is a thing a reader has been told is true without being shown why.</p>
+  <div class="stats">
+    <div class="stat"><b>${debts.length}</b><span>deferrals</span><small>across ${borrowers} chain${borrowers === 1 ? "" : "s"}</small></div>
+    <div class="stat ${owed.length ? "warn" : "fine"}"><b>${owed.length}</b><span>still owed</span><small>${owed.length ? "no chain explains them" : "nothing outstanding"}</small></div>
+    <div class="stat"><b>${paid.length}</b><span>paid back</span><small>explained in a chain</small></div>
+  </div>
+</header>
+${owed.length ? `<div class="alarm"><span class="stamp red">${owed.length} owed</span><p>These are the first candidates for the next chain — not because they are the most important concepts, but because the reader is already carrying them. <code>npm run chain</code> prints the same ledger.</p></div>` : ""}
+${section("⊙", "Still owed", "Established in a story, explained nowhere yet. The next book's shopping list.", owed)}
+${section("✓", "Paid back", "Borrowed early, explained properly later.", paid)}
+${debts.length ? "" : '<section class="block"><div class="empty">No chain defers anything yet. A step earns a line here by being marked <code>kind: seeded</code> with a <code>defers:</code> list.</div></section>'}
+<section class="block">
+  <h2>How a debt is made and paid</h2>
+  <div class="prose">
+    <p>A chain step is normally <b>spine</b>: it may not appear until every prerequisite has appeared before it. Two kinds of step bend that rule, in opposite directions.</p>
+    <ul>
+      <li><b>✦ delight</b> — cuttable. Nothing on the spine may lean on it. It is there for joy, and the book still stands if it is dropped.</li>
+      <li><b>⊙ seeded</b> — load-bearing but unexplained. The <i>conclusion</i> is established and the <i>mechanism</i> is deferred, so the step must list what it borrows in <code>defers:</code>. It appears on this page until some chain reaches that concept as an ordinary step.</li>
+    </ul>
+    <p>A debt is repaid by any chain that meets the concept properly — not by mentioning it again. If nothing ever does, the encyclopaedia has quietly taught a child to accept an answer, which is the one thing it exists not to do.</p>
+  </div>
+</section>`,
   });
 }

@@ -67,6 +67,38 @@ He doesn't care very much about sounding sensible.
 ❌ **Be cynical** (he's genuinely curious about weird things)
 ❌ **Substitute for evidence** (Prof still provides real answers)
 
+### Can he ever be right?
+
+Yes. The rule is not *never true* — it is **never teaching**. Olia, Oct 2026:
+"не впевнена, що він взагалі ніколи не може сказати щось, що відповідає
+дійсності — вчити точно не має."
+
+The line runs between two things that look alike on the page:
+
+| He may | He may not |
+|---|---|
+| Land a conclusion the scene has already earned | Supply a mechanism nobody worked out |
+| Say the obvious thing nobody said out loud | Say the thing only someone who studied it knows |
+| Be accidentally right — a joke that turns out to hold | Be deliberately informative |
+| Compress what just happened into one line | Add information the children did not have |
+
+The practical test: **could a reader have said it too?** If his true line is a
+compression of what everyone just watched, it is his. If it could only come
+from knowing the physics, it belongs to Professor Ada — hand it over.
+
+The second test is direction. Teaching has an audience; Strange talks to
+nobody in particular. A true sentence he throws at the ceiling is fine. The
+same sentence addressed to a child who did not understand is a lesson.
+
+His truths arrive sideways: as a joke that happens to hold, or a flat remark
+he does not realise matters. Never as "ось як це працює".
+
+**From the first story, both kinds in one scene.** `Вона охолоджує себе
+язиком` — his: four people have just felt a dry dog and a wet tongue, and he
+names it. `По тілу в неї немає чим... тому вона висолопила єдине мокре місце,
+яке має` — not his: nobody could have got there from the room, and it arrives
+as instruction. Give that one to Ada.
+
 ## Dialogue Style
 
 **Tone**: Playful, curious, a bit mischievous

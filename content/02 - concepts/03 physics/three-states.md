@@ -8,7 +8,6 @@ ages: 5-7
 status: mapped
 prerequisites:
   - '[[everything-is-made-of-bits]]'
-  - '[[hot-and-cold-even-out]]'
 opens:
   - question: Чи все можна розплавити?
     domain: Matter

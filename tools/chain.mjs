@@ -9,6 +9,11 @@
  *   2. A step marked `kind: delight` must be cuttable. Nothing on the spine may
  *      depend on it — delights are there for joy, not for load-bearing, so the
  *      book still stands if every one of them is removed.
+ *   3. A step marked `kind: seeded` establishes a conclusion without its
+ *      mechanism — by evidence or by consequence rather than by explanation.
+ *      Prerequisites are not required, because nothing is being explained. It
+ *      must say what it `defers:`, and that debt is tracked: a deferred
+ *      concept that never turns up in any chain is borrowed and not repaid.
  *
  * A set with no delight at all is a warning: that is a textbook chapter.
  *
@@ -27,6 +32,8 @@ const all = {};
 for (const t of listTopics()) for (const c of loadTopic(t).concepts) all[c.id] = c;
 
 let errors = 0, warnings = 0;
+const deferred = new Map();   // concept id → the chain that owes it
+const covered = new Set();    // every concept any chain actually explains
 
 for (const f of fs.readdirSync(CHAINS).filter((f) => f.endsWith(".md") && !f.startsWith("_")).sort()) {
   const where = path.join(CHAINS, f);
@@ -35,6 +42,7 @@ for (const f of fs.readdirSync(CHAINS).filter((f) => f.endsWith(".md") && !f.sta
   const delights = new Set(steps.filter((s) => s.kind === "delight").map((s) => s.concept));
   console.log(`\n${fm.title ?? fm.id} — ${(fm.sets ?? []).length} sets, ${steps.length} steps`);
 
+  for (const st of steps) if (st.kind !== "seeded") covered.add(st.concept);
   const seen = new Set();
   const order = new Map(steps.map((s, i) => [s.concept, i]));
   let n = 0, setNow = null;
@@ -43,6 +51,19 @@ for (const f of fs.readdirSync(CHAINS).filter((f) => f.endsWith(".md") && !f.sta
     n++;
     if (st.set !== setNow) { setNow = st.set; console.log(`  ── ${setNow}`); }
     const c = all[st.concept];
+    if (c && st.kind === "seeded") {
+      seen.add(st.concept);
+      const owes = [].concat(st.defers ?? []);
+      if (!owes.length) {
+        errors++;
+        console.log(`  ${String(n).padStart(2)}. ✗ ${st.concept} is seeded but says nothing under defers:`);
+        console.log(`         a seeded step must name the mechanism it is leaving for later`);
+      } else {
+        owes.forEach((d) => deferred.set(d, fm.title ?? fm.id));
+        console.log(`  ${String(n).padStart(2)}.  ⊙ ${st.concept.padEnd(32)} ${c.topic}  — defers ${owes.join(", ")}`);
+      }
+      continue;
+    }
     if (!c) {
       errors++;
       console.log(`  ${String(n).padStart(2)}. ✗ ${st.concept} — no such concept in any topic`);
@@ -86,7 +107,8 @@ for (const f of fs.readdirSync(CHAINS).filter((f) => f.endsWith(".md") && !f.sta
     }
   }
   const nd = steps.filter((s) => s.kind === "delight").length;
-  console.log(`  ${steps.length - nd} spine, ${nd} delight`);
+  const ns = steps.filter((s) => s.kind === "seeded").length;
+  console.log(`  ${steps.length - nd - ns} spine, ${nd} delight${ns ? `, ${ns} seeded` : ""}`);
 
   // a chain that never leaves one topic is a textbook chapter, not a book
   const topics = new Set(steps.map((s) => all[s.concept]?.topic).filter(Boolean));
@@ -95,6 +117,17 @@ for (const f of fs.readdirSync(CHAINS).filter((f) => f.endsWith(".md") && !f.sta
     console.log(`  ! stays inside one topic (${[...topics]}) — a chain is meant to cross them`);
   }
   console.log(`  topics crossed: ${[...topics].join(" → ")}`);
+}
+
+if (deferred.size) {
+  console.log(`\ndeferred mechanisms (${deferred.size})`);
+  for (const [id, from] of deferred) {
+    const paid = covered.has(id);
+    if (!paid) warnings++;
+    console.log(`  ${paid ? "✓ repaid" : "! owed  "}  ${id.padEnd(32)} borrowed by "${from}"`);
+  }
+  if ([...deferred.keys()].some((id) => !covered.has(id)))
+    console.log(`  An owed mechanism is a promise to the reader. It needs a later chain, or the loan was a lie.`);
 }
 
 console.log(`\n${errors ? "✗" : "✓"} ${errors} ordering error${errors === 1 ? "" : "s"}, ${warnings} warning${warnings === 1 ? "" : "s"}`);

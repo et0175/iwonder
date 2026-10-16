@@ -285,6 +285,9 @@ export function loadChains() {
           steps: (s.steps ?? []).map((st) => ({
             concept: unwiki(st.concept ?? ""),
             question: st.question ?? "",
+            // spine (default) · delight: cuttable · seeded: conclusion without mechanism
+            kind: st.kind ?? "spine",
+            defers: [].concat(st.defers ?? []).map(unwiki),
           })),
         })),
         // the editorial note: `## Про цей ланцюжок` and anything else written

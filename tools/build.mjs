@@ -139,8 +139,11 @@ for (const ch of chains) {
       st.rests = pre.filter((p) => seen.has(p))
         .map((p) => ({ n: at.get(p), c: conceptById.get(p) }))
         .sort((a, b) => a.n - b.n);
-      st.unmet = pre.filter((p) => !seen.has(p))
+      // A `seeded` step establishes a conclusion without its mechanism, so its
+      // prerequisites are deliberately not met. That is a deferral, not a fault.
+      st.unmet = st.kind === "seeded" ? [] : pre.filter((p) => !seen.has(p))
         .map((p) => ({ later: at.get(p) ?? null, c: conceptById.get(p) }));
+      st.defers = [].concat(st.defers ?? []).map((d) => conceptById.get(d)).filter(Boolean);
       seen.add(st.concept);
       ch.steps.push(st);
     }
@@ -149,6 +152,7 @@ for (const ch of chains) {
   const used = new Set(ch.steps.map((st) => st.concept));
   ch.missing = ch.steps.filter((st) => !st.c);
   ch.outOfOrder = ch.steps.filter((st) => st.c && st.unmet.length);
+  ch.seeded = ch.steps.filter((st) => st.kind === "seeded");
   ch.topicsCrossed = [...new Set(ch.steps.map((st) => st.c?.topicTitle).filter(Boolean))];
   ch.written = ch.steps.filter((st) => st.c?.status === "written").length;
   ch.drafted = ch.steps.filter((st) => st.c?.status === "drafted").length;
@@ -222,6 +226,23 @@ stories.forEach((s, i) => {
   // a story with no English version still needs a page at its plain URL
   if (!s.versions.en) write(url.story(s.id), P.storyPage(db, s, Object.keys(s.versions)[0], i));
 });
+// Ada's notebook: every mechanism a chain established without explaining.
+// A concept explained by any chain (a step that is not itself seeded) repays it.
+{
+  const explained = new Map();
+  for (const ch of chains) for (const st of ch.steps)
+    if (st.kind !== "seeded" && st.c && !explained.has(st.concept)) explained.set(st.concept, { ch, st });
+  db.debts = chains.flatMap((ch) =>
+    ch.steps.filter((st) => st.kind === "seeded").flatMap((st) =>
+      (st.defers ?? []).map((owed) => ({
+        owed,
+        borrowedBy: ch,
+        atStep: st,
+        repaidBy: explained.get(owed.id) ?? null,
+      }))));
+  db.debts.sort((a, b) => (a.repaidBy ? 1 : 0) - (b.repaidBy ? 1 : 0) || a.owed.short.localeCompare(b.owed.short));
+}
+write("notebook/", P.notebookPage(db));
 write("chains/", P.chainsPage(db));
 chains.forEach((ch) => write(`chains/${ch.id}/`, P.chainPage(db, ch)));
 
