@@ -192,6 +192,31 @@ for (const ch of chains) {
     .filter((o) => !o.leadsTo || !used.has(o.leadsTo))
     .map((o) => ({ ...o, from: st })));
   ch.withStories = ch.steps.filter((st) => storiesByConcept.has(st.concept)).length;
+
+  // The prose. One story per file; the chapter is the reading unit, so the
+  // order is the chain's, not the filenames' — a story sits where the first
+  // concept it teaches sits. Filename numbers are for the file browser only,
+  // and the build says so out loud when the two disagree.
+  const pos = new Map(ch.steps.map((st, i) => [st.concept, i]));
+  const rank = (s) => Math.min(...s.concepts.map((c) => pos.has(c) ? pos.get(c) : Infinity));
+  ch.prose = stories.filter((s) => s.chapter === ch.id)
+    .sort((a, b) => rank(a) - rank(b) || a.order.localeCompare(b.order));
+  ch.prose.forEach((s, i) => {
+    s.chapterOf = ch;
+    s.inChapter = i + 1;
+    s.prevInChapter = ch.prose[i - 1] ?? null;
+    s.nextInChapter = ch.prose[i + 1] ?? null;
+    s.orphan = s.concepts.every((c) => !pos.has(c));
+    // The question as the chapter asks it, which beats the concept's generic one.
+    s.askedAs = ch.steps.find((st) => st.concept === s.concepts[0])?.question ?? "";
+    if (!s.characters.length) s.characters = ch.characters ?? [];
+    if (!s.ages.length) s.ages = ch.ages ?? [];
+  });
+  ch.langs = [...new Set(ch.prose.flatMap((s) => Object.keys(s.versions)))];
+  ch.toldConcepts = new Set(ch.prose.flatMap((s) => s.concepts));
+  ch.untold = ch.steps.filter((st) => !ch.toldConcepts.has(st.concept));
+  const byFile = ch.prose.slice().sort((a, b) => a.order.localeCompare(b.order));
+  ch.fileOrderDiffers = byFile.some((s, i) => s !== ch.prose[i]);
 }
 
 const chainsByConcept = new Map();
@@ -259,6 +284,11 @@ stories.forEach((s, i) => {
   // a story with no English version still needs a page at its plain URL
   if (!s.versions.en) write(url.story(s.id), P.storyPage(db, s, Object.keys(s.versions)[0], i));
 });
+// A chapter read end to end: the same story files, stitched in the chain's order.
+chains.filter((ch) => ch.prose.length).forEach((ch) => {
+  for (const lang of ch.langs) write(url.chapter(ch.id, lang), P.chapterPage(db, ch, lang));
+  if (!ch.langs.includes("en")) write(url.chapter(ch.id), P.chapterPage(db, ch, ch.langs[0]));
+});
 // Ada's notebook: every mechanism a chain established without explaining.
 // A concept explained by any chain (a step that is not itself seeded) repays it.
 {
@@ -282,4 +312,9 @@ chains.forEach((ch) => write(`chains/${ch.id}/`, P.chainPage(db, ch)));
 console.log(`built ${OUT}/`);
 topics.forEach((t) => console.log(`  ${t.meta.title.padEnd(14)} ${String(t.concepts.length).padStart(3)} concepts, ${t.maxL + 1} layers → atlas/${t.meta.topic}.html`));
 console.log(`  ${characters.length} characters · ${concepts.length} concept pages · ${questions.length} questions · ${stories.length} stories`);
+chains.filter((ch) => ch.prose.length).forEach((ch) => {
+  console.log(`  ${ch.title.padEnd(14)} ${String(ch.prose.length).padStart(3)} stories written, ${ch.untold.length} concepts with no prose yet → chapters/${ch.id}/`);
+  if (ch.fileOrderDiffers) console.log(`    ! file numbering disagrees with the chain order; the chain wins`);
+  ch.prose.filter((s) => s.orphan).forEach((s) => console.log(`    ! "${s.id}" teaches nothing this chapter lists`));
+});
 chains.forEach((ch) => console.log(`  ${ch.title.padEnd(14)} ${String(ch.steps.length).padStart(3)} steps in ${ch.sets.length} sets, ${ch.topicsCrossed.length} topics` + ((ch.outOfOrder.length + ch.missing.length) ? ` \u2014 \u2717 ${ch.outOfOrder.length + ch.missing.length} out of order` : "") + ` \u2192 chains/${ch.id}/`));

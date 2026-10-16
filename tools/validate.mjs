@@ -186,6 +186,7 @@ const LANGS = ["en", "uk"];
 const stories = loadStories();
 console.log(`\nstories`);
 console.log(`  ${stories.length} stories, ${stories.filter((s) => LANGS.every((l) => s.versions[l])).length} in both languages`);
+const untranslated = {};   // language -> story ids, so one line instead of sixty
 for (const st of stories) {
   const at = st.files[0].file;
   if (!/^[a-z0-9-]+$/.test(st.id)) err(`${at}: id "${st.id}" must be lower-case kebab-case`);
@@ -200,9 +201,11 @@ for (const st of stories) {
   for (const c of st.concepts) if (!allConcepts.has(c)) err(`${at}: concept "${c}" does not exist`);
   for (const c of st.characters) if (!castIds.has(c)) err(`${at}: character "${c}" is not in the cast`);
   if (st.bridgeTo && !allConcepts.has(st.bridgeTo)) err(`${at}: bridge_to "${st.bridgeTo}" does not exist`);
-  const missingLangs = LANGS.filter((l) => !st.versions[l]);
-  if (missingLangs.length) warn(`${at}: no ${missingLangs.join(", ")} version yet`);
+  for (const l of LANGS) if (!st.versions[l]) (untranslated[l] ??= []).push(st.id);
 }
+// Missing translations are a fact about the book, not sixty separate problems.
+for (const [l, ids] of Object.entries(untranslated))
+  warn(`${ids.length} stor${ids.length === 1 ? "y has" : "ies have"} no ${l} version yet: ${ids.slice(0, 5).join(", ")}${ids.length > 5 ? ` …and ${ids.length - 5} more` : ""}`);
 
 console.log(
   `\n${errors ? "✗" : "✓"} ${errors} error${errors === 1 ? "" : "s"}, ${warnings} warning${warnings === 1 ? "" : "s"}`

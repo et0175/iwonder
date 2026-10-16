@@ -506,6 +506,8 @@ export function storiesPage(db) {
     const cs = s.concepts.map((id) => db.conceptById.get(id)).filter(Boolean);
     return {
       id: s.id, href: url.story(s.id),
+      chapter: s.chapterOf ? `${s.chapterOf.chapterNo ? stepNo(s.chapterOf.chapterNo) + " · " : ""}${s.chapterOf.title}` : "Not in a chapter",
+      n: s.inChapter ?? 0,
       title: s.versions.en?.title ?? Object.values(s.versions)[0].title,
       uk: s.versions.uk?.title ?? null,
       langs: Object.keys(LANGS).map((l) => [l, !!s.versions[l]]),
@@ -530,7 +532,7 @@ export function storiesPage(db) {
 </header>
 <div class="toolbar">
   <div class="seg" role="group" aria-label="Group by">
-    <button data-g="concept" aria-pressed="true">Concept</button><button data-g="question" aria-pressed="false">Question</button><button data-g="age" aria-pressed="false">Age</button><button data-g="order" aria-pressed="false">In order</button>
+    <button data-g="chapter" aria-pressed="true">Chapter</button><button data-g="concept" aria-pressed="false">Concept</button><button data-g="question" aria-pressed="false">Question</button><button data-g="age" aria-pressed="false">Age</button><button data-g="order" aria-pressed="false">In order</button>
   </div>
   <span class="count">${data.length} stor${data.length === 1 ? "y" : "ies"}</span>
 </div>
@@ -538,7 +540,7 @@ export function storiesPage(db) {
     script: `
 const S = ${json(data)};
 const esc = s => String(s ?? '').replace(/[&<>"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[m]);
-let group = 'concept';
+let group = 'chapter';
 function card(s) {
   return '<a class="card" href="' + s.href + '"><span class="tag">' + s.concepts.map(c => esc(c.title)).join(' · ') + '</span>' +
     '<h3>' + esc(s.title) + '</h3>' + (s.uk ? '<p>' + esc(s.uk) + '</p>' : '') +
@@ -549,10 +551,11 @@ function card(s) {
 }
 function render() {
   document.querySelectorAll('[data-g]').forEach(b => b.setAttribute('aria-pressed', b.dataset.g === group));
-  const keys = s => group === 'concept' ? [s.concept] : group === 'question' ? [s.question || 'No question yet'] : group === 'age' ? s.ages : ['All stories'];
+  const keys = s => group === 'chapter' ? [s.chapter] : group === 'concept' ? [s.concept] : group === 'question' ? [s.question || 'No question yet'] : group === 'age' ? s.ages : ['All stories'];
   const groups = new Map();
   S.forEach(s => keys(s).forEach(k => { if (!groups.has(k)) groups.set(k, []); groups.get(k).push(s); }));
   const order = [...groups.keys()]; if (group !== 'order') order.sort();
+  if (group === 'chapter') groups.forEach(g => g.sort((a, b) => a.n - b.n));
   document.getElementById('out').innerHTML = S.length ? order.map(k =>
     '<section class="group"><div class="gh"><h2>' + esc(k) + '</h2><span class="tag">' + groups.get(k).length + '</span></div><div class="grid">' +
     groups.get(k).map(card).join('') + '</div></section>').join('') : '<div class="empty">No stories yet.</div>';
@@ -571,7 +574,11 @@ export function storyPage(db, s, lang, i) {
   const hook = v.memoryHook || en.memoryHook;
   const bridge = v.bridge || en.bridge;
   const bridgeTo = s.bridgeTo && db.conceptById.get(s.bridgeTo);
-  const prev = db.stories[i - 1], next = db.stories[i + 1];
+  // Neighbours come from the chapter, so reordering a chapter reorders the
+  // pager; a story outside any chapter falls back to the flat list.
+  const prev = s.chapterOf ? s.prevInChapter : db.stories[i - 1];
+  const next = s.chapterOf ? s.nextInChapter : db.stories[i + 1];
+  const whole = s.chapterOf ? url.chapter(s.chapterOf.id, s.chapterOf.langs.includes(lang) ? lang : s.chapterOf.langs[0]) : null;
 
   const tabs = Object.entries(LANGS).map(([l, label]) =>
     s.versions[l]
@@ -587,11 +594,16 @@ export function storyPage(db, s, lang, i) {
     body: `
 <div class="reader">
 <header class="mast">
-  <p class="eyebrow"><a href="${url.stories()}">Stories</a> · ages ${esc(s.ages.join(", ") || "—")} · ${statusBadge(v.status)}</p>
+  <p class="eyebrow">${s.chapterOf
+    ? `<a href="${whole}">${esc(s.chapterOf.title)}</a> <span>· story ${stepNo(s.inChapter)} of ${s.chapterOf.prose.length} · ages ${esc(s.ages.join(", ") || "—")}</span>`
+    : `<a href="${url.stories()}">Stories</a> <span>· ages ${esc(s.ages.join(", ") || "—")}</span>`} ${statusBadge(v.status)}</p>
   <h1 lang="${lang}">${esc(v.title)}</h1>
   <div class="tabs">${tabs}</div>
   <dl class="storymeta">
-    ${row("Question", question ? `<i>${esc(question)}</i>` : cs[0]?.ask ? `<i>${esc(cs[0].ask)}</i> <span class="tag">from the concept</span>` : none("not set"))}
+    ${row("Question", question
+      ? `<i>${esc(question)}</i>`
+      : s.askedAs ? `<i>${esc(s.askedAs)}</i> <span class="tag">from the chapter</span>`
+      : cs[0]?.ask ? `<i>${esc(cs[0].ask)}</i> <span class="tag">from the concept</span>` : none("not set"))}
     ${row("Concept", cs.map(conceptChip).join(" ") || none("not linked"))}
     ${row("Characters", `<div class="chips">${who.map(characterChip).join("") || none("none listed")}</div>`)}
     ${row("Memory hook", hook ? esc(hook) : cs[0]?.hook ? `${esc(cs[0].hook)} <span class="tag">from the concept</span>` : none("not written yet"))}
@@ -599,9 +611,60 @@ export function storyPage(db, s, lang, i) {
   </dl>
 </header>
 <article class="story" lang="${lang}">${md(v.body)}</article>
+${whole ? `<p class="sub" style="margin-top:22px">One of ${s.chapterOf.prose.length} stories in <a href="${whole}">${esc(s.chapterOf.title)}</a> — the chapter reads end to end there, in this order.</p>` : ""}
 <nav class="pager">
   ${prev ? `<a href="${url.story(prev.id, prev.versions[lang] ? lang : prev.versions.en ? "en" : Object.keys(prev.versions)[0])}"><span class="tag">← Previous story</span>${esc((prev.versions[lang] ?? prev.versions.en ?? Object.values(prev.versions)[0]).title)}</a>` : ""}
   ${next ? `<a class="next" href="${url.story(next.id, next.versions[lang] ? lang : next.versions.en ? "en" : Object.keys(next.versions)[0])}"><span class="tag">Next story →</span>${esc((next.versions[lang] ?? next.versions.en ?? Object.values(next.versions)[0]).title)}</a>` : ""}
+</nav>
+</div>`,
+  });
+}
+
+/* ====================================================================== */
+/* A chapter, read end to end                                              */
+/* ====================================================================== */
+
+export function chapterPage(db, ch, lang) {
+  const tabs = Object.entries(LANGS).map(([l, label]) =>
+    ch.langs.includes(l)
+      ? `<a href="${url.chapter(ch.id, l)}" lang="${l}"${l === lang ? ' aria-current="page"' : ""}>${label}</a>`
+      : `<span class="off" title="Not written yet">${label} <span class="soon">not yet</span></span>`).join("");
+
+  const toc = ch.prose.map((s) => {
+    const v = s.versions[lang] ?? Object.values(s.versions)[0];
+    return `<li><b>${stepNo(s.inChapter)}</b><span class="t"><a href="#${s.id}">${esc(v.title)}</a><i>${esc(s.concepts.map((id) => db.conceptById.get(id)?.short).filter(Boolean).join(" · "))}</i></span><span class="tag">${esc(v.status)}</span></li>`;
+  }).join("");
+
+  const sections = ch.prose.map((s) => {
+    const v = s.versions[lang] ?? Object.values(s.versions)[0];
+    const cs = s.concepts.map((id) => db.conceptById.get(id)).filter(Boolean);
+    return `<section class="block story-part" id="${s.id}">
+      <p class="eyebrow">${stepNo(s.inChapter)}${v.lang !== lang ? ` · <span class="tag">${esc(LANGS[v.lang] ?? v.lang)}</span>` : ""} · <a href="${url.story(s.id, v.lang)}">this story on its own →</a></p>
+      <h2>${esc(v.title)}</h2>
+      <div class="chips">${cs.map(conceptChip).join("")}</div>
+      <article class="story" lang="${v.lang}">${md(v.body)}</article>
+    </section>`;
+  }).join("");
+
+  return page({
+    title: `${ch.title} — I Wonder`,
+    description: `${ch.title}, read end to end: ${ch.prose.length} stories.`,
+    active: "stories",
+    atlasHref: db.atlasHref,
+    body: `
+<div class="reader">
+<header class="mast">
+  <p class="eyebrow">${ch.chapterNo ? `Chapter ${ch.chapterNo}` : "Outside the book"} <span>· ${ch.prose.length} stor${ch.prose.length === 1 ? "y" : "ies"} · <a href="${url.chain(ch.id)}">the chapter's concepts →</a></span> ${statusBadge(ch.status)}</p>
+  <h1>${esc(ch.title)}</h1>
+  <div class="tabs">${tabs}</div>
+  <p class="lede">The whole chapter, one story after another, in the order the concepts are met. Each story is its own file — this page only stitches them, so the order here is the chain's, and changing the chain changes this page.</p>
+  <ol class="setlist">${toc}</ol>
+  ${ch.untold.length ? `<p class="sub">${ch.untold.length} concept${ch.untold.length === 1 ? "" : "s"} in this chapter ${ch.untold.length === 1 ? "has" : "have"} no prose yet: ${ch.untold.map((st) => st.c ? conceptChip(st.c) : esc(st.concept)).join(" ")}</p>` : ""}
+</header>
+${sections}
+<nav class="pager">
+  <a href="${url.chain(ch.id)}"><span class="tag">← The chapter's concepts</span>${esc(ch.title)}</a>
+  <a class="next" href="${url.chains()}"><span class="tag">The book →</span>${esc(db.book?.title ?? "All chapters")}</a>
 </nav>
 </div>`,
   });
@@ -624,7 +687,7 @@ export function chainsPage(db) {
       <div class="bar" title="${ch.written} written, ${ch.drafted} drafted of ${ch.steps.length}"><i class="w" style="width:${(100 * ch.written) / total}%"></i><i class="d" style="width:${(100 * ch.drafted) / total}%"></i></div>
       <span class="tag barlab">${ch.written} written · ${ch.drafted} drafted · ${ch.steps.length - ch.written - ch.drafted} still only mapped</span>
       <div class="figs">
-        <div class="fig"><b>${ch.steps.length}</b><span>stories</span></div>
+        <div class="fig"><b>${ch.prose?.length ?? 0}</b><span>stories written</span></div>
         <div class="fig"><b>${ch.sets.length}</b><span>sets</span></div>
         <div class="fig"><b>${ch.topicsCrossed.length}</b><span>topics</span></div>
         <div class="fig"><b>${ch.open.length}</b><span>doors left open</span></div>
@@ -748,6 +811,7 @@ export function chainPage(db, ch) {
   <p class="eyebrow"><a href="${url.chains()}">${ch.chapterNo ? `Chapter ${ch.chapterNo}` : "Outside the book"}</a> <span>· ${ch.sets.length} sets · ${ch.steps.length} stories · ${esc(ch.topicsCrossed.join(" → "))}</span> ${statusBadge(ch.status)}</p>
   <h1>${esc(ch.title)}</h1>
   <p class="lede">The order this chapter meets its concepts in. Each step is one story: the question as the child asks it <b>in that setting</b>, and the concept it teaches. <b>Rests on</b> names the earlier steps it leans on — nothing may lean forward.</p>
+  ${ch.prose?.length ? `<p class="sub"><a href="${url.chapter(ch.id, ch.langs.includes("uk") ? "uk" : ch.langs[0])}">Read the chapter end to end →</a> ${ch.prose.length} of ${ch.steps.length} concepts have prose.</p>` : ""}
   ${ch.followsChains?.length ? `<p class="sub">Comes after ${ch.followsChains.map((fc) => `<a href="${url.chain(fc.id)}">${esc(fc.title)}</a>`).join(", ")} — ${ch.prior.size} concepts count as already met, and may be leaned on without being taught again.</p>` : ""}
   <div class="stats">
     <div class="stat"><b>${ch.steps.length}</b><span>stories</span><small>${ch.sets.length} sets</small></div>

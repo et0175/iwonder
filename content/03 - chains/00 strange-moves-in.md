@@ -2,6 +2,9 @@
 id: strange-moves-in
 title: Дивак оселяється
 status: draft
+ages: [5-7, 8-10]
+# Склад глави. Історія, яка не називає свого, успадковує цей.
+characters: [strange, nota, max, kira, professor-ada]
 # Olia's rewrite, Oct 2026, after testing on an eight-year-old. Her structure,
 # not the original draft's — eleven questions over one evening instead of nine.
 # Two steps are `seeded`: the conclusion is established by evidence, and the

@@ -224,13 +224,24 @@ export function loadStories() {
   const byId = new Map();
   for (const where of files.sort()) {
     const [fm, body] = splitFrontmatter(fs.readFileSync(where, "utf8"), where);
-    const id = fm.id ?? stripOrder(path.basename(where, ".md"));
-    if (!byId.has(id)) byId.set(id, { id, versions: {}, files: [] });
+    // `03 spoon.uk.md` — the ordering prefix is for the file browser, the
+    // `.uk` suffix is the language, and what is left is the story's id.
+    const base = path.basename(where, ".md");
+    const suffix = base.match(/\.([a-z]{2})$/);
+    const lang = fm.lang ?? (suffix ? suffix[1] : "en");
+    const id = fm.id ?? stripOrder(suffix ? base.slice(0, -3) : base);
+    // A story kept in a chapter's folder belongs to that chapter.
+    const rel = path.relative(dir, where);
+    const chapter = fm.chapter
+      ? unwiki(fm.chapter)
+      : rel.includes(path.sep) ? stripOrder(rel.split(path.sep)[0]) : null;
+    if (!byId.has(id)) byId.set(id, { id, chapter, versions: {}, files: [] });
     const story = byId.get(id);
-    story.files.push({ file: where, lang: fm.lang });
-    story.versions[fm.lang ?? "en"] ??= {
+    story.chapter ??= chapter;
+    story.files.push({ file: where, lang });
+    story.versions[lang] ??= {
       file: where,
-      lang: fm.lang ?? "en",
+      lang,
       title: fm.title ?? id,
       question: fm.question ?? "",
       memoryHook: fm.memory_hook ?? "",
@@ -300,6 +311,8 @@ export function loadChains() {
         title: fm.title ?? id,
         status: fm.status ?? "draft",
         ages: ageList(fm.ages),
+        // The cast a story inherits when it does not name its own.
+        characters: [].concat(fm.characters ?? []).map(unwiki),
         // Chapters in sequence: the chain(s) a reader has already walked, so this
         // one may rest on what they taught. See tools/chain.mjs.
         follows: [].concat(fm.follows ?? []).map(unwiki),

@@ -33,6 +33,8 @@ export const url = {
   questions: () => "/questions/",
   stories: () => "/stories/",
   story: (id, lang = "en") => (lang === "en" ? `/stories/${id}/` : `/stories/${id}/${lang}/`),
+  // a whole chapter, read end to end
+  chapter: (id, lang = "en") => (lang === "en" ? `/chapters/${id}/` : `/chapters/${id}/${lang}/`),
   chains: () => "/chains/",
   notebook: () => "/notebook/",
   chain: (id) => `/chains/${id}/`,
@@ -47,7 +49,7 @@ const NAV = [
   ["atlas", "Graph", null], // filled in per build: first topic's atlas
   ["questions", "Questions", url.questions()],
   ["stories", "Stories", url.stories()],
-  ["chains", "Chains", url.chains()],
+  ["chains", "The book", url.chains()],
   ["notebook", "Notebook", url.notebook()],
 ];
 
