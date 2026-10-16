@@ -246,7 +246,9 @@ export function loadStories() {
     const base = (s.versions.en ?? Object.values(s.versions)[0]).fm;
     return {
       ...s,
-      order: path.basename(s.files[0].file),
+      // path, not basename: a story kept in its own folder must still sort by
+      // the folder's number, not by "uk.md"
+      order: path.relative(dir, s.files[0].file),
       concepts: [].concat(base.concepts ?? []).map(unwiki),
       ages: ageList(base.ages),
       characters: [].concat(base.characters ?? []).map(unwiki),
@@ -256,7 +258,26 @@ export function loadStories() {
 }
 
 /**
- * Chains: `content/03 - chains/<file>.md`, one per book. A chain is a reading
+ * The book: an ordered list of chapters, `content/03 - chains/_book.yml`.
+ * Chapter order lives here and nowhere else, so reshuffling the book is
+ * reordering one list rather than editing every chapter.
+ */
+export function loadBook() {
+  if (!CHAINS) return null;
+  const where = path.join(CHAINS, "_book.yml");
+  if (!fs.existsSync(where)) return null;
+  const b = yaml.load(fs.readFileSync(where, "utf8")) ?? {};
+  return {
+    id: b.id ?? "book",
+    title: b.title ?? "The book",
+    target: [].concat(b.target ?? []).map(Number).filter((n) => !Number.isNaN(n)),
+    chapters: [].concat(b.chapters ?? []).map(unwiki),
+    note: b.note ?? "",
+  };
+}
+
+/**
+ * Chains: `content/03 - chains/<file>.md`, one per chapter. A chain is a reading
  * order — one walk through the concept graph, held together by a setting rather
  * than by subject. The frontmatter carries the walk; the body is the editorial
  * note about it. Nothing here is derived: the ordering checks live in
@@ -279,6 +300,9 @@ export function loadChains() {
         title: fm.title ?? id,
         status: fm.status ?? "draft",
         ages: ageList(fm.ages),
+        // Chapters in sequence: the chain(s) a reader has already walked, so this
+        // one may rest on what they taught. See tools/chain.mjs.
+        follows: [].concat(fm.follows ?? []).map(unwiki),
         sets: (fm.sets ?? []).map((s) => ({
           title: s.title ?? "",
           setting: s.setting ?? "",

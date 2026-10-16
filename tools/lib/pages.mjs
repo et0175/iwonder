@@ -41,7 +41,7 @@ export function hubPage(db) {
     [concepts.length, "Concepts", `${byStatus("written")} written · ${byStatus("drafted")} drafted`, url.concepts()],
     [questions.length, "Questions", `${questions.filter((q) => q.kind === "opens" && !q.target).length} on the frontier`, url.questions()],
     [stories.length, "Stories", `${translated} in both languages`, url.stories()],
-    [db.chains.length, db.chains.length === 1 ? "Chain" : "Chains", `${db.chains.reduce((n, ch) => n + ch.steps.length, 0)} steps in order`, url.chains()],
+    [(db.chapters ?? []).length, "Chapters", `${(db.chapters ?? []).reduce((n, ch) => n + ch.steps.length, 0)} stories in order`, url.chains()],
   ].map(([n, label, small, href]) =>
     `<a class="stat" href="${href}"><b>${n}</b><span>${label}</span><small>${esc(small)}</small></a>`).join("");
 
@@ -615,36 +615,55 @@ export function storyPage(db, s, lang, i) {
 const stepNo = (n) => String(n).padStart(2, "0");
 
 export function chainsPage(db) {
-  const cards = db.chains.map((ch) => {
+  const card = (ch) => {
     const problems = ch.outOfOrder.length + ch.missing.length;
     const total = ch.steps.length || 1;
     return `<a class="card chain" href="${url.chain(ch.id)}">
-      <span class="head"><span class="tag">Reading order${ch.ages.length ? ` · ages ${esc(ch.ages.join(", "))}` : ""}</span>${problems ? `<span class="stamp red flat">${problems} out of order</span>` : statusBadge(ch.status, true)}</span>
+      <span class="head"><span class="tag">${ch.chapterNo ? `Chapter ${ch.chapterNo}` : "Not in the book"}${ch.ages.length ? ` · ages ${esc(ch.ages.join(", "))}` : ""}</span>${problems ? `<span class="stamp red flat">${problems} out of order</span>` : statusBadge(ch.status, true)}</span>
       <h3>${esc(ch.title)}</h3>
       <div class="bar" title="${ch.written} written, ${ch.drafted} drafted of ${ch.steps.length}"><i class="w" style="width:${(100 * ch.written) / total}%"></i><i class="d" style="width:${(100 * ch.drafted) / total}%"></i></div>
       <span class="tag barlab">${ch.written} written · ${ch.drafted} drafted · ${ch.steps.length - ch.written - ch.drafted} still only mapped</span>
       <div class="figs">
-        <div class="fig"><b>${ch.steps.length}</b><span>steps</span></div>
+        <div class="fig"><b>${ch.steps.length}</b><span>stories</span></div>
         <div class="fig"><b>${ch.sets.length}</b><span>sets</span></div>
         <div class="fig"><b>${ch.topicsCrossed.length}</b><span>topics</span></div>
         <div class="fig"><b>${ch.open.length}</b><span>doors left open</span></div>
       </div>
-      <ol class="setlist">${ch.sets.map((s) => `<li><b>${stepNo(s.n)}</b><span class="t">${esc(s.title)}<i>${esc(s.setting)}</i></span><span class="tag">${s.steps.length} steps</span></li>`).join("")}</ol>
+      <ol class="setlist">${ch.sets.map((s) => `<li><b>${stepNo(s.n)}</b><span class="t">${esc(s.title)}<i>${esc(s.setting)}</i></span><span class="tag">${s.steps.length} stories</span></li>`).join("")}</ol>
       <div class="foot"><span class="badge out">${esc(ch.topicsCrossed.join(" → "))}</span></div>
     </a>`;
-  }).join("");
+  };
+
+  const chapters = db.chapters ?? [];
+  const outside = db.chains.filter((ch) => !chapters.includes(ch));
+  const told = chapters.reduce((n, ch) => n + ch.steps.length, 0);
+  const [lo, hi] = db.book?.target?.length === 2 ? db.book.target : [null, null];
+
+  const order = chapters.map((ch) =>
+    `<li><b>${stepNo(ch.chapterNo)}</b><span class="t">${esc(ch.title)}<i>${esc(ch.sets.map((s) => s.title).join(" · "))}</i></span><span class="tag">${ch.steps.length} stories</span></li>`).join("");
 
   return page({
-    title: "Chains — I Wonder",
+    title: "The book — I Wonder",
     active: "chains",
     atlasHref: db.atlasHref,
     body: `
 <header class="mast">
-  <p class="eyebrow">Chains · ${db.chains.length} reading order${db.chains.length === 1 ? "" : "s"}</p>
-  <h1>Chains</h1>
-  <p class="lede">A chain is <b>one walk through the graph</b>: the order the concepts are actually met in a book, held together by a setting rather than by subject. The one rule is that a concept may not appear until everything it rests on has already appeared — which is why a chain is checked, not just written. Run <code>npm run chain</code> for the same answer in the terminal.</p>
+  <p class="eyebrow">${esc(db.book?.title ?? "Chains")} · ${chapters.length} chapter${chapters.length === 1 ? "" : "s"} · ${told} stor${told === 1 ? "y" : "ies"}${lo ? ` of ${lo}–${hi}` : ""}</p>
+  <h1>${esc(db.book?.title ?? "Chains")}</h1>
+  <p class="lede">The book is <b>an ordered list of chapters</b>; a chapter is one walk through the concept graph, held together by a setting rather than by subject; and one step of a chapter is <b>one story</b> — one question, one article. A chapter may lean on everything the chapters before it taught, and on nothing that comes after. Chapter order lives in <code>content/03 - chains/_book.yml</code> and nowhere else, so reshuffling the book is reordering one list. Run <code>npm run chain</code> for the same answer in the terminal.</p>
+  ${lo ? `<div class="stats">
+    <div class="stat"><b>${told}</b><span>stories written into chapters</span><small>the book aims at ${lo}–${hi}</small></div>
+    <div class="stat"><b>${chapters.length}</b><span>chapters</span><small>${Math.max(0, lo - told)} stories short of ${lo}</small></div>
+    <div class="stat"><b>${db.concepts.length - told}</b><span>concepts still outside the book</span><small>of ${db.concepts.length} in the graph</small></div>
+  </div>` : ""}
 </header>
-<section class="block"><div class="grid chains stagger">${cards || '<div class="empty">No chains yet. Add a file to <code>content/03 - chains/</code>.</div>'}</div></section>`,
+${order ? `<section class="block"><h2>Reading order</h2><ol class="setlist">${order}</ol></section>` : ""}
+<section class="block"><div class="grid chains stagger">${chapters.map(card).join("") || '<div class="empty">No chapters yet. Add a file to <code>content/03 - chains/</code> and list it in <code>_book.yml</code>.</div>'}</div></section>
+${outside.length ? `<section class="block">
+  <h2>Outside the book</h2>
+  <p class="sub">Chains that are not chapters: plans, pools, selections kept for reference. They are checked like any other chain, but nothing in the book may lean on them.</p>
+  <div class="grid chains stagger">${outside.map(card).join("")}</div>
+</section>` : ""}`,
   });
 }
 
@@ -663,9 +682,14 @@ export function chainPage(db, ch) {
     const title = c
       ? `<a class="cq" href="${url.concept(c.topic, c.id)}">${esc(q)}</a>`
       : `<span class="cq">${esc(q)}</span>`;
+    const assumed = st.assumed?.length
+      ? `<span class="rests"><span class="tag">from an earlier chapter</span>${st.assumed.map(conceptChip).join("")}</span>`
+      : "";
     const rests = st.rests.length
       ? `<span class="rests"><span class="tag">rests on</span>${st.rests.map((r) => `<a href="#s${r.n}" title="${esc(r.c.short)}">${stepNo(r.n)}</a>`).join("")}</span>`
-      : `<span class="rests"><span class="root">rests on nothing — a child already has this</span></span>`;
+      : assumed
+        ? ""
+        : `<span class="rests"><span class="root">rests on nothing — a child already has this</span></span>`;
     const why = !c
       ? `<p class="broke">No concept with the id <code>${esc(st.concept)}</code> in any topic.</p>`
       : st.kind === "seeded"
@@ -674,13 +698,13 @@ export function chainPage(db, ch) {
         ? `<p class="broke">Needs ${st.unmet.map((u) => `<b>${esc(u.c.short)}</b>${u.later ? ` — comes later, at step ${stepNo(u.later)}` : " — never appears in this chain"}`).join("; ")}.</p>`
         : "";
     return `<div class="step${bad ? " bad" : ""}" id="s${st.n}">
-      <span class="n"><b>${stepNo(st.n)}</b><small>step</small></span>
+      <span class="n"><b>${stepNo(st.n)}</b><small>story</small></span>
       <div class="main">
         ${title}
         ${c ? `<p class="teaches"><span class="tag">teaches</span><b>${esc(c.short)}</b><span>${esc(c.name)}</span></p>` : ""}
         ${c && c.ask && c.ask !== st.question ? `<p class="generic">The concept's own wording: <i>${esc(c.ask)}</i></p>` : ""}
         ${kindTag}
-        ${c && st.kind !== "seeded" ? rests : ""}
+        ${c && st.kind !== "seeded" ? rests + assumed : ""}
         ${why}
       </div>
       <span class="end">${c ? `<span class="label"><b>${esc(c.catalogue)}</b>${esc(c.topicTitle)}</span>${statusBadge(c.status, true)}` : '<span class="stamp red flat">no such concept</span>'}</span>
@@ -692,7 +716,7 @@ export function chainPage(db, ch) {
       <div class="sh">
         <span class="n">${stepNo(s.n)}</span>
         <div><h2>${esc(s.title)}</h2>${s.setting ? `<p class="setting">${esc(s.setting)}</p>` : ""}</div>
-        <span class="tag">steps ${stepNo(s.steps[0]?.n ?? 0)}–${stepNo(s.steps[s.steps.length - 1]?.n ?? 0)}</span>
+        <span class="tag">stories ${stepNo(s.steps[0]?.n ?? 0)}–${stepNo(s.steps[s.steps.length - 1]?.n ?? 0)}</span>
       </div>
       <div class="walk">${s.steps.map(step).join("")}</div>
     </section>`).join("");
@@ -721,14 +745,15 @@ export function chainPage(db, ch) {
     atlasHref: db.atlasHref,
     body: `
 <header class="mast">
-  <p class="eyebrow"><a href="${url.chains()}">Chains</a> <span>· ${ch.sets.length} sets · ${ch.steps.length} steps · ${esc(ch.topicsCrossed.join(" → "))}</span> ${statusBadge(ch.status)}</p>
+  <p class="eyebrow"><a href="${url.chains()}">${ch.chapterNo ? `Chapter ${ch.chapterNo}` : "Outside the book"}</a> <span>· ${ch.sets.length} sets · ${ch.steps.length} stories · ${esc(ch.topicsCrossed.join(" → "))}</span> ${statusBadge(ch.status)}</p>
   <h1>${esc(ch.title)}</h1>
-  <p class="lede">The order the book meets its concepts in. Each step is one article: the question as the child asks it <b>in that setting</b>, and the concept it teaches. <b>Rests on</b> names the earlier steps it leans on — nothing may lean forward.</p>
+  <p class="lede">The order this chapter meets its concepts in. Each step is one story: the question as the child asks it <b>in that setting</b>, and the concept it teaches. <b>Rests on</b> names the earlier steps it leans on — nothing may lean forward.</p>
+  ${ch.followsChains?.length ? `<p class="sub">Comes after ${ch.followsChains.map((fc) => `<a href="${url.chain(fc.id)}">${esc(fc.title)}</a>`).join(", ")} — ${ch.prior.size} concepts count as already met, and may be leaned on without being taught again.</p>` : ""}
   <div class="stats">
-    <div class="stat"><b>${ch.steps.length}</b><span>steps</span><small>${ch.sets.length} sets</small></div>
+    <div class="stat"><b>${ch.steps.length}</b><span>stories</span><small>${ch.sets.length} sets</small></div>
     <div class="stat"><b>${ch.written}</b><span>written</span><small>${ch.drafted} drafted · ${ch.steps.length - ch.written - ch.drafted} mapped</small></div>
     <div class="stat"><b>${ch.open.length}</b><span>doors left open</span><small>asked, not answered here</small></div>
-    <div class="stat"><b>${ch.withStories}</b><span>with a story</span><small>of ${ch.steps.length} steps</small></div>
+    <div class="stat"><b>${ch.withStories}</b><span>with prose</span><small>of ${ch.steps.length} stories</small></div>
     <div class="stat ${problems ? "warn" : "fine"}"><b>${problems}</b><span>out of order</span><small>${problems ? "a step leans forward" : "every step rests on what came before"}</small></div>
   </div>
 </header>

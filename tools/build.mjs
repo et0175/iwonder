@@ -15,7 +15,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
-import { listTopics, loadTopic, graph, loadCharacters, loadStories, loadChains, CHARACTERS } from "./lib/load.mjs";
+import { listTopics, loadTopic, graph, loadCharacters, loadStories, loadChains, loadBook, CHARACTERS } from "./lib/load.mjs";
 import { esc, url, nav } from "./lib/site.mjs";
 import * as P from "./lib/pages.mjs";
 
@@ -122,13 +122,40 @@ for (const c of concepts) for (const r of c.preExt ?? []) conceptById.get(r.id)?
  * every prerequisite has appeared earlier in the same chain.
  */
 const chains = loadChains();
+// Chapters are sequential: everything an earlier chapter taught counts as met,
+// so a chapter may rest on it without teaching it again. The order is the
+// book's (content/03 - chains/_book.yml); `follows:` covers chains outside it.
+const book = loadBook();
+const chapterAt = new Map((book?.chapters ?? []).map((id, i) => [id, i]));
+const chainById = new Map(chains.map((c) => [c.id, c]));
+const sourcesOf = (ch) => [...new Set([
+  ...(ch.follows ?? []),
+  ...(chapterAt.has(ch.id) ? book.chapters.slice(0, chapterAt.get(ch.id)) : []),
+])];
+const priorMemo = new Map();
+const priorOf = (ch) => {
+  if (priorMemo.has(ch.id)) return priorMemo.get(ch.id);
+  priorMemo.set(ch.id, new Set()); // stands in while we recurse
+  const out = new Set();
+  for (const id of sourcesOf(ch)) {
+    const prev = chainById.get(id);
+    if (!prev) continue;
+    for (const p of priorOf(prev)) out.add(p);
+    for (const s of prev.sets) for (const st of s.steps) out.add(st.concept);
+  }
+  priorMemo.set(ch.id, out);
+  return out;
+};
 for (const ch of chains) {
+  ch.prior = priorOf(ch);
+  ch.chapterNo = chapterAt.has(ch.id) ? chapterAt.get(ch.id) + 1 : null;
+  ch.followsChains = sourcesOf(ch).map((id) => chainById.get(id)).filter(Boolean);
   // Step numbers are chain-wide and 1-based, so a step can name an earlier one.
   let n = 0;
   const at = new Map(); // concept id -> step number
   ch.sets.forEach((s, i) => { s.n = i + 1; s.steps.forEach((st) => { st.n = ++n; at.set(st.concept, st.n); }); });
 
-  const seen = new Set();
+  const seen = new Set(ch.prior);
   ch.steps = [];
   for (const s of ch.sets) {
     for (const st of s.steps) {
@@ -136,9 +163,12 @@ for (const ch of chains) {
       // Prerequisites that exist in the graph at all; a dangling one is the
       // validator's problem, not the chain's.
       const pre = (st.c?.preAll ?? []).filter((p) => conceptById.has(p));
-      st.rests = pre.filter((p) => seen.has(p))
+      st.rests = pre.filter((p) => seen.has(p) && at.has(p))
         .map((p) => ({ n: at.get(p), c: conceptById.get(p) }))
         .sort((a, b) => a.n - b.n);
+      // met before this chapter opened, in one the reader has already walked
+      st.assumed = pre.filter((p) => !at.has(p) && ch.prior.has(p))
+        .map((p) => conceptById.get(p)).filter(Boolean);
       // A `seeded` step establishes a conclusion without its mechanism, so its
       // prerequisites are deliberately not met. That is a deferral, not a fault.
       st.unmet = st.kind === "seeded" ? [] : pre.filter((p) => !seen.has(p))
@@ -152,6 +182,7 @@ for (const ch of chains) {
   const used = new Set(ch.steps.map((st) => st.concept));
   ch.missing = ch.steps.filter((st) => !st.c);
   ch.outOfOrder = ch.steps.filter((st) => st.c && st.unmet.length);
+  ch.alreadyMet = ch.steps.filter((st) => ch.prior.has(st.concept));
   ch.seeded = ch.steps.filter((st) => st.kind === "seeded");
   ch.topicsCrossed = [...new Set(ch.steps.map((st) => st.c?.topicTitle).filter(Boolean))];
   ch.written = ch.steps.filter((st) => st.c?.status === "written").length;
@@ -171,7 +202,9 @@ chains.forEach((ch) => ch.steps.forEach((st) => {
 
 const db = {
   topics, concepts, conceptById, characters, stories, storiesByConcept, questions,
-  chains, chainsByConcept,
+  chains, chainsByConcept, book,
+  // the book is an ordered list of chapters; a chain outside it is a plan
+  chapters: (book?.chapters ?? []).map((id) => chainById.get(id)).filter(Boolean),
   charById: new Map(characters.map((c) => [c.id, c])),
   conceptIn: (topic, id) => topics.find((t) => t.meta.topic === topic)?.g.byId[id],
   castImage: castSrc ? "/assets/cast" + path.extname(castSrc) : null,

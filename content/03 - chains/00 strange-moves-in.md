@@ -34,6 +34,9 @@ sets:
   - title: Танці
     setting: Музика з телефона, кульки, паровозик. Нота стрибає з усіма.
     steps:
+      - concept: spin-world-slides
+        kind: delight
+        question: Чому кімната їде, коли я вже стою?
       - concept: energy-comes-from-somewhere
         kind: seeded
         defers: [rubbing-makes-heat, burning-needs-air]
@@ -47,18 +50,6 @@ sets:
       - concept: panting-cools
         question: Кому Нота показує язик?
 
-  - title: Коло на подушках
-    setting: Гітара, резинка з Кіриного хвоста, порожня бляшанка, порожня кімната.
-    steps:
-      - concept: sound-is-shaking
-        question: Як грає гітара?
-      - concept: a-hollow-body-makes-it-louder
-        kind: delight
-        question: Чому резинка на бляшанці звучить, а між пальцями майже ні?
-      - concept: sound-needs-a-carrier
-        question: Наскільки гучно, коли вибухає космічний корабель?
-      - concept: echo
-        question: Що цікавить порожню кімнату?
 ---
 
 ## Про цей ланцюжок
