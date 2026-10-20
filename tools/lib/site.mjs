@@ -50,7 +50,7 @@ const NAV = [
   ["questions", "Questions", url.questions()],
   ["stories", "Stories", url.stories()],
   ["chains", "The book", url.chains()],
-  ["notebook", "Notebook", url.notebook()],
+  ["notebook", "Debts", url.notebook()],
 ];
 
 export function nav(active, atlasHref) {

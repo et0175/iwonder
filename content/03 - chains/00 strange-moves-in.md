@@ -17,7 +17,7 @@ sets:
         question: Що збільшує повітряну кульку, якщо вона порожня?
 
   - title: Торт
-    setting: Професорка Ада просіює борошно. Вежа з цукрових кубиків на столі.
+    setting: Професорка Ада просіює борошно. Вежа з цукрових кубиків на столі. Потім чайник.
     steps:
       - concept: everything-is-made-of-bits
         question: Куди зникає цукор у чаї?
@@ -29,17 +29,19 @@ sets:
       - concept: everything-has-a-melting-point
         kind: delight
         question: А камінь може розплавитись? Тоді чому ложка зараз тверда?
-      - concept: near-hot
-        question: Чому духовка не обігріла всю кімнату?
       - concept: heat-is-how-fast-the-bits-move
         question: Що відбувається всередині торта, поки він холоне?
+      - concept: water-cannot-get-hotter
+        question: Навіщо вимикається чайник?
+      - concept: near-hot
+        question: Чому чайник не обігрів усю кімнату?
 
   - title: Танці
     setting: Музика з телефона, кульки, паровозик. Нота стрибає з усіма.
     steps:
       - concept: spin-world-slides
         kind: delight
-        question: Чому кімната їде, коли я вже стою?
+        question: Чому кімната тікає по колу, коли я кручусь?
       - concept: energy-comes-from-somewhere
         kind: seeded
         defers: [rubbing-makes-heat, burning-needs-air]

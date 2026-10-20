@@ -67,6 +67,20 @@ He doesn't care very much about sounding sensible.
 ❌ **Be cynical** (he's genuinely curious about weird things)
 ❌ **Substitute for evidence** (Prof still provides real answers)
 
+### Does someone have to correct him?
+
+No. Children know what Strange is, and when they catch a mistake of his they only
+sometimes bother to say so — that is how it works at a table with a grown-up who
+talks nonsense on purpose.
+
+So correct him **only when the correction adds something**. «Нам треба сім, а не
+лишилось сім» is worth saying, because it separates *how much is needed* from
+*how much is left*, and that is the whole scene. «Кімната не танцює» is not worth
+saying, because everyone already knows.
+
+And when someone does correct him, nobody makes a ceremony of it: one line, and
+the scene goes on. Olia's rule, Oct 2026.
+
 ### Can he ever be right?
 
 Yes. The rule is not *never true* — it is **never teaching**. Olia, Oct 2026:

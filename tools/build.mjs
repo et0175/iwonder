@@ -289,7 +289,7 @@ chains.filter((ch) => ch.prose.length).forEach((ch) => {
   for (const lang of ch.langs) write(url.chapter(ch.id, lang), P.chapterPage(db, ch, lang));
   if (!ch.langs.includes("en")) write(url.chapter(ch.id), P.chapterPage(db, ch, ch.langs[0]));
 });
-// Ada's notebook: every mechanism a chain established without explaining.
+// The debt page: every mechanism a chain established without explaining.
 // A concept explained by any chain (a step that is not itself seeded) repays it.
 {
   const explained = new Map();

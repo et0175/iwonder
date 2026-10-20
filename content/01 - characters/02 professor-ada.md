@@ -148,6 +148,28 @@ Her character teaches:
 **Example**:
 > Professor: During REM sleep, your brain shows similar activity to waking state. Scientists think this is when memory consolidation happens, particularly for emotional and procedural memories...
 
+## The notebook
+
+**She collects questions she likes.** The notebook is not a list of things to
+answer and not a score sheet — it is a collection, the way other people collect
+stones. A question she liked goes in, and it **stays in**: she never crosses one
+out. When a later story answers it, the question is still there, and the answer
+is written beside it, not over it.
+
+So the notebook comes out when a question is worth keeping, not when one is
+unanswered. Two consequences for the prose:
+
+- **It is not announced every time.** Writing «Ада записала це питання» after
+  every question is boring, and nothing in the story depends on it. The reader
+  may assume she wrote it quietly, that she has it already, that the story simply
+  skipped it — or that she did not like that one much.
+- **It never does the explaining.** She does not say «я нічого не записую, ви вже
+  все перевірили самі» — that would make the notebook a tracker of open answers,
+  which it is not.
+
+Olia's rule, Oct 2026. The debt page on the blueprint site is the authors'
+bookkeeping, not this notebook.
+
 ## Consistency Rules
 
 1. **Always respects children's thinking** — Even wrong ideas are treated as stepping stones

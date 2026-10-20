@@ -839,7 +839,7 @@ ${notes}`,
 }
 
 /* ====================================================================== */
-/* Ada's notebook — mechanisms a chain used before it explained them       */
+/* The debt page — mechanisms a chain used before it explained them        */
 /* ====================================================================== */
 
 export function notebookPage(db) {
@@ -882,15 +882,16 @@ export function notebookPage(db) {
     </section>`;
 
   return page({
-    title: "Ada's notebook — I Wonder",
+    title: "Borrowed mechanisms — I Wonder",
     description: "Every mechanism a story established before it explained it, and whether it has been paid back.",
     active: "notebook",
     atlasHref: db.atlasHref,
     body: `
 <header class="mast">
-  <p class="eyebrow">Notebook · ${debts.length} deferral${debts.length === 1 ? "" : "s"} · ${owed.length} still owed</p>
-  <h1>Ada's notebook</h1>
+  <p class="eyebrow">Debts · ${debts.length} deferral${debts.length === 1 ? "" : "s"} · ${owed.length} still owed</p>
+  <h1>Borrowed mechanisms</h1>
   <p class="lede">A story is allowed to establish something it cannot yet explain: a child can feel that wet skin cools before meeting evaporation. The step is marked <b>⊙ seeded</b> in its chain and must name what it borrows — and the borrowing is written down here. This is the ledger: <b>a promise that the mechanism gets explained somewhere</b>, not a licence to skip it. Everything on this page is a thing a reader has been told is true without being shown why.</p>
+  <p class="sub">This is the authors' bookkeeping, not Professor Ada's notebook. Hers, inside the stories, is a different thing: she collects questions she likes, and never crosses one out.</p>
   <div class="stats">
     <div class="stat"><b>${debts.length}</b><span>deferrals</span><small>across ${borrowers} chain${borrowers === 1 ? "" : "s"}</small></div>
     <div class="stat ${owed.length ? "warn" : "fine"}"><b>${owed.length}</b><span>still owed</span><small>${owed.length ? "no chain explains them" : "nothing outstanding"}</small></div>
